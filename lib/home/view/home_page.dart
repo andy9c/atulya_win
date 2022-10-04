@@ -18,12 +18,15 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late StudentCubit _studentCubit;
+  late TabController _tabController;
 
   @override
   void initState() {
     _studentCubit = StudentCubit()..loadData();
+    _tabController = TabController(length: 6, vsync: this, initialIndex: 0);
     super.initState();
   }
 
@@ -337,8 +340,9 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget loadStudent(bool setEnabled) {
-      return const TabBarView(
-        children: [
+      return TabBarView(
+        controller: _tabController,
+        children: const [
           TabOne(),
           TabTwo(),
           TabThree(),
