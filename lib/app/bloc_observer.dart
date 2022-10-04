@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print, unnecessary_overrides
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override

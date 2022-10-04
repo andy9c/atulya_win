@@ -19,8 +19,8 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(configSchoolName),
-        backgroundColor: Theme.of(context).primaryColorDark, // appbar color.
-        foregroundColor: Colors.white,
+        //backgroundColor: Theme.of(context).primaryColorDark, // appbar color.
+        //foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
