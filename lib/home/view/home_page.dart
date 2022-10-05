@@ -377,7 +377,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       );
     }
 
-    Widget loadStudent(bool setEnabled) {
+    Widget loadStudent() {
       return TabBarView(
         controller: _tabController,
         children: const [
@@ -443,32 +443,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               create: (context) => SectionFourCubit(),
             ),
             BlocProvider(
-              create: (context) => SectionTwoCubit(),
+              create: (context) => SectionFiveCubit(),
+            ),
+            BlocProvider(
+              create: (context) => SectionSixCubit(),
             ),
           ],
-          child: BlocBuilder<StudentCubit, StudentState>(
-            builder: (context, state) {
-              final RegExp emailRegExp = RegExp(
-                r'^test+[0-9]+@admission.org//$',
-              );
-
-              return (state.loadStatus == LoadStatus.Loading)
-                  ? const LoadingState()
-                  : (state.loadStatus == LoadStatus.ExistingStudent)
-                      ? loadStudent(false) //printPDF()
-                      : (state.loadStatus == LoadStatus.NewStudent &&
-                              Expired.hasStarted() &&
-                              !Expired.hasExpired())
-                          ? loadStudent(true)
-                          : (!Expired.hasStarted() &&
-                                  !Expired.hasExpired() &&
-                                  emailRegExp.hasMatch(user.email ?? ''))
-                              ? loadStudent(true)
-                              : (Expired.hasExpired())
-                                  ? notifyPage("Registration Over")
-                                  : notifyPage("Something went Wrong !");
-            },
-          ),
+          child: loadStudent(),
         ),
       ),
     );
