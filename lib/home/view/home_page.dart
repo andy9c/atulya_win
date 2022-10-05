@@ -1,13 +1,10 @@
 // ignore_for_file: unused_element
 
+import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
-import 'package:atulya/home/cubit/informatics_cubit.dart';
-import 'package:atulya/home/cubit/section_one_cubit.dart';
-import 'package:atulya/home/cubit/section_two_cubit.dart';
-
-import '../../app/app.dart';
-import '../cubit/student_cubit.dart';
-import '../home.dart';
+import 'package:atulya/home/cubit/cubit.dart';
+import 'package:atulya/home/view/view.dart';
+import 'package:atulya/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -22,13 +19,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late StudentCubit _studentCubit;
   late TabController _tabController;
   late AnimationController _hideFabAnimController;
 
   @override
   void initState() {
-    _studentCubit = StudentCubit()..loadData();
     _tabController = TabController(length: 6, vsync: this, initialIndex: 0);
     _tabController.addListener(() {
       context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
@@ -436,10 +431,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) => _studentCubit,
+              create: (context) => SectionOneCubit(),
             ),
             BlocProvider(
-              create: (context) => SectionOneCubit(),
+              create: (context) => SectionTwoCubit(),
+            ),
+            BlocProvider(
+              create: (context) => SectionThreeCubit(),
+            ),
+            BlocProvider(
+              create: (context) => SectionFourCubit(),
             ),
             BlocProvider(
               create: (context) => SectionTwoCubit(),

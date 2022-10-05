@@ -1,9 +1,9 @@
 export 'view/create_pdf.dart';
 export 'view/home_page.dart';
-export 'view/tabOne.dart';
-export 'view/tabTwo.dart';
-export 'view/tabThree.dart';
-export 'view/tabFour.dart';
-export 'view/tabFive.dart';
-export 'view/tabSix.dart';
+export 'view/tab_one.dart';
+export 'view/tab_two.dart';
+export 'view/tab_three.dart';
+export 'view/tab_four.dart';
+export 'view/tab_five.dart';
+export 'view/tab_six.dart';
 export 'widgets/widgets.dart';
