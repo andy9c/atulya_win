@@ -164,7 +164,7 @@ class _TabFourState extends State<TabFour>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: TextFormField(
                       inputFormatters: [
                         NameUpperCaseTextFormatter(),
@@ -192,39 +192,14 @@ class _TabFourState extends State<TabFour>
                   spacerWidget(),
                   Expanded(
                     flex: 1,
-                    child: DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      //value: "YES",
-                      icon: const Icon(Icons.arrow_downward_rounded),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
-                      decoration: const InputDecoration(
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                              top: 0), // add padding to adjust icon
-                          child:
-                              Icon(Icons.wc_rounded, color: Colors.lightBlue),
-                        ),
-                        border: OutlineInputBorder(),
-                        labelText: "Decimal/Acre",
+                    child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.blueGrey.shade50,
+                        border: const OutlineInputBorder(),
+                        labelText: 'acre/decimal',
                         helperText: '',
-                        //errorText: state.gender.invalid ? 'required field' : null,
-                      ),
-                      onChanged: (value) {},
-                      items: areaList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      hint: const Text(
-                        "Unit",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:atulya/home/cubit/informatics_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../routes/routes.dart';
@@ -22,10 +23,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AppBloc(
-          authenticationRepository: _authenticationRepository,
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => AppBloc(
+              authenticationRepository: _authenticationRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (context) => InformaticsCubit(),
+          ),
+        ],
         child: const AppView(),
       ),
     );

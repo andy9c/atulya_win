@@ -1,6 +1,9 @@
 // ignore_for_file: unused_element
 
 import 'package:atulya/configuration/configuration.dart';
+import 'package:atulya/home/cubit/informatics_cubit.dart';
+import 'package:atulya/home/cubit/section_one_cubit.dart';
+import 'package:atulya/home/cubit/section_two_cubit.dart';
 
 import '../../app/app.dart';
 import '../cubit/student_cubit.dart';
@@ -18,16 +21,39 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late StudentCubit _studentCubit;
   late TabController _tabController;
+  late AnimationController _hideFabAnimController;
 
   @override
   void initState() {
     _studentCubit = StudentCubit()..loadData();
     _tabController = TabController(length: 6, vsync: this, initialIndex: 0);
+    _tabController.addListener(() {
+      context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
+      switch (_tabController.index) {
+        case 0:
+          _hideFabAnimController.forward();
+          break;
+        default:
+          _hideFabAnimController.reverse();
+          break;
+      }
+    });
+    _hideFabAnimController = AnimationController(
+      vsync: this,
+      duration: kThemeAnimationDuration,
+      value: 1, // initially visible
+    );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _hideFabAnimController.dispose();
+    super.dispose();
   }
 
   @override
@@ -339,6 +365,23 @@ class _HomePageState extends State<HomePage>
       );
     }
 
+    Widget? getFab() {
+      return FadeTransition(
+        opacity: _hideFabAnimController,
+        child: ScaleTransition(
+          scale: _hideFabAnimController,
+          child: FloatingActionButton(
+            onPressed: () {
+              addFamilyMembers();
+            },
+            //foregroundColor: Colors.white,
+            //backgroundColor: Colors.blue,
+            child: const Icon(Icons.person_add),
+          ),
+        ),
+      );
+    }
+
     Widget loadStudent(bool setEnabled) {
       return TabBarView(
         controller: _tabController,
@@ -358,10 +401,11 @@ class _HomePageState extends State<HomePage>
       child: Scaffold(
         appBar: AppBar(
           title: Text(configSchoolName),
-          bottom: const TabBar(
+          bottom: TabBar(
+            controller: _tabController,
             labelColor: Colors.blueGrey,
             indicatorColor: Colors.pinkAccent,
-            tabs: [
+            tabs: const [
               Tab(text: "S1"),
               Tab(text: "S2"),
               Tab(text: "S3"),
@@ -374,7 +418,7 @@ class _HomePageState extends State<HomePage>
           //foregroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.save),
+              icon: const Icon(Icons.save_rounded),
               onPressed: () => {},
             ),
             IconButton(
@@ -388,20 +432,23 @@ class _HomePageState extends State<HomePage>
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            addFamilyMembers();
-          },
-          //foregroundColor: Colors.white,
-          //backgroundColor: Colors.blue,
-          child: const Icon(Icons.person_add),
-        ),
-        body: BlocProvider(
-          create: (_) => _studentCubit,
+        floatingActionButton: getFab() is Container ? null : getFab(),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => _studentCubit,
+            ),
+            BlocProvider(
+              create: (context) => SectionOneCubit(),
+            ),
+            BlocProvider(
+              create: (context) => SectionTwoCubit(),
+            ),
+          ],
           child: BlocBuilder<StudentCubit, StudentState>(
             builder: (context, state) {
               final RegExp emailRegExp = RegExp(
-                r'^test+[0-9]+@admission.org$',
+                r'^test+[0-9]+@admission.org//$',
               );
 
               return (state.loadStatus == LoadStatus.Loading)
