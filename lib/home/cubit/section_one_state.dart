@@ -92,23 +92,23 @@ class SectionOneState extends Equatable with FormzMixin {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionOneState state) {
     return {
-      'pattaNo': pattaNo.value,
-      'fullName': fullName.value,
-      'relationship': relationship.value,
-      'headOfHousehold': headOfHousehold.value,
-      'age': age.value,
-      'gender': gender.value,
-      'religion': religion.value,
-      'socialCategory': socialCategory.value,
-      'nameOfCommunity': nameOfCommunity.value,
-      'gramPanchayat': gramPanchayat.value,
-      'cardholderCategory': cardholderCategory.value,
-      'qualification': qualification.value,
-      'primaryOccupation': primaryOccupation.value,
-      'secondaryOccupation': secondaryOccupation.value,
-      'familyMemberDetails': familyMemberDetails,
+      'pattaNo': state.pattaNo.value,
+      'fullName': state.fullName.value,
+      'relationship': state.relationship.value,
+      'headOfHousehold': state.headOfHousehold.value,
+      'age': state.age.value,
+      'gender': state.gender.value,
+      'religion': state.religion.value,
+      'socialCategory': state.socialCategory.value,
+      'nameOfCommunity': state.nameOfCommunity.value,
+      'gramPanchayat': state.gramPanchayat.value,
+      'cardholderCategory': state.cardholderCategory.value,
+      'qualification': state.qualification.value,
+      'primaryOccupation': state.primaryOccupation.value,
+      'secondaryOccupation': state.secondaryOccupation.value,
+      'familyMemberDetails': state.familyMemberDetails,
     };
   }
 
@@ -131,12 +131,6 @@ class SectionOneState extends Equatable with FormzMixin {
       familyMemberDetails: map['familyMemberDetails'],
     );
   }
-  String toJson() => json.encode(toMap());
-  factory SectionOneState.fromJson(String source) =>
-      SectionOneState.fromMap(json.decode(source));
-
-  @override
-  bool get stringify => true;
 
   @override
   List<FormzInput> get inputs => [

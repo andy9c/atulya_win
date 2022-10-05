@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -6,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 part 'section_three_state.dart';
 
-class SectionThreeCubit extends Cubit<SectionThreeState> {
+class SectionThreeCubit extends Cubit<SectionThreeState> with HydratedMixin {
   SectionThreeCubit() : super(const SectionThreeState());
 
   void incomeSourcesChanged(String value) {
@@ -49,5 +48,15 @@ class SectionThreeCubit extends Cubit<SectionThreeState> {
 
   void otherFreshWaterItemsChanged(String value) {
     emit(state.copyWith(otherFreshWaterItems: value));
+  }
+
+  @override
+  SectionThreeState? fromJson(Map<String, dynamic> json) {
+    return SectionThreeState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionThreeState state) {
+    return SectionThreeState.toMap(state);
   }
 }

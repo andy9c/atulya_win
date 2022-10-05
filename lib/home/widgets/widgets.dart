@@ -5,6 +5,5 @@ export 'present_address.dart';
 export 'past_student.dart';
 export 'mother_information.dart';
 export 'father_information.dart';
-export 'candidate_information.dart';
 export 'elements.dart';
 export 'build_pdf.dart';

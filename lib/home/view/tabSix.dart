@@ -288,6 +288,7 @@ class _TabSixState extends State<TabSix>
             spacerWidget(),
             spacerWidget(),
             spacerWidget(),
+            spacerWidget(),
           ],
         ),
       ),

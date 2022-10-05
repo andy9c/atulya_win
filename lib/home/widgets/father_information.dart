@@ -151,8 +151,8 @@ class FatherLastName extends StatelessWidget {
   }
 }
 
-class FatherProfessionSelection extends StatelessWidget {
-  const FatherProfessionSelection({Key? key}) : super(key: key);
+class RespondentPrimaryOccupation extends StatelessWidget {
+  const RespondentPrimaryOccupation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -214,8 +214,8 @@ class FatherProfessionSelection extends StatelessWidget {
   }
 }
 
-class FatherQualificationSelection extends StatelessWidget {
-  const FatherQualificationSelection({Key? key}) : super(key: key);
+class RespondentQualification extends StatelessWidget {
+  const RespondentQualification({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

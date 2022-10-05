@@ -87,25 +87,22 @@ class SectionTwoState extends Equatable with FormzMixin {
     );
   }
 
-  @override
-  bool get stringify => true;
-
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionTwoState state) {
     return {
-      'generationCount': generationCount.value,
-      'ownLand': ownLand.value,
-      'yesName': yesName,
-      'noName': noName,
-      'relationship': relationship.value,
-      'isAlive': isAlive.value,
-      'countChulha': countChulha.value,
-      'totalPeople': totalPeople.value,
-      'landHolding': landHolding,
-      'cultivateAnabadi': cultivateAnabadi.value,
-      'yearsAnabadi': yearsAnabadi,
-      'appliedOwnership': appliedOwnership.value,
-      'receivedEntitlement': receivedEntitlement.value,
-      'cropTypes': cropTypes,
+      'generationCount': state.generationCount.value,
+      'ownLand': state.ownLand.value,
+      'yesName': state.yesName,
+      'noName': state.noName,
+      'relationship': state.relationship.value,
+      'isAlive': state.isAlive.value,
+      'countChulha': state.countChulha.value,
+      'totalPeople': state.totalPeople.value,
+      'landHolding': state.landHolding,
+      'cultivateAnabadi': state.cultivateAnabadi.value,
+      'yearsAnabadi': state.yearsAnabadi,
+      'appliedOwnership': state.appliedOwnership.value,
+      'receivedEntitlement': state.receivedEntitlement.value,
+      'cropTypes': state.cropTypes,
     };
   }
 
@@ -127,9 +124,6 @@ class SectionTwoState extends Equatable with FormzMixin {
       cropTypes: map['cropTypes'],
     );
   }
-  String toJson() => json.encode(toMap());
-  factory SectionTwoState.fromJson(String source) =>
-      SectionTwoState.fromMap(json.decode(source));
 
   @override
   List<FormzInput> get inputs => [

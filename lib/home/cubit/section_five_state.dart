@@ -78,28 +78,25 @@ class SectionFiveState extends Equatable with FormzMixin {
         resettlementPlan,
       ];
 
-  @override
-  bool get stringify => true;
-
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionFiveState state) {
     return {
-      'oclAcquiring': oclAcquiring.value,
-      'looseLand': looseLand.value,
-      'landHoldingLost': landHoldingLost,
-      'gotNotification': gotNotification.value,
-      'whatAction': whatAction.value,
-      'givenConsent': givenConsent.value,
-      'reason': reason,
-      'aware': aware.value,
-      'law': law.value,
-      'gramsabha': gramsabha.value,
-      'participate': participate.value,
-      'resolution': resolution,
-      'compensationAware': compensationAware.value,
-      'compensationDetails': compensationDetails,
-      'happyWithCompensation': happyWithCompensation.value,
-      'resettlementPlan': resettlementPlan.value,
-      'resettlementOpinion': resettlementOpinion,
+      'oclAcquiring': state.oclAcquiring.value,
+      'looseLand': state.looseLand.value,
+      'landHoldingLost': state.landHoldingLost,
+      'gotNotification': state.gotNotification.value,
+      'whatAction': state.whatAction.value,
+      'givenConsent': state.givenConsent.value,
+      'reason': state.reason,
+      'aware': state.aware.value,
+      'law': state.law.value,
+      'gramsabha': state.gramsabha.value,
+      'participate': state.participate.value,
+      'resolution': state.resolution,
+      'compensationAware': state.compensationAware.value,
+      'compensationDetails': state.compensationDetails,
+      'happyWithCompensation': state.happyWithCompensation.value,
+      'resettlementPlan': state.resettlementPlan.value,
+      'resettlementOpinion': state.resettlementOpinion,
     };
   }
 
@@ -124,10 +121,6 @@ class SectionFiveState extends Equatable with FormzMixin {
       resettlementOpinion: map['resettlementOpinion'],
     );
   }
-  String toJson() => json.encode(toMap());
-
-  factory SectionFiveState.fromJson(String source) =>
-      SectionFiveState.fromMap(json.decode(source));
 
   SectionFiveState copyWith({
     Compulsory? oclAcquiring,

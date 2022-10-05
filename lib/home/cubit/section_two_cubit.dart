@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -7,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 part 'section_two_state.dart';
 
-class SectionTwoCubit extends Cubit<SectionTwoState> {
+class SectionTwoCubit extends Cubit<SectionTwoState> with HydratedMixin {
   SectionTwoCubit() : super(const SectionTwoState());
 
   void generationCountChanged(String value) {
@@ -66,5 +64,15 @@ class SectionTwoCubit extends Cubit<SectionTwoState> {
 
   void cropTypesChanged(String value) {
     emit(state.copyWith(cropTypes: value));
+  }
+
+  @override
+  SectionTwoState? fromJson(Map<String, dynamic> json) {
+    return SectionTwoState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionTwoState state) {
+    return SectionTwoState.toMap(state);
   }
 }

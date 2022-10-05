@@ -67,18 +67,18 @@ class SectionFourState extends Equatable with FormzMixin {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionFourState state) {
     return {
-      'lostland': lostland.value,
-      'lostLandtoprojects': lostLandtoprojects.value,
-      'landAreaLost': landAreaLost.value,
-      'yearOflandLost': yearOflandLost.value,
-      'gotCompensation': gotCompensation.value,
-      'compensation': compensation,
-      'cashCompensation': cashCompensation,
-      'employmentDetails': employmentDetails,
-      'landDetails': landDetails,
-      'otherComments': otherComments,
+      'lostland': state.lostland.value,
+      'lostLandtoprojects': state.lostLandtoprojects.value,
+      'landAreaLost': state.landAreaLost.value,
+      'yearOflandLost': state.yearOflandLost.value,
+      'gotCompensation': state.gotCompensation.value,
+      'compensation': state.compensation,
+      'cashCompensation': state.cashCompensation,
+      'employmentDetails': state.employmentDetails,
+      'landDetails': state.landDetails,
+      'otherComments': state.otherComments,
     };
   }
 
@@ -96,11 +96,6 @@ class SectionFourState extends Equatable with FormzMixin {
       otherComments: map['otherComments'],
     );
   }
-  String toJson() => json.encode(toMap());
-  factory SectionFourState.fromJson(String source) =>
-      SectionFourState.fromMap(json.decode(source));
-  @override
-  bool get stringify => true;
 
   @override
   List<FormzInput> get inputs => [

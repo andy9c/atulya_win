@@ -38,16 +38,14 @@ class SectionSixState extends Equatable with FormzMixin {
         discussion,
       ];
 
-  @override
-  bool get stringify => true;
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionSixState state) {
     return {
-      'landMean': landMean.value,
-      'loss': loss.value,
-      'landAcquisition': landAcquisition.value,
-      'miningActivity': miningActivity.value,
-      'discussion': discussion.value,
-      'comments': comments,
+      'landMean': state.landMean.value,
+      'loss': state.loss.value,
+      'landAcquisition': state.landAcquisition.value,
+      'miningActivity': state.miningActivity.value,
+      'discussion': state.discussion.value,
+      'comments': state.comments,
     };
   }
 
@@ -61,10 +59,6 @@ class SectionSixState extends Equatable with FormzMixin {
       comments: map['comments'],
     );
   }
-  String toJson() => json.encode(toMap());
-
-  factory SectionSixState.fromJson(String source) =>
-      SectionSixState.fromMap(json.decode(source));
 
   SectionSixState copyWith({
     Compulsory? landMean,

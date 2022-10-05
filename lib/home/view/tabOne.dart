@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
+import '../widgets/section_one_widget.dart';
+
 class TabOne extends StatefulWidget {
   const TabOne({super.key});
 
@@ -107,15 +109,15 @@ class _TabOneState extends State<TabOne>
             spacerWidget(),
             //LoadingState(),
             //spacerWidget(),
-            const CandidateFirstName(),
+            const PattaNumber(),
             spacerWidget(),
-            const CandidateMiddleName(),
+            const RespondentFullName(),
             spacerWidget(),
-            const MotherTongueSelection(),
+            const RespondentRelationship(),
             spacerWidget(),
-            const CandidateLastName(),
+            const HeadOfHousehold(),
             spacerWidget(),
-            const DateOfBirth(),
+            const RespondentAge(),
             spacerWidget(),
             const GenderSelection(),
             spacerWidget(),
@@ -123,25 +125,24 @@ class _TabOneState extends State<TabOne>
             spacerWidget(),
             const SocialCategorySelection(),
             spacerWidget(),
-            const PlaceOfBirth(),
+            const CommunityName(),
             spacerWidget(),
-            const AadharCard(),
-            spacerWidget(),
-            const BloodGroupSelection(),
+            const GramPanchayat(),
             spacerWidget(),
 
-            const HasAadharCardSelection(),
+            const CardHolder(),
             spacerWidget(),
-            const FatherQualificationSelection(),
+            const RespondentQualification(),
             spacerWidget(),
-            const FatherProfessionSelection(),
+            const RespondentPrimaryOccupation(),
             spacerWidget(),
-            const MotherProfessionSelection(),
+            const RespondentSecondaryOccupation(),
 
             spacerWidget(),
             spacerWidget(),
-            const SubmitAndLockButton(),
-            const SizedBox(height: 80),
+            spacerWidget(),
+            spacerWidget(),
+            spacerWidget(),
           ],
         ),
       ),

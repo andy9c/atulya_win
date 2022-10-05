@@ -62,17 +62,17 @@ class SectionThreeState extends Equatable with FormzMixin {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  static Map<String, dynamic> toMap(SectionThreeState state) {
     return {
-      'incomeSources': incomeSources.value,
-      'otherAssetsCount': otherAssetsCount,
-      'annualIncome': annualIncome.value,
-      'cropsPattern': cropsPattern,
-      'vegetablesPattern': vegetablesPattern,
-      'forestProduce': forestProduce,
-      'otherForestProduce': otherForestProduce,
-      'freshWaterItems': freshWaterItems,
-      'otherFreshWaterItems': otherFreshWaterItems,
+      'incomeSources': state.incomeSources.value,
+      'otherAssetsCount': state.otherAssetsCount,
+      'annualIncome': state.annualIncome.value,
+      'cropsPattern': state.cropsPattern,
+      'vegetablesPattern': state.vegetablesPattern,
+      'forestProduce': state.forestProduce,
+      'otherForestProduce': state.otherForestProduce,
+      'freshWaterItems': state.freshWaterItems,
+      'otherFreshWaterItems': state.otherFreshWaterItems,
     };
   }
 
@@ -89,11 +89,6 @@ class SectionThreeState extends Equatable with FormzMixin {
       otherFreshWaterItems: map['otherFreshWaterItems'],
     );
   }
-  String toJson() => json.encode(toMap());
-  factory SectionThreeState.fromJson(String source) =>
-      SectionThreeState.fromMap(json.decode(source));
-  @override
-  bool get stringify => true;
 
   @override
   List<FormzInput> get inputs => [incomeSources, annualIncome];

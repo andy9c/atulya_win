@@ -1,13 +1,11 @@
-import 'dart:convert';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'section_one_state.dart';
 
-class SectionOneCubit extends Cubit<SectionOneState> {
+class SectionOneCubit extends Cubit<SectionOneState> with HydratedMixin {
   SectionOneCubit() : super(const SectionOneState());
 
   void pattaChanged(String value) {
@@ -72,5 +70,15 @@ class SectionOneCubit extends Cubit<SectionOneState> {
     data.addAll(state.familyMemberDetails);
 
     emit(state.copyWith(familyMemberDetails: data));
+  }
+
+  @override
+  SectionOneState? fromJson(Map<String, dynamic> json) {
+    return SectionOneState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionOneState state) {
+    return SectionOneState.toMap(state);
   }
 }

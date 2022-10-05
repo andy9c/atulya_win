@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -7,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 part 'section_six_state.dart';
 
-class SectionSixCubit extends Cubit<SectionSixState> {
+class SectionSixCubit extends Cubit<SectionSixState> with HydratedMixin {
   SectionSixCubit() : super(const SectionSixState());
 
   void landMeanChanged(String value) {
@@ -32,5 +30,15 @@ class SectionSixCubit extends Cubit<SectionSixState> {
 
   void commentsChanged(String value) {
     emit(state.copyWith(comments: value));
+  }
+
+  @override
+  SectionSixState? fromJson(Map<String, dynamic> json) {
+    return SectionSixState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionSixState state) {
+    return SectionSixState.toMap(state);
   }
 }

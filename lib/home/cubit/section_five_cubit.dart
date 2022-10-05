@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -7,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 part 'section_five_state.dart';
 
-class SectionFiveCubit extends Cubit<SectionFiveState> {
+class SectionFiveCubit extends Cubit<SectionFiveState> with HydratedMixin {
   SectionFiveCubit() : super(const SectionFiveState());
 
   void oclAcquiringChanged(String value) {
@@ -76,5 +74,15 @@ class SectionFiveCubit extends Cubit<SectionFiveState> {
 
   void resettlementOpinionChanged(String value) {
     emit(state.copyWith(resettlementOpinion: ""));
+  }
+
+  @override
+  SectionFiveState? fromJson(Map<String, dynamic> json) {
+    return SectionFiveState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionFiveState state) {
+    return SectionFiveState.toMap(state);
   }
 }

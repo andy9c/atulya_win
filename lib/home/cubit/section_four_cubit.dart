@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -6,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 part 'section_four_state.dart';
 
-class SectionFourCubit extends Cubit<SectionFourState> {
+class SectionFourCubit extends Cubit<SectionFourState> with HydratedMixin {
   SectionFourCubit() : super(const SectionFourState());
 
   void lostlandChanged(String value) {
@@ -47,5 +46,15 @@ class SectionFourCubit extends Cubit<SectionFourState> {
 
   void otherCommentsChanged(String value) {
     emit(state.copyWith());
+  }
+
+  @override
+  SectionFourState? fromJson(Map<String, dynamic> json) {
+    return SectionFourState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SectionFourState state) {
+    return SectionFourState.toMap(state);
   }
 }
