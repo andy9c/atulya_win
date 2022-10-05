@@ -9,4 +9,8 @@ class InformaticsCubit extends Cubit<InformaticsState> {
   void tabIndexChanged(int value) {
     emit(state.copyWith(tabIndex: value));
   }
+
+  void isEnabledChanged(bool value) {
+    emit(state.copyWith(isEnabled: value));
+  }
 }
