@@ -1,37 +1,4 @@
-const List<String> fieldDescription = [
-  "Candidate's First Name",
-  "Date of Birth",
-  "Place of Birth",
-  "Gender",
-  "Mother Tongue",
-  "Blood Group",
-  "Religion",
-  "Social Category",
-  "Aadhar Card Number",
-  "Aadhar Enrollment ID",
-  "Last School Attended",
-  "Last Class Attended",
-  "Admission Sought for Class",
-  "Father's First Name",
-  "Father's Profession",
-  "Father's Qualification",
-  "Father's Home/Personal Contact",
-  "Father's Email ID",
-  "Mother's First Name",
-  "Mother's Profession",
-  "Mother's Qualification",
-  "Mother's Home/Personal Contact",
-  "Mother's Email ID",
-  "Present Location",
-  "Present State",
-  "Present PIN Code",
-  "Permanent Location",
-  "Permanent State",
-  "Permanent PIN Code",
-  "I AGREE Checkbox",
-];
-
-List<String> motherTongueList = [
+List<String> relationshipList = [
   "SELF",
   "HUSBAND",
   "WIFE",
@@ -90,12 +57,6 @@ List<String> socialCategoryList = [
   "SC",
   "ST",
   "OBC",
-];
-
-List<String> relationshipList = [
-  "NONE",
-  "BROTHER",
-  "SISTER",
 ];
 
 List<String> numberList = [

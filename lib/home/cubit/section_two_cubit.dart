@@ -2,11 +2,17 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_two_state.dart';
 
-class SectionTwoCubit extends Cubit<SectionTwoState> with HydratedMixin {
+class SectionTwoCubit extends Cubit<SectionTwoState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionTwoCubit() : super(const SectionTwoState());
+
+  void reset() {
+    emit(const SectionTwoState());
+  }
 
   void generationCountChanged(String value) {
     emit(state.copyWith(generationCount: Compulsory.dirty(value)));

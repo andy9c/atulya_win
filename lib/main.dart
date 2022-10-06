@@ -30,6 +30,7 @@ Future<void> main() async {
         ? HydratedStorage.webStorageDirectory
         : await getApplicationDocumentsDirectory(),
   );
+
   HydratedBlocOverrides.runZoned(
     () => runApp(App(authenticationRepository: authenticationRepository)),
     storage: storage,

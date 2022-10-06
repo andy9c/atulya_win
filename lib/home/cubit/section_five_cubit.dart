@@ -2,11 +2,17 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_five_state.dart';
 
-class SectionFiveCubit extends Cubit<SectionFiveState> with HydratedMixin {
+class SectionFiveCubit extends Cubit<SectionFiveState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionFiveCubit() : super(const SectionFiveState());
+
+  void reset() {
+    emit(const SectionFiveState());
+  }
 
   void oclAcquiringChanged(String value) {
     emit(state.copyWith(oclAcquiring: Compulsory.dirty(value)));

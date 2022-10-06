@@ -2,11 +2,17 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_six_state.dart';
 
-class SectionSixCubit extends Cubit<SectionSixState> with HydratedMixin {
+class SectionSixCubit extends Cubit<SectionSixState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionSixCubit() : super(const SectionSixState());
+
+  void reset() {
+    emit(const SectionSixState());
+  }
 
   void landMeanChanged(String value) {
     emit(state.copyWith(landMean: Compulsory.dirty(value)));

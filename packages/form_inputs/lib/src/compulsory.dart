@@ -11,7 +11,7 @@ enum CompulsoryValidationError {
 /// {@endtemplate}
 class Compulsory extends FormzInput<dynamic, CompulsoryValidationError> {
   /// {@macro compulsory}
-  const Compulsory.pure() : super.pure(null);
+  const Compulsory.pure([dynamic value = null]) : super.pure(value);
 
   /// {@macro compulsory}
   const Compulsory.dirty([dynamic value = null]) : super.dirty(value);
@@ -23,7 +23,7 @@ class Compulsory extends FormzInput<dynamic, CompulsoryValidationError> {
 
   @override
   CompulsoryValidationError? validator(dynamic value) {
-    if (value == null) return null;
+    if (value == null) return CompulsoryValidationError.invalid;
 
     if (value is String) value = value.trim();
     if (value is int || value is double) value = value.toString();

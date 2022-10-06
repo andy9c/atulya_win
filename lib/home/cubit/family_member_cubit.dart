@@ -2,34 +2,40 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'family_member_state.dart';
 
-class FamilyMemberCubit extends Cubit<FamilyMemberState> with HydratedMixin {
+class FamilyMemberCubit extends Cubit<FamilyMemberState>
+    with HydratedMixin, ReplayCubitMixin {
   FamilyMemberCubit() : super(const FamilyMemberState());
 
+  void reset() {
+    emit(const FamilyMemberState());
+  }
+
   void nameChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(name: Compulsory.dirty(value)));
   }
 
-  void relationshiphanged(String value) {
-    emit(state.copyWith());
+  void relationshipChanged(String value) {
+    emit(state.copyWith(relationship: Compulsory.dirty(value)));
   }
 
-  void agehanged(String value) {
-    emit(state.copyWith());
+  void ageChanged(String value) {
+    emit(state.copyWith(age: Compulsory.dirty(value)));
   }
 
-  void genderhanged(String value) {
-    emit(state.copyWith());
+  void genderChanged(String value) {
+    emit(state.copyWith(gender: Compulsory.dirty(value)));
   }
 
-  void qualificationhanged(String value) {
-    emit(state.copyWith());
+  void qualificationChanged(String value) {
+    emit(state.copyWith(qualification: Compulsory.dirty(value)));
   }
 
-  void occupationhanged(String value) {
-    emit(state.copyWith());
+  void occupationChanged(String value) {
+    emit(state.copyWith(occupation: Compulsory.dirty(value)));
   }
 
   @override

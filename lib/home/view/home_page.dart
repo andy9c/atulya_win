@@ -4,9 +4,11 @@ import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
 import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
+import 'package:atulya/home/widgets/section_one_widget.dart';
 import 'package:atulya/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatefulWidget {
@@ -156,6 +158,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
+          key: UniqueKey(),
           title: const Text(
               'Family Member Details'), // To display the title it is optional
           content: SizedBox(
@@ -164,188 +167,54 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Scrollbar(
               controller: scrollController,
               thumbVisibility: true,
-              child: ListView(
-                controller: scrollController,
-                padding: const EdgeInsets.all(16.0),
-                physics: const AlwaysScrollableScrollPhysics(),
-                shrinkWrap: false,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child:
-                            Icon(Icons.place_rounded, color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Name",
-                      helperText: '',
-                    ),
-                  ),
-                  spacerWidget(),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_downward_rounded),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child: Icon(Icons.connect_without_contact_rounded,
-                            color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Relationship with head",
-                      helperText: '',
-                    ),
-                    onChanged: (value) {},
-                    items: motherTongueList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Please select relationship",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  spacerWidget(),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child:
-                            Icon(Icons.place_rounded, color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Age",
-                      helperText: '',
-                    ),
-                  ),
-                  spacerWidget(),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_downward_rounded),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child: Icon(Icons.connect_without_contact_rounded,
-                            color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Gender",
-                      helperText: '',
-                    ),
-                    onChanged: (value) {},
-                    items: genderList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Please select gender",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  spacerWidget(),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_downward_rounded),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child: Icon(Icons.connect_without_contact_rounded,
-                            color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Qualification",
-                      helperText: '',
-                    ),
-                    onChanged: (value) {},
-                    items: qualificationList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Please select qualification",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  spacerWidget(),
-                  DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_downward_rounded),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            top: 0), // add padding to adjust icon
-                        child: Icon(Icons.connect_without_contact_rounded,
-                            color: Colors.lightBlue),
-                      ),
-                      border: OutlineInputBorder(),
-                      labelText: "Occupation",
-                      helperText: '',
-                    ),
-                    onChanged: (value) {},
-                    items: professionList
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    hint: const Text(
-                      "Please select occupation",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  spacerWidget(),
-                ],
+              child: FocusScope(
+                child: ListView(
+                  key: UniqueKey(),
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(16.0),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: false,
+                  children: <Widget>[
+                    const MemberName(),
+                    spacerWidget(),
+                    const MemberRelationship(),
+                    spacerWidget(),
+                    const MemberAge(),
+                    spacerWidget(),
+                    const MemberGender(),
+                    spacerWidget(),
+                    const MemberQualification(),
+                    spacerWidget(),
+                    const MemberOccupation(),
+                    spacerWidget(),
+                  ],
+                ),
               ),
             ),
           ), // Message which will be pop up on the screen
           // Action widget which will provide the user to acknowledge the choice
           actions: [
-            ElevatedButton(
-              // FlatButton widget is used to make a text to work like a button
-              //textColor: Colors.black,
-              onPressed: () =>
-                  {}, // function used to perform after pressing the button
-              child: const Text('SAVE'),
+            BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  key: UniqueKey(),
+                  // FlatButton widget is used to make a text to work like a button
+                  //textColor: Colors.black,
+                  onPressed: state.status.isValidated
+                      ? () {
+                          context
+                              .read<SectionOneCubit>()
+                              .familyMemberDetailsAdd(
+                                  FamilyMemberState.toMap(state));
+
+                          context.read<FamilyMemberCubit>().reset();
+
+                          Navigator.pop(context);
+                        }
+                      : null, // function used to perform after pressing the button
+                  child: const Text('SAVE'),
+                );
+              },
             ),
             ElevatedButton(
               // FlatButton widget is used to make a text to work like a button
@@ -361,19 +230,96 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     Widget? getFab() {
-      return FadeTransition(
-        opacity: _hideFabAnimController,
-        child: ScaleTransition(
-          scale: _hideFabAnimController,
-          child: FloatingActionButton(
-            onPressed: () {
-              addFamilyMembers();
-            },
-            //foregroundColor: Colors.white,
-            //backgroundColor: Colors.blue,
-            child: const Icon(Icons.person_add),
+      return Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FadeTransition(
+              opacity: _hideFabAnimController,
+              child: ScaleTransition(
+                scale: _hideFabAnimController,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    addFamilyMembers();
+                  },
+                  child: const Icon(Icons.person_add),
+                ),
+              ),
+            ),
           ),
-        ),
+          BlocBuilder<InformaticsCubit, InformaticsState>(
+            builder: (context, state) {
+              final dynamic cubit;
+
+              switch (state.tabIndex) {
+                case 0:
+                  cubit = context.read<SectionOneCubit>();
+                  break;
+                case 1:
+                  cubit = context.read<SectionTwoCubit>();
+                  break;
+                case 2:
+                  cubit = context.read<SectionThreeCubit>();
+                  break;
+                case 3:
+                  cubit = context.read<SectionFourCubit>();
+                  break;
+                case 4:
+                  cubit = context.read<SectionFiveCubit>();
+                  break;
+                case 5:
+                  cubit = context.read<SectionSixCubit>();
+                  break;
+                default:
+                  cubit = context.read<SectionOneCubit>();
+                  break;
+              }
+
+              return Align(
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  children: [
+                    spacerWidget(),
+                    spacerWidget(),
+                    FloatingActionButton.extended(
+                      enableFeedback: true,
+                      onPressed: () {
+                        // print(cubit.canUndo);
+                        if (cubit.canUndo) {
+                          cubit.undo();
+                        }
+                      },
+                      icon: const Icon(Icons.undo),
+                      label: const Text(
+                        'Undo',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    spacerWidget(),
+                    FloatingActionButton.extended(
+                      enableFeedback: true,
+                      onPressed: () {
+                        // print(cubit.canRedo);
+                        if (cubit.canRedo) {
+                          cubit.redo();
+                        }
+                      },
+                      icon: const Icon(Icons.redo),
+                      label: const Text(
+                        'Redo',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
+        ],
       );
     }
 
@@ -428,29 +374,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ],
         ),
         floatingActionButton: getFab() is Container ? null : getFab(),
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => SectionOneCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SectionTwoCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SectionThreeCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SectionFourCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SectionFiveCubit(),
-            ),
-            BlocProvider(
-              create: (context) => SectionSixCubit(),
-            ),
-          ],
-          child: loadStudent(),
-        ),
+        body: loadStudent(),
       ),
     );
   }

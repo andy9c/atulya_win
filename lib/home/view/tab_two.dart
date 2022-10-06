@@ -260,7 +260,7 @@ class _TabTwoState extends State<TabTwo>
                     //errorText: state.gender.invalid ? 'required field' : null,
                   ),
                   onChanged: (value) {},
-                  items: motherTongueList
+                  items: relationshipList
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

@@ -13,4 +13,8 @@ class InformaticsCubit extends Cubit<InformaticsState> {
   void isEnabledChanged(bool value) {
     emit(state.copyWith(isEnabled: value));
   }
+
+  void toggleUndoRedoChanged() {
+    emit(state.copyWith(toggleUndoRedo: !state.toggleUndoRedo));
+  }
 }

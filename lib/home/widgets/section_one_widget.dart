@@ -4,8 +4,344 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-class PattaNumber extends StatelessWidget {
+class MemberName extends StatefulWidget {
+  const MemberName({super.key});
+
+  @override
+  State<MemberName> createState() => _MemberNameState();
+}
+
+class _MemberNameState extends State<MemberName> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) => previous.name != current.name,
+      builder: (context, state) {
+        return TextFormField(
+          key: const Key('sectionOne_familyMember_name'),
+          inputFormatters: [
+            nameFormat(),
+            UpperCaseFormatter(),
+          ],
+          textInputAction: TextInputAction.next,
+          textCapitalization: TextCapitalization.characters,
+          controller: _controller = TextEditingController()
+            ..text = state.name.value ?? ''
+            ..selection = TextSelection.fromPosition(
+              TextPosition(
+                offset: state.name.value == null
+                    ? 0
+                    : _controller.selection.base.offset >
+                            state.name.value.length
+                        ? state.name.value.length
+                        : _controller.selection.base.offset,
+              ),
+            ),
+          // initialValue: state.name.value,
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().nameChanged(value),
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.place_rounded, color: Colors.lightBlue),
+            ),
+            border: const OutlineInputBorder(),
+            labelText: "Name",
+            helperText: '',
+            errorText: state.name.invalid ? 'required field' : null,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MemberRelationship extends StatefulWidget {
+  const MemberRelationship({super.key});
+
+  @override
+  State<MemberRelationship> createState() => _MemberRelationshipState();
+}
+
+class _MemberRelationshipState extends State<MemberRelationship> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) =>
+          previous.relationship != current.relationship,
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          key: const Key('SectionOne_familyMember_relationship'),
+          value: state.relationship.value,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_downward_rounded),
+          iconSize: 24,
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          decoration: const InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.connect_without_contact_rounded,
+                  color: Colors.lightBlue),
+            ),
+            border: OutlineInputBorder(),
+            labelText: "Relationship with head",
+            helperText: '',
+          ),
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().relationshipChanged(value!),
+          items: relationshipList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          hint: const Text(
+            "Please select relationship",
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MemberAge extends StatefulWidget {
+  const MemberAge({super.key});
+
+  @override
+  State<MemberAge> createState() => _MemberAgeState();
+}
+
+class _MemberAgeState extends State<MemberAge> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) => previous.age != current.age,
+      builder: (context, state) {
+        return TextFormField(
+          key: const Key('SectionOne_familyMember_age'),
+          inputFormatters: [
+            intFormat(),
+          ],
+          textInputAction: TextInputAction.next,
+          textCapitalization: TextCapitalization.characters,
+          controller: _controller = TextEditingController()
+            ..text = state.age.value ?? ''
+            ..selection = TextSelection.fromPosition(
+              TextPosition(
+                offset: state.age.value == null
+                    ? 0
+                    : _controller.selection.base.offset > state.age.value.length
+                        ? state.age.value.length
+                        : _controller.selection.base.offset,
+              ),
+            ),
+          // initialValue: state.age.value,
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().ageChanged(value),
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.place_rounded, color: Colors.lightBlue),
+            ),
+            border: const OutlineInputBorder(),
+            labelText: "Age",
+            helperText: '',
+            errorText: state.age.invalid ? 'required field' : null,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MemberGender extends StatefulWidget {
+  const MemberGender({super.key});
+
+  @override
+  State<MemberGender> createState() => _MemberGenderState();
+}
+
+class _MemberGenderState extends State<MemberGender> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) => previous.gender != current.gender,
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          key: const Key('SectionOne_familyMember_gender'),
+          value: state.gender.value,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_downward_rounded),
+          iconSize: 24,
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          decoration: const InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.connect_without_contact_rounded,
+                  color: Colors.lightBlue),
+            ),
+            border: OutlineInputBorder(),
+            labelText: "Gender",
+            helperText: '',
+          ),
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().genderChanged(value!),
+          items: genderList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          hint: const Text(
+            "Please select gender",
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MemberQualification extends StatefulWidget {
+  const MemberQualification({super.key});
+
+  @override
+  State<MemberQualification> createState() => _MemberQualificationState();
+}
+
+class _MemberQualificationState extends State<MemberQualification> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) =>
+          previous.qualification != current.qualification,
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          key: const Key('SectionOne_familyMember_qualification'),
+          value: state.qualification.value,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_downward_rounded),
+          iconSize: 24,
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          decoration: const InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.connect_without_contact_rounded,
+                  color: Colors.lightBlue),
+            ),
+            border: OutlineInputBorder(),
+            labelText: "Qualification",
+            helperText: '',
+          ),
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().qualificationChanged(value!),
+          items:
+              qualificationList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          hint: const Text(
+            "Please select qualification",
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MemberOccupation extends StatefulWidget {
+  const MemberOccupation({super.key});
+
+  @override
+  State<MemberOccupation> createState() => _MemberOccupationState();
+}
+
+class _MemberOccupationState extends State<MemberOccupation> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+      buildWhen: (previous, current) =>
+          previous.occupation != current.occupation,
+      builder: (context, state) {
+        return DropdownButtonFormField<String>(
+          key: const Key('SectionOne_familyMember_occupation'),
+          isExpanded: true,
+          value: state.occupation.value,
+          icon: const Icon(Icons.arrow_downward_rounded),
+          iconSize: 24,
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          decoration: const InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+              child: Icon(Icons.connect_without_contact_rounded,
+                  color: Colors.lightBlue),
+            ),
+            border: OutlineInputBorder(),
+            labelText: "Occupation",
+            helperText: '',
+          ),
+          onChanged: (value) =>
+              context.read<FamilyMemberCubit>().occupationChanged(value!),
+          items: professionList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          hint: const Text(
+            "Please select occupation",
+            style: TextStyle(
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class PattaNumber extends StatefulWidget {
   const PattaNumber({Key? key}) : super(key: key);
+
+  @override
+  State<PattaNumber> createState() => _PattaNumberState();
+}
+
+class _PattaNumberState extends State<PattaNumber> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SectionOneCubit, SectionOneState>(
@@ -20,12 +356,26 @@ class PattaNumber extends StatelessWidget {
             ),
             child: TextFormField(
               inputFormatters: [
-                NameUpperCaseTextFormatter(),
+                alphaNumericFormat(),
+                UpperCaseFormatter(),
               ],
-              initialValue: state.pattaNo.value,
+              // initialValue: state.pattaNo.value,
+              controller: _controller = TextEditingController()
+                ..text = state.pattaNo.value ?? ''
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: state.pattaNo.value == null
+                        ? 0
+                        : _controller.selection.base.offset >
+                                state.pattaNo.value.length
+                            ? state.pattaNo.value.length
+                            : _controller.selection.base.offset,
+                  ),
+                ),
               maxLines: 1,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.next,
+              key: const Key('sectionOne_pattaNo'),
               onChanged: (value) =>
                   context.read<SectionOneCubit>().pattaChanged(value),
               obscureText: false,
@@ -48,8 +398,21 @@ class PattaNumber extends StatelessWidget {
   }
 }
 
-class RespondentFullName extends StatelessWidget {
+class RespondentFullName extends StatefulWidget {
   const RespondentFullName({Key? key}) : super(key: key);
+
+  @override
+  State<RespondentFullName> createState() => _RespondentFullNameState();
+}
+
+class _RespondentFullNameState extends State<RespondentFullName> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +428,25 @@ class RespondentFullName extends StatelessWidget {
             ),
             child: TextFormField(
               inputFormatters: [
-                NameUpperCaseTextFormatter(),
+                nameFormat(),
+                UpperCaseFormatter(),
               ],
-              initialValue: state.fullName.value,
+              key: const Key('sectionOne_fullName'),
+              // initialValue: state.fullName.value,
+              controller: _controller = TextEditingController()
+                ..text = state.fullName.value ?? ''
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: state.fullName.value == null
+                        ? 0
+                        : _controller.selection.base.offset >
+                                state.fullName.value.length
+                            ? state.fullName.value.length
+                            : _controller.selection.base.offset,
+                  ),
+                ),
               maxLines: 1,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.next,
               onChanged: (value) =>
                   context.read<SectionOneCubit>().fullNameChanged(value),
@@ -93,8 +470,21 @@ class RespondentFullName extends StatelessWidget {
   }
 }
 
-class HeadOfHousehold extends StatelessWidget {
+class HeadOfHousehold extends StatefulWidget {
   const HeadOfHousehold({Key? key}) : super(key: key);
+
+  @override
+  State<HeadOfHousehold> createState() => _HeadOfHouseholdState();
+}
+
+class _HeadOfHouseholdState extends State<HeadOfHousehold> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +501,25 @@ class HeadOfHousehold extends StatelessWidget {
             ),
             child: TextFormField(
               inputFormatters: [
-                NameUpperCaseTextFormatter(),
+                nameFormat(),
+                UpperCaseFormatter(),
               ],
-              initialValue: state.headOfHousehold.value,
+              key: const Key('sectionOne_head'),
+              // initialValue: state.headOfHousehold.value,
+              controller: _controller = TextEditingController()
+                ..text = state.headOfHousehold.value ?? ''
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: state.headOfHousehold.value == null
+                        ? 0
+                        : _controller.selection.base.offset >
+                                state.headOfHousehold.value.length
+                            ? state.headOfHousehold.value.length
+                            : _controller.selection.base.offset,
+                  ),
+                ),
               maxLines: 1,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.next,
               onChanged: (value) =>
                   context.read<SectionOneCubit>().headOfHouseholdChanged(value),
@@ -140,8 +544,21 @@ class HeadOfHousehold extends StatelessWidget {
   }
 }
 
-class RespondentAge extends StatelessWidget {
+class RespondentAge extends StatefulWidget {
   const RespondentAge({Key? key}) : super(key: key);
+
+  @override
+  State<RespondentAge> createState() => _RespondentAgeState();
+}
+
+class _RespondentAgeState extends State<RespondentAge> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,11 +573,28 @@ class RespondentAge extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              inputFormatters: [
+                intFormat(),
+              ],
+              key: const Key('sectionOne_age'),
               maxLines: 1,
               showCursor: true,
               readOnly: false,
               textInputAction: TextInputAction.next,
-              initialValue: state.age.value,
+              keyboardType: TextInputType.number,
+              // initialValue: state.age.value,
+              controller: _controller = TextEditingController()
+                ..text = state.age.value ?? ''
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: state.age.value == null
+                        ? 0
+                        : _controller.selection.base.offset >
+                                state.age.value.length
+                            ? state.age.value.length
+                            : _controller.selection.base.offset,
+                  ),
+                ),
               onChanged: (value) =>
                   context.read<SectionOneCubit>().ageChanged(value),
               obscureText: false,
@@ -184,8 +618,20 @@ class RespondentAge extends StatelessWidget {
   }
 }
 
-class CommunityName extends StatelessWidget {
+class CommunityName extends StatefulWidget {
   const CommunityName({Key? key}) : super(key: key);
+
+  @override
+  State<CommunityName> createState() => _CommunityNameState();
+}
+
+class _CommunityNameState extends State<CommunityName> {
+  late TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,13 +648,26 @@ class CommunityName extends StatelessWidget {
             ),
             child: TextFormField(
               inputFormatters: [
-                UpperCaseTextFormatter(),
+                nameFormat(),
+                UpperCaseFormatter(),
               ],
-              initialValue: state.nameOfCommunity.value,
+              // initialValue: state.nameOfCommunity.value,
+              controller: _controller = TextEditingController()
+                ..text = state.nameOfCommunity.value ?? ''
+                ..selection = TextSelection.fromPosition(
+                  TextPosition(
+                    offset: state.nameOfCommunity.value == null
+                        ? 0
+                        : _controller.selection.base.offset >
+                                state.nameOfCommunity.value.length
+                            ? state.nameOfCommunity.value.length
+                            : _controller.selection.base.offset,
+                  ),
+                ),
               maxLines: 1,
-              textCapitalization: TextCapitalization.words,
+              textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.next,
-              key: const Key('studentForm_placeOfBirth_textField'),
+              key: const Key('sectionOne_communityName'),
               onChanged: (value) =>
                   context.read<SectionOneCubit>().nameOfCommunityChanged(value),
               obscureText: false,
@@ -248,6 +707,7 @@ class GenderSelection extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_gender'),
               isExpanded: true,
               value: state.gender.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -306,6 +766,7 @@ class RespondentRelationship extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_relationship'),
               isExpanded: true,
               value: state.relationship.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -327,7 +788,7 @@ class RespondentRelationship extends StatelessWidget {
               onChanged: (String? motherTongue) => context
                   .read<SectionOneCubit>()
                   .relationshipChanged(motherTongue!),
-              items: motherTongueList
+              items: relationshipList
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -366,6 +827,7 @@ class GramPanchayat extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_gramPanchayat'),
               isExpanded: true,
               value: state.gramPanchayat.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -425,6 +887,7 @@ class ReligionSelection extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_religion'),
               isExpanded: true,
               value: state.religion.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -483,6 +946,7 @@ class SocialCategorySelection extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_socialCategory'),
               isExpanded: true,
               value: state.socialCategory.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -543,6 +1007,7 @@ class CardHolder extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_cardHolder'),
               isExpanded: true,
               value: state.cardholderCategory.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -601,6 +1066,7 @@ class RespondentQualification extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_qualification'),
               isExpanded: true,
               value: state.qualification.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -660,6 +1126,7 @@ class RespondentPrimaryOccupation extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_primaryOccupation'),
               isExpanded: true,
               value: state.primaryOccupation.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -721,6 +1188,7 @@ class RespondentSecondaryOccupation extends StatelessWidget {
               horizontal: 5.w,
             ),
             child: DropdownButtonFormField<String>(
+              key: const Key('sectionOne_secondaryOccupation'),
               isExpanded: true,
               value: state.secondaryOccupation.value,
               icon: const Icon(Icons.arrow_downward_rounded),
@@ -765,63 +1233,46 @@ class RespondentSecondaryOccupation extends StatelessWidget {
   }
 }
 
-class MotherQualificationSelection extends StatelessWidget {
-  const MotherQualificationSelection({Key? key}) : super(key: key);
+class FamilyMember extends StatefulWidget {
+  const FamilyMember({super.key});
 
   @override
+  State<FamilyMember> createState() => _FamilyMemberState();
+}
+
+class _FamilyMemberState extends State<FamilyMember> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StudentCubit, StudentState>(
-      buildWhen: (previous, current) =>
-          previous.motherQualification != current.motherQualification,
+    return BlocBuilder<SectionOneCubit, SectionOneState>(
       builder: (context, state) {
-        return Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 0,
-              horizontal: 5.w,
+        Map<String, dynamic> familyMembers = state.familyMemberDetails;
+
+        List<Widget> buttons = [];
+        familyMembers.forEach((key, value) {
+          String name = value['name'] ?? '';
+          String relationship = value['relationship'] ?? '';
+          String age = value['age'] ?? '';
+          String gender = value['gender'] ?? '';
+          String qualification = value['qualification'] ?? '';
+          String occupation = value['occupation'] ?? '';
+
+          Widget x = ElevatedButton(
+            key: UniqueKey(),
+            onPressed: () {
+              context.read<SectionOneCubit>().familyMemberDetailsRemove(key);
+            },
+            child: Text(
+              name,
             ),
-            child: DropdownButtonFormField<String>(
-              isExpanded: true,
-              value: state.motherQualification.value,
-              icon: const Icon(Icons.arrow_downward_rounded),
-              iconSize: 24,
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              decoration: InputDecoration(
-                prefixIcon: const Padding(
-                  padding:
-                      EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.menu_book_rounded, color: Colors.lightBlue),
-                ),
-                border: const OutlineInputBorder(),
-                labelText: "Mother's Qualification",
-                helperText: '',
-                errorText:
-                    state.motherQualification.invalid ? 'required field' : null,
-              ),
-              onChanged: state.setEnabled
-                  ? (String? motherQualification) => context
-                      .read<StudentCubit>()
-                      .motherQualificationChanged(motherQualification!)
-                  : null,
-              items: qualificationList
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint: const Text(
-                "Mother's Qualification",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        );
+          );
+          buttons.add(x);
+        });
+
+        return familyMembers.isEmpty
+            ? Container()
+            : Column(
+                children: buttons,
+              );
       },
     );
   }

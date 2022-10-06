@@ -2,11 +2,17 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_three_state.dart';
 
-class SectionThreeCubit extends Cubit<SectionThreeState> with HydratedMixin {
+class SectionThreeCubit extends Cubit<SectionThreeState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionThreeCubit() : super(const SectionThreeState());
+
+  void reset() {
+    emit(const SectionThreeState());
+  }
 
   void incomeSourcesChanged(String value) {
     emit(state.copyWith(incomeSources: Compulsory.dirty(value)));

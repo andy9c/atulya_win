@@ -2,12 +2,12 @@ part of 'family_member_cubit.dart';
 
 class FamilyMemberState extends Equatable with FormzMixin {
   const FamilyMemberState({
-    this.name = const Compulsory.dirty(),
-    this.relationship = const Compulsory.dirty(),
-    this.age = const Compulsory.dirty(),
-    this.gender = const Compulsory.dirty(),
-    this.qualification = const Compulsory.dirty(),
-    this.occupation = const Compulsory.dirty(),
+    this.name = const Compulsory.pure(),
+    this.relationship = const Compulsory.pure(),
+    this.age = const Compulsory.pure(),
+    this.gender = const Compulsory.pure(),
+    this.qualification = const Compulsory.pure(),
+    this.occupation = const Compulsory.pure(),
   });
 
   final Compulsory name;
@@ -60,12 +60,12 @@ class FamilyMemberState extends Equatable with FormzMixin {
 
   factory FamilyMemberState.fromMap(Map<String, dynamic> map) {
     return FamilyMemberState(
-      name: map['name'],
-      relationship: map['relationship'],
-      age: map['age'],
-      gender: map['gender'],
-      qualification: map['qualification'],
-      occupation: map['occupation'],
+      name: Compulsory.dirty(map['name']),
+      relationship: Compulsory.dirty(map['relationship']),
+      age: Compulsory.dirty(map['age']),
+      gender: Compulsory.dirty(map['gender']),
+      qualification: Compulsory.dirty(map['qualification']),
+      occupation: Compulsory.dirty(map['occupation']),
     );
   }
 

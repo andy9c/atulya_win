@@ -2,11 +2,17 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_four_state.dart';
 
-class SectionFourCubit extends Cubit<SectionFourState> with HydratedMixin {
+class SectionFourCubit extends Cubit<SectionFourState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionFourCubit() : super(const SectionFourState());
+
+  void reset() {
+    emit(const SectionFourState());
+  }
 
   void lostlandChanged(String value) {
     emit(state.copyWith());

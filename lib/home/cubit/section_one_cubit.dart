@@ -2,11 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'section_one_state.dart';
 
-class SectionOneCubit extends Cubit<SectionOneState> with HydratedMixin {
+class SectionOneCubit extends Cubit<SectionOneState>
+    with HydratedMixin, ReplayCubitMixin {
   SectionOneCubit() : super(const SectionOneState());
+
+  void reset() {
+    emit(const SectionOneState());
+  }
 
   void pattaChanged(String value) {
     emit(state.copyWith(pattaNo: Compulsory.dirty(value)));
@@ -64,10 +70,17 @@ class SectionOneCubit extends Cubit<SectionOneState> with HydratedMixin {
     emit(state.copyWith(secondaryOccupation: Compulsory.dirty(value)));
   }
 
-  familyMemberDetailsAdd(Map<String, String> value) {
+  familyMemberDetailsAdd(Map<String, dynamic> value) {
     String index = state.familyMemberDetails.length.toString();
-    Map<String, dynamic> data = {index, value} as Map<String, dynamic>;
+    Map<String, dynamic> data = {index: value};
     data.addAll(state.familyMemberDetails);
+
+    emit(state.copyWith(familyMemberDetails: data));
+  }
+
+  familyMemberDetailsRemove(String key) {
+    Map<String, dynamic> data = state.familyMemberDetails;
+    data.remove(key);
 
     emit(state.copyWith(familyMemberDetails: data));
   }

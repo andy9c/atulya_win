@@ -59,6 +59,7 @@ dependencies:
   path_provider: ^2.0.11
   pdf: ^3.8.3
   printing: ^5.9.3
+  replay_bloc: ^0.2.2
   responsive_framework: ^0.2.0
   sizer: ^2.0.15
 

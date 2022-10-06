@@ -1,6 +1,6 @@
-import 'package:atulya/home/cubit/informatics_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../home/cubit/cubit.dart';
 import '../routes/routes.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -31,7 +31,28 @@ class App extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => InformaticsCubit(),
+            create: (_) => InformaticsCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionOneCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionTwoCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionThreeCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionFourCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionFiveCubit(),
+          ),
+          BlocProvider(
+            create: (_) => SectionSixCubit(),
+          ),
+          BlocProvider(
+            create: (_) => FamilyMemberCubit(),
           ),
         ],
         child: const AppView(),
