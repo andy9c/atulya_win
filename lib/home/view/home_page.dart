@@ -2,6 +2,7 @@
 
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
+import 'package:atulya/database/create.dart';
 import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
 import 'package:atulya/home/widgets/section_one_widget.dart';
@@ -366,7 +367,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save_rounded),
-              onPressed: () => {},
+              onPressed: () async => await Create.execute(context),
             ),
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),

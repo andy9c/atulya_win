@@ -1,97 +1,54 @@
-// // ignore_for_file: avoid_print
+// ignore_for_file: avoid_print
 
-// import 'package:atulya/configuration/configuration.dart';
+import 'package:atulya/configuration/configuration.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_date/dart_date.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-// import '../home/cubit/student_cubit.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:dart_date/dart_date.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../home/cubit/cubit.dart';
 
-// import 'database.dart';
+class Create {
+  static Future<void> execute(BuildContext context) async {
+    SectionOneState s1 = context.read<SectionOneCubit>().state;
+    SectionTwoState s2 = context.read<SectionTwoCubit>().state;
+    SectionThreeState s3 = context.read<SectionThreeCubit>().state;
+    SectionFourState s4 = context.read<SectionFourCubit>().state;
+    SectionFiveState s5 = context.read<SectionFiveCubit>().state;
+    SectionSixState s6 = context.read<SectionSixCubit>().state;
 
-// class Create {
-//   static Future<void> execute(StudentState state) async {
-//     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-//     final User? student = FirebaseAuth.instance.currentUser;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final User? student = FirebaseAuth.instance.currentUser;
 
-//     final CollectionReference mainCollection =
-//         firestore.collection(rootCollection);
+    final CollectionReference mainCollection =
+        firestore.collection(rootCollection);
 
-//     final timeStamp = DateTime.now().format('MMMM dd y, h:mm:ss a');
+    final timeStamp = DateTime.now().format('MMMM dd y, h:mm:ss a');
 
-//     var rootDocumentReferencer = mainCollection.doc(student!.email.toString());
+    final String uidDoc = '${s1.fullName.value} (${s1.pattaNo.value})';
+    final String emailID = student!.email.toString();
 
-//     Map<String, dynamic> data = <String, dynamic>{
-//       "sameAsPresentCheckBox": state.sameAsPresentCheckBox.value,
-//       "iAgreeCheckBox": state.iAgreeCheckBox.value,
-//       "candidateFirstName": state.candidateFirstName.value!.trim(),
-//       "candidateMiddleName": state.candidateMiddleName.trim(),
-//       "candidateLastName": state.candidateLastName.trim(),
-//       "dateOfBirth": state.dateOfBirth.value!.trim(),
-//       "placeOfBirth": state.placeOfBirth.value!.trim(),
-//       "gender": state.gender.value!.trim(),
-//       "motherTongue": state.motherTongue.value!.trim(),
-//       "bloodGroup": state.bloodGroup.value!.trim(),
-//       "religion": state.religion.value!.trim(),
-//       "socialCategory": state.socialCategory.value!.trim(),
-//       "aadharNumber": state.aadharNumber.value != null
-//           ? state.aadharNumber.value!.trim()
-//           : '',
-//       "hasAadharCard": state.hasAadharCard.trim(),
-//       "aadharEnrollmentID": state.aadharEnrollmentID.value != null
-//           ? state.aadharEnrollmentID.value!.trim()
-//           : '',
-//       "lastSchoolAttended": state.lastSchoolAttended.value!.trim(),
-//       "lastClassAttended": state.lastClassAttended.value!.trim(),
-//       "admissionSoughtForClass": state.admissionSoughtForClass.value!.trim(),
-//       "fatherFirstName": state.fatherFirstName.value!.trim(),
-//       "fatherMiddleName": state.fatherMiddleName.trim(),
-//       "fatherLastName": state.fatherLastName.trim(),
-//       "fatherProfession": state.fatherProfession.value!.trim(),
-//       "fatherQualification": state.fatherQualification.value!.trim(),
-//       "fatherAdditionalQualification":
-//           state.fatherAdditionalQualification.trim(),
-//       "fatherHomeContact": state.fatherHomeContact.value!.trim(),
-//       "fatherOfficeContact": state.fatherOfficeContact.trim(),
-//       "fatherEmail": state.fatherEmail.value.trim(),
-//       "motherFirstName": state.motherFirstName.value!.trim(),
-//       "motherMiddleName": state.motherMiddleName.trim(),
-//       "motherLastName": state.motherLastName.trim(),
-//       "motherProfession": state.motherProfession.value!.trim(),
-//       "motherQualification": state.motherQualification.value!.trim(),
-//       "motherAdditionalQualification":
-//           state.motherAdditionalQualification.trim(),
-//       "motherHomeContact": state.motherHomeContact.value!.trim(),
-//       "motherOfficeContact": state.motherOfficeContact.trim(),
-//       "motherEmail": state.motherEmail.value.trim(),
-//       "relationshipStudentName": state.relationshipStudentName.trim(),
-//       "relationshipStudentRegNo": state.relationshipStudentRegNo.trim(),
-//       "relationshipStudentClassSection":
-//           state.relationshipStudentClassSection.trim(),
-//       "relationshipWithStudent": state.relationshipWithStudent.trim(),
-//       "relationshipStudentYearOfJoining":
-//           state.relationshipStudentYearOfJoining.trim(),
-//       "relationshipStudentYearOfLeaving":
-//           state.relationshipStudentYearOfLeaving.trim(),
-//       "presentLocation": state.presentLocation.value!.trim(),
-//       "presentCity": state.presentCity.trim(),
-//       "presentPostOffice": state.presentPostOffice.trim(),
-//       "presentDistrict": state.presentDistrict.trim(),
-//       "presentState": state.presentState.value!.trim(),
-//       "presentPinCode": state.presentPinCode.value!.trim(),
-//       "permanentLocation": state.permanentLocation.value!.trim(),
-//       "permanentCity": state.permanentCity.trim(),
-//       "permanentPostOffice": state.permanentPostOffice.trim(),
-//       "permanentDistrict": state.permanentDistrict.trim(),
-//       "permanentState": state.permanentState.value!.trim(),
-//       "permanentPinCode": state.permanentPinCode.value!.trim(),
-//       "timeStamp": timeStamp.trim(),
-//     };
+    var rootDocumentReferencer = mainCollection.doc(uidDoc);
 
-//     await rootDocumentReferencer
-//         .set(data)
-//         .then(
-//             (_) async => await Email.execute(state).catchError((e) => print(e)))
-//         .catchError((e) => print(e));
-//   }
-// }
+    Map<String, dynamic> s1Data = SectionOneState.toMap(s1);
+    Map<String, dynamic> s2Data = SectionTwoState.toMap(s2);
+    Map<String, dynamic> s3Data = SectionThreeState.toMap(s3);
+    Map<String, dynamic> s4Data = SectionFourState.toMap(s4);
+    Map<String, dynamic> s5Data = SectionFiveState.toMap(s5);
+    Map<String, dynamic> s6Data = SectionSixState.toMap(s6);
+
+    Map<String, dynamic> data = <String, dynamic>{
+      "email": emailID,
+      "timestamp": timeStamp,
+      "s1": s1Data,
+      "s2": s2Data,
+      "s3": s3Data,
+      "s4": s4Data,
+      "s5": s5Data,
+      "s6": s6Data,
+    };
+
+    await rootDocumentReferencer.set(data).catchError((e) => print(e));
+  }
+}
