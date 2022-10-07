@@ -25,4 +25,20 @@ class InformaticsState extends Equatable {
       toggleUndoRedo: toggleUndoRedo ?? this.toggleUndoRedo,
     );
   }
+
+  static Map<String, dynamic> toMap(InformaticsState state) {
+    return {
+      'tabIndex': state.tabIndex,
+      'isEnabled': state.isEnabled,
+      'toggleUndoRedo': state.toggleUndoRedo,
+    };
+  }
+
+  factory InformaticsState.fromMap(Map<String, dynamic> map) {
+    return InformaticsState(
+      tabIndex: map['tabIndex'],
+      isEnabled: map['isEnabled'],
+      toggleUndoRedo: map['toggleUndoRedo'],
+    );
+  }
 }

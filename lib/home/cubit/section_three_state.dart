@@ -14,7 +14,7 @@ class SectionThreeState extends Equatable with FormzMixin {
   });
 
   final Compulsory incomeSources;
-  final Map<String, int> otherAssetsCount;
+  final Map<String, dynamic> otherAssetsCount;
   final Compulsory annualIncome;
   final Map<String, dynamic> cropsPattern;
   final Map<String, dynamic> vegetablesPattern;
@@ -40,7 +40,7 @@ class SectionThreeState extends Equatable with FormzMixin {
 
   SectionThreeState copyWith({
     Compulsory? incomeSources,
-    Map<String, int>? otherAssetsCount,
+    Map<String, dynamic>? otherAssetsCount,
     Compulsory? annualIncome,
     Map<String, dynamic>? cropsPattern,
     Map<String, dynamic>? vegetablesPattern,
@@ -78,9 +78,9 @@ class SectionThreeState extends Equatable with FormzMixin {
 
   factory SectionThreeState.fromMap(Map<String, dynamic> map) {
     return SectionThreeState(
-      incomeSources: map['incomeSources'],
+      incomeSources: Compulsory.dirty(map['incomeSources']),
       otherAssetsCount: map['otherAssetsCount'],
-      annualIncome: map['annualIncome'],
+      annualIncome: Compulsory.dirty(map['annualIncome']),
       cropsPattern: map['cropsPattern'],
       vegetablesPattern: map['vegetablesPattern'],
       forestProduce: map['forestProduce'],

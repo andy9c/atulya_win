@@ -84,11 +84,11 @@ class SectionFourState extends Equatable with FormzMixin {
 
   factory SectionFourState.fromMap(Map<String, dynamic> map) {
     return SectionFourState(
-      lostland: map['lostland'],
-      lostLandtoprojects: map['lostLandtoprojects'],
-      landAreaLost: map['landAreaLost'],
-      yearOflandLost: map['yearOflandLost'],
-      gotCompensation: map['gotCompensation'],
+      lostland: Compulsory.dirty(map['lostland']),
+      lostLandtoprojects: Compulsory.dirty(map['lostLandtoprojects']),
+      landAreaLost: Compulsory.dirty(map['landAreaLost']),
+      yearOflandLost: Compulsory.dirty(map['yearOflandLost']),
+      gotCompensation: Compulsory.dirty(map['gotCompensation']),
       compensation: map['compensation'],
       cashCompensation: map['cashCompensation'],
       employmentDetails: map['employmentDetails'],

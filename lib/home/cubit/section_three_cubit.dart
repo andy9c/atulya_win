@@ -14,12 +14,12 @@ class SectionThreeCubit extends Cubit<SectionThreeState>
     emit(const SectionThreeState());
   }
 
-  void incomeSourcesChanged(String value) {
+  void incomeSourcesChanged(List<String> value) {
     emit(state.copyWith(incomeSources: Compulsory.dirty(value)));
   }
 
-  void otherAssetsCountChanged(Map<String, int> value) {
-    Map<String, int> newData = state.otherAssetsCount;
+  void otherAssetsCountChanged(Map<String, dynamic> value) {
+    Map<String, dynamic> newData = Map.from(state.otherAssetsCount);
     newData.addAll(value);
     emit(state.copyWith(otherAssetsCount: newData));
   }
@@ -29,13 +29,13 @@ class SectionThreeCubit extends Cubit<SectionThreeState>
   }
 
   void cropsPatternChanged(Map<String, dynamic> value) {
-    Map<String, dynamic> newData = state.cropsPattern;
+    Map<String, dynamic> newData = Map.from(state.cropsPattern);
     newData.addAll(value);
     emit(state.copyWith(cropsPattern: newData));
   }
 
   void vegetablesPatternChanged(Map<String, dynamic> value) {
-    Map<String, dynamic> newData = state.vegetablesPattern;
+    Map<String, dynamic> newData = Map.from(state.vegetablesPattern);
     newData.addAll(value);
     emit(state.copyWith(vegetablesPattern: newData));
   }

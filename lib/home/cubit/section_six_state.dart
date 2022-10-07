@@ -51,11 +51,11 @@ class SectionSixState extends Equatable with FormzMixin {
 
   factory SectionSixState.fromMap(Map<String, dynamic> map) {
     return SectionSixState(
-      landMean: map['landMean'],
-      loss: map['loss'],
-      landAcquisition: map['landAcquisition'],
-      miningActivity: map['miningActivity'],
-      discussion: map['discussion'],
+      landMean: Compulsory.dirty(map['landMean']),
+      loss: Compulsory.dirty(map['loss']),
+      landAcquisition: Compulsory.dirty(map['landAcquisition']),
+      miningActivity: Compulsory.dirty(map['miningActivity']),
+      discussion: Compulsory.dirty(map['discussion']),
       comments: map['comments'],
     );
   }

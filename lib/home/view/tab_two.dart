@@ -1062,7 +1062,7 @@ class _TabTwoState extends State<TabTwo>
                           ),
                         maxLines: 1,
                         textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
                         key: const Key('sectionTwo_cropTypes'),
                         onChanged: (value) => context
                             .read<SectionTwoCubit>()

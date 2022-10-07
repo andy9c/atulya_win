@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 part 'informatics_state.dart';
 
-class InformaticsCubit extends Cubit<InformaticsState> {
+class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
   InformaticsCubit() : super(const InformaticsState());
 
   void tabIndexChanged(int value) {
@@ -16,5 +16,15 @@ class InformaticsCubit extends Cubit<InformaticsState> {
 
   void toggleUndoRedoChanged() {
     emit(state.copyWith(toggleUndoRedo: !state.toggleUndoRedo));
+  }
+
+  @override
+  InformaticsState? fromJson(Map<String, dynamic> json) {
+    return InformaticsState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(InformaticsState state) {
+    return InformaticsState.toMap(state);
   }
 }

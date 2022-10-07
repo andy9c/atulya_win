@@ -23,14 +23,16 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
   }
 
   void landHoldingLostChanged(Map<String, dynamic> value) {
-    emit(state.copyWith(landHoldingLost: value));
+    Map<String, dynamic> newData = Map.from(state.landHoldingLost);
+    newData.addAll(value);
+    emit(state.copyWith(landHoldingLost: newData));
   }
 
   void gotNotificationChanged(String value) {
     emit(state.copyWith(gotNotification: Compulsory.dirty(value)));
   }
 
-  void whatActionChanged(String value) {
+  void whatActionChanged(List<String> value) {
     emit(state.copyWith(whatAction: Compulsory.dirty(value)));
   }
 

@@ -26,7 +26,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: 6, vsync: this, initialIndex: 0);
+    _tabController = TabController(
+      length: 6,
+      vsync: this,
+      initialIndex: context.read<InformaticsCubit>().state.tabIndex,
+    );
+
     _tabController.addListener(() {
       context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
       switch (_tabController.index) {
@@ -58,6 +63,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AppBloc bloc) => bloc.state.user);
     // final ScrollController scrollController = ScrollController();
+
+    context.read<InformaticsCubit>().state.tabIndex == 0
+        ? _hideFabAnimController.forward()
+        : _hideFabAnimController.reverse();
 
     Widget registrationEmailID() {
       return Align(

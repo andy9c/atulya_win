@@ -108,19 +108,19 @@ class SectionTwoState extends Equatable with FormzMixin {
 
   factory SectionTwoState.fromMap(Map<String, dynamic> map) {
     return SectionTwoState(
-      generationCount: map['generationCount'],
-      ownLand: map['ownLand'],
+      generationCount: Compulsory.dirty(map['generationCount']),
+      ownLand: Compulsory.dirty(map['ownLand']),
       yesName: map['yesName'],
       noName: map['noName'],
-      relationship: map['relationship'],
-      isAlive: map['isAlive'],
-      countChulha: map['countChulha'],
-      totalPeople: map['totalPeople'],
+      relationship: Compulsory.dirty(map['relationship']),
+      isAlive: Compulsory.dirty(map['isAlive']),
+      countChulha: Compulsory.dirty(map['countChulha']),
+      totalPeople: Compulsory.dirty(map['totalPeople']),
       landHolding: map['landHolding'],
-      cultivateAnabadi: map['cultivateAnabadi'],
+      cultivateAnabadi: Compulsory.dirty(map['cultivateAnabadi']),
       yearsAnabadi: map['yearsAnabadi'],
-      appliedOwnership: map['appliedOwnership'],
-      receivedEntitlement: map['receivedEntitlement'],
+      appliedOwnership: Compulsory.dirty(map['appliedOwnership']),
+      receivedEntitlement: Compulsory.dirty(map['receivedEntitlement']),
       cropTypes: map['cropTypes'],
     );
   }

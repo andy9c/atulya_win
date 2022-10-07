@@ -15,43 +15,43 @@ class SectionFourCubit extends Cubit<SectionFourState>
   }
 
   void lostlandChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(lostland: Compulsory.dirty(value)));
   }
 
-  void lostLandtoprojectsChanged(String value) {
-    emit(state.copyWith());
+  void lostLandtoprojectsChanged(List<String> value) {
+    emit(state.copyWith(lostLandtoprojects: Compulsory.dirty(value)));
   }
 
   void landAreaLostChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(landAreaLost: Compulsory.dirty(value)));
   }
 
   void yearOflandLostChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(yearOflandLost: Compulsory.dirty(value)));
   }
 
   void gotCompensationChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(gotCompensation: Compulsory.dirty(value)));
   }
 
   void compensationChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(compensation: value));
   }
 
   void cashCompensationChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(cashCompensation: value));
   }
 
   void employmentDetailsChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(employmentDetails: value));
   }
 
   void landDetailsChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(landDetails: value));
   }
 
   void otherCommentsChanged(String value) {
-    emit(state.copyWith());
+    emit(state.copyWith(otherComments: value));
   }
 
   @override
