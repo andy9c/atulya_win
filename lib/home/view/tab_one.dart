@@ -165,6 +165,12 @@ class _TabOneState extends State<TabOne>
                                   );
                                 },
                                 itemBuilder: (context, i) {
+                                  // Reached top of the list, show a progress indicator.
+                                  if (i < state.familyMemberDetails.length) {
+                                    return const Align(
+                                        child: CircularProgressIndicator());
+                                  }
+
                                   int len = state.familyMemberDetails.length;
                                   dynamic value = state
                                       .familyMemberDetails['${(len - i - 1)}'];

@@ -533,7 +533,7 @@ class _HeadOfHouseholdState extends State<HeadOfHousehold> {
                 prefixIcon: const Padding(
                   padding:
                       EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.person, color: Colors.lightBlue),
                 ),
                 border: const OutlineInputBorder(),
                 labelText: "Head of the household (Full Name)",
@@ -680,7 +680,7 @@ class _CommunityNameState extends State<CommunityName> {
                 prefixIcon: const Padding(
                   padding:
                       EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.place_rounded, color: Colors.lightBlue),
+                  child: Icon(Icons.group_rounded, color: Colors.lightBlue),
                 ),
                 border: const OutlineInputBorder(),
                 labelText: "Name of the Community",
@@ -843,7 +843,7 @@ class GramPanchayat extends StatelessWidget {
                 prefixIcon: const Padding(
                   padding:
                       EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.bloodtype_rounded, color: Colors.lightBlue),
+                  child: Icon(Icons.place_rounded, color: Colors.lightBlue),
                 ),
                 border: const OutlineInputBorder(),
                 labelText: "Gram Panchayat",

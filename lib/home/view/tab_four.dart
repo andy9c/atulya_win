@@ -166,7 +166,12 @@ class _TabFourState extends State<TabFour>
                             .lostLandtoprojectsChanged(value);
                       },
                       title: const Text("Select Projects"),
-                      buttonText: const Text("Select Projects"),
+                      buttonText: const Text(
+                        "Select Projects",
+                        style: TextStyle(
+                          color: Colors.lightBlue,
+                        ),
+                      ),
                       searchable: true,
                       barrierColor: Colors.blueGrey.withOpacity(0.3),
                       items: projectLossList
@@ -224,7 +229,8 @@ class _TabFourState extends State<TabFour>
                               prefixIcon: Padding(
                                 padding: EdgeInsets.only(
                                     top: 0), // add padding to adjust icon
-                                child: Icon(Icons.person),
+                                child:
+                                    Icon(Icons.person, color: Colors.lightBlue),
                               ),
                               border: OutlineInputBorder(),
                               labelText: "How much land lost ?",
@@ -288,7 +294,7 @@ class _TabFourState extends State<TabFour>
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: OutlineInputBorder(),
                           labelText: "Year of the land lost",

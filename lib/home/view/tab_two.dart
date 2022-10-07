@@ -444,7 +444,8 @@ class _TabTwoState extends State<TabTwo>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.group_rounded,
+                                color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
@@ -496,7 +497,8 @@ class _TabTwoState extends State<TabTwo>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.group_rounded,
+                                color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:

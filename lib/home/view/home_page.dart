@@ -407,27 +407,135 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             controller: _tabController,
             labelColor: Colors.blueGrey,
             indicatorColor: Colors.pinkAccent,
-            tabs: const [
-              Tab(text: "S1"),
-              Tab(text: "S2"),
-              Tab(text: "S3"),
-              Tab(text: "S4"),
-              Tab(text: "S5"),
-              Tab(text: "S6"),
+            tabs: [
+              BlocBuilder<SectionOneCubit, SectionOneState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S1',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              BlocBuilder<SectionTwoCubit, SectionTwoState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S2',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              BlocBuilder<SectionThreeCubit, SectionThreeState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S3',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              BlocBuilder<SectionFourCubit, SectionFourState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S4',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              BlocBuilder<SectionFiveCubit, SectionFiveState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S5',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              BlocBuilder<SectionSixCubit, SectionSixState>(
+                builder: (context, state) {
+                  return Tab(
+                    child: Text(
+                      'S6',
+                      style: TextStyle(
+                        color: state.status.isValid ? null : Colors.pinkAccent,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           //backgroundColor: Theme.of(context).primaryColorDark, // appbar color.
           //foregroundColor: Colors.white,
           actions: <Widget>[
             IconButton(
+              icon: const Icon(Icons.view_list_rounded),
+              onPressed: () {},
+            ),
+            IconButton(
               icon: const Icon(Icons.save_rounded),
               onPressed: () async {
-                if (!context.read<InformaticsCubit>().state.hasInternet) {
-                  String message =
-                      'Information will sync when internet is back !';
+                if (context.read<SectionOneCubit>().state.status.isValidated &&
+                    context.read<SectionTwoCubit>().state.status.isValidated &&
+                    context
+                        .read<SectionThreeCubit>()
+                        .state
+                        .status
+                        .isValidated &&
+                    context.read<SectionFourCubit>().state.status.isValidated &&
+                    context.read<SectionFiveCubit>().state.status.isValidated &&
+                    context.read<SectionSixCubit>().state.status.isValidated) {
+                  if (!context.read<InformaticsCubit>().state.hasInternet) {
+                    String message =
+                        'Information will sync when internet is back !';
+                    showMessageBanner(context, message);
+                  }
+                  Create.execute(context);
+
+                  context.read<SectionOneCubit>().reset();
+                  context.read<SectionTwoCubit>().reset();
+                  context.read<SectionThreeCubit>().reset();
+                  context.read<SectionFourCubit>().reset();
+                  context.read<SectionFiveCubit>().reset();
+                  context.read<SectionSixCubit>().reset();
+                } else {
+                  String message = 'Required fields are missing !';
                   showMessageBanner(context, message);
                 }
-                await Create.execute(context);
+              },
+            ),
+            BlocBuilder<InformaticsCubit, InformaticsState>(
+              builder: (context, state) {
+                return IconButton(
+                  key: UniqueKey(),
+                  onPressed: () {},
+                  icon: state.hasInternet
+                      ? Icon(
+                          Icons.sync,
+                          key: UniqueKey(),
+                        )
+                      : Icon(
+                          Icons.sync_disabled_rounded,
+                          key: UniqueKey(),
+                        ),
+                );
               },
             ),
             IconButton(

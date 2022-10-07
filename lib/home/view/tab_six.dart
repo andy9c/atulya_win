@@ -133,7 +133,7 @@ class _TabSixState extends State<TabSix>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText: "What does the land mean to you ?",
@@ -179,7 +179,7 @@ class _TabSixState extends State<TabSix>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
@@ -230,7 +230,7 @@ class _TabSixState extends State<TabSix>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
@@ -282,7 +282,7 @@ class _TabSixState extends State<TabSix>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
@@ -334,7 +334,7 @@ class _TabSixState extends State<TabSix>
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.person, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
                           labelText:

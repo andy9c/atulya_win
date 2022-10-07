@@ -140,7 +140,12 @@ class _TabThreeState extends State<TabThree>
                             .incomeSourcesChanged(value);
                       },
                       searchable: true,
-                      buttonText: const Text("Select Sources of Income"),
+                      buttonText: const Text(
+                        "Select Sources of Income",
+                        style: TextStyle(
+                          color: Colors.lightBlue,
+                        ),
+                      ),
                       barrierColor: Colors.blueGrey.withOpacity(0.3),
                       items: sourcesOfincomeList
                           .map((e) => MultiSelectItem(e, e))
@@ -752,7 +757,8 @@ class _TabThreeState extends State<TabThree>
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
+                            child: Icon(Icons.monetization_on_rounded,
+                                color: Colors.lightBlue),
                           ),
                           border: OutlineInputBorder(),
                           labelText: "Annual Income of Family",

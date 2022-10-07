@@ -612,6 +612,12 @@ class _TabFiveState extends State<TabFive>
                             .read<SectionFiveCubit>()
                             .whatActionChanged(value);
                       },
+                      buttonText: const Text(
+                        'Select Action',
+                        style: TextStyle(
+                          color: Colors.lightBlue,
+                        ),
+                      ),
                       searchable: true,
                       barrierColor: Colors.blueGrey.withOpacity(0.3),
                       items: protestActionList
