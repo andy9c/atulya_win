@@ -1060,7 +1060,7 @@ class _TabTwoState extends State<TabTwo>
                                   : c11.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.done,
                         key: const Key('sectionTwo_cropTypes'),

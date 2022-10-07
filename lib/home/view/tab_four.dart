@@ -359,7 +359,7 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c3 = TextEditingController()
@@ -372,7 +372,7 @@ class _TabFourState extends State<TabFour>
                                   : c3.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
                         key: const Key('sectionFour_compensation'),
@@ -406,7 +406,7 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c4 = TextEditingController()
@@ -419,7 +419,7 @@ class _TabFourState extends State<TabFour>
                                   : c4.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
                         key: const Key('sectionFour_cashCompensation'),
@@ -453,7 +453,7 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c5 = TextEditingController()
@@ -466,7 +466,7 @@ class _TabFourState extends State<TabFour>
                                   : c5.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
                         key: const Key('sectionFour_employmentDetails'),
@@ -500,7 +500,7 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c6 = TextEditingController()
@@ -513,7 +513,7 @@ class _TabFourState extends State<TabFour>
                                   : c6.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
                         key: const Key('sectionFour_landDetails'),
@@ -546,7 +546,7 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c7 = TextEditingController()
@@ -559,7 +559,7 @@ class _TabFourState extends State<TabFour>
                                   : c7.selection.base.offset,
                             ),
                           ),
-                        maxLines: 1,
+                        maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.done,
                         key: const Key('sectionFour_otherComments'),

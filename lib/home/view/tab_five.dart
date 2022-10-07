@@ -687,7 +687,7 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c6 = TextEditingController()
@@ -932,7 +932,7 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c7 = TextEditingController()
@@ -1032,7 +1032,7 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c8 = TextEditingController()
@@ -1178,7 +1178,7 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c9 = TextEditingController()

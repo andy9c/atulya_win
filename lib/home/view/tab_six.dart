@@ -106,7 +106,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c1 = TextEditingController()
@@ -124,7 +124,6 @@ class _TabSixState extends State<TabSix>
                         maxLines: 5,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
                         key: const Key('sectionSix_landMean'),
                         onChanged: (value) => context
                             .read<SectionSixCubit>()
@@ -154,7 +153,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c2 = TextEditingController()
@@ -204,7 +203,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c3 = TextEditingController()
@@ -256,7 +255,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c4 = TextEditingController()
@@ -308,7 +307,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c5 = TextEditingController()
@@ -357,7 +356,7 @@ class _TabSixState extends State<TabSix>
                       ),
                       child: TextFormField(
                         inputFormatters: [
-                          textFormat(),
+                          alphaNumericFormat(),
                           UpperCaseFormatter(),
                         ],
                         controller: c6 = TextEditingController()
