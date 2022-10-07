@@ -1251,7 +1251,6 @@ class _FamilyMemberState extends State<FamilyMember> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SectionOneCubit, SectionOneState>(
-      key: UniqueKey(),
       builder: (context, state) {
         Map<String, dynamic> familyMembers = state.familyMemberDetails;
 
@@ -1270,11 +1269,9 @@ class _FamilyMemberState extends State<FamilyMember> {
               vertical: 16,
             ),
             child: BlocBuilder<SectionOneCubit, SectionOneState>(
-              key: UniqueKey(),
               builder: (context, state) {
                 return state.familyMemberDetails.containsKey(key)
                     ? ElevatedButton(
-                        key: UniqueKey(),
                         onLongPress: () {
                           context
                               .read<SectionOneCubit>()
@@ -1289,9 +1286,7 @@ class _FamilyMemberState extends State<FamilyMember> {
                           ),
                         ),
                       )
-                    : Container(
-                        key: UniqueKey(),
-                      );
+                    : Container();
               },
             ),
           );
@@ -1299,7 +1294,6 @@ class _FamilyMemberState extends State<FamilyMember> {
         });
 
         return Column(
-          key: UniqueKey(),
           children: buttons,
         );
       },
