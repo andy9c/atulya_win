@@ -131,6 +131,69 @@ class EmailTextFormatter extends TextInputFormatter {
   }
 }
 
+TextStyle groupStyle(BuildContext context) {
+  return TextStyle(
+    color: Theme.of(context).colorScheme.secondary,
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
+}
+
+TextStyle cardTextStyle(BuildContext context) {
+  return const TextStyle(
+    fontWeight: FontWeight.w600,
+    color: Colors.black54,
+  );
+}
+
+TextStyle snackbarCardTextStyle(BuildContext context) {
+  return const TextStyle(
+    fontWeight: FontWeight.w600,
+    color: Colors.white54,
+  );
+}
+
+const transparentColor = Color(0x00ffffff);
+const themeBlue = Color(0xFF70e1f5);
+const themeYellow = Color(0xFFffd194);
+
+const backgroundGradient = LinearGradient(
+  colors: [
+    //Color.fromRGBO(76, 61, 243, 1),
+    //Color.fromRGBO(120, 58, 183, 1),
+    themeBlue, // F58470, 8470F5, E1F570
+    themeYellow, // 94C2FF, C2FF94, D194FF
+  ],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
+
+const backgroundDecoration = BoxDecoration(
+  gradient: backgroundGradient,
+);
+
+const transparentBottomGradient = LinearGradient(
+  colors: [
+    //Color.fromRGBO(76, 61, 243, 1),
+    //Color.fromRGBO(120, 58, 183, 1),
+    transparentColor,
+    themeYellow, // 94C2FF, C2FF94, D194FF
+  ],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
+
+const transparentTopGradient = LinearGradient(
+  colors: [
+    //Color.fromRGBO(76, 61, 243, 1),
+    //Color.fromRGBO(120, 58, 183, 1),
+    themeBlue, // 94C2FF, C2FF94, D194FF
+    transparentColor,
+  ],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
+
 class LoadingState extends StatelessWidget {
   const LoadingState({Key? key}) : super(key: key);
 

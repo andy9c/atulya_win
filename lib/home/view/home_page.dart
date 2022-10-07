@@ -1,5 +1,7 @@
 // ignore_for_file: unused_element
 
+import 'dart:async';
+
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
 import 'package:atulya/database/create.dart';
@@ -10,7 +12,32 @@ import 'package:atulya/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sizer/sizer.dart';
+
+Future<void> execute(InternetConnectionChecker internetConnectionChecker,
+    BuildContext context) async {
+  // Simple check to see if we have Internet
+  // ignore: avoid_print
+  //print('''The statement 'this machine is connected to the Internet' is: ''');
+  // final bool isConnected = await InternetConnectionChecker().hasConnection;
+  // ignore: avoid_print
+  // print(
+  //   isConnected.toString(),
+  // );
+  // returns a bool
+
+  // We can also get an enum instead of a bool
+  // ignore: avoid_print
+  // print(
+  //   'Current status: ${await InternetConnectionChecker().connectionStatus}',
+  // );
+  // Prints either InternetConnectionStatus.connected
+  // or InternetConnectionStatus.disconnected
+
+  // close listener after 30 seconds, so the program doesn't run forever
+  // await Future<void>.delayed(const Duration(seconds: 30));
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +51,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
   late AnimationController _hideFabAnimController;
+  late final StreamSubscription<InternetConnectionStatus> listener;
 
   @override
   void initState() {
@@ -44,16 +72,41 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           break;
       }
     });
+
     _hideFabAnimController = AnimationController(
       vsync: this,
       duration: kThemeAnimationDuration,
       value: 1, // initially visible
     );
+
+    // actively listen for status updates
+    listener = InternetConnectionChecker().onStatusChange.listen(
+      (InternetConnectionStatus status) {
+        switch (status) {
+          case InternetConnectionStatus.connected:
+            // ignore: avoid_print
+            // print('Data connection is available.');
+            context.read<InformaticsCubit>().hasInternetChanged(true);
+            String message = 'Connected to internet !';
+            showMessageBanner(context, message);
+            break;
+          case InternetConnectionStatus.disconnected:
+            // ignore: avoid_print
+            // print('You are disconnected from the internet.');
+            context.read<InformaticsCubit>().hasInternetChanged(false);
+            String message = 'No internet !';
+            showMessageBanner(context, message);
+            break;
+        }
+      },
+    );
+
     super.initState();
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
+    await listener.cancel();
     _tabController.dispose();
     _hideFabAnimController.dispose();
     super.dispose();
@@ -367,7 +420,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save_rounded),
-              onPressed: () async => await Create.execute(context),
+              onPressed: () async {
+                if (!context.read<InformaticsCubit>().state.hasInternet) {
+                  String message =
+                      'Information will sync when internet is back !';
+                  showMessageBanner(context, message);
+                }
+                await Create.execute(context);
+              },
             ),
             IconButton(
               icon: const Icon(Icons.picture_as_pdf),

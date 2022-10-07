@@ -4,25 +4,25 @@ class InformaticsState extends Equatable {
   const InformaticsState({
     this.tabIndex = 0,
     this.isEnabled = true,
-    this.toggleUndoRedo = true,
+    this.hasInternet = false,
   });
 
   final int tabIndex;
   final bool isEnabled;
-  final bool toggleUndoRedo;
+  final bool hasInternet;
 
   @override
-  List<Object> get props => [tabIndex, isEnabled, toggleUndoRedo];
+  List<Object> get props => [tabIndex, isEnabled, hasInternet];
 
   InformaticsState copyWith({
     int? tabIndex,
     bool? isEnabled,
-    bool? toggleUndoRedo,
+    bool? hasInternet,
   }) {
     return InformaticsState(
       tabIndex: tabIndex ?? this.tabIndex,
       isEnabled: isEnabled ?? this.isEnabled,
-      toggleUndoRedo: toggleUndoRedo ?? this.toggleUndoRedo,
+      hasInternet: hasInternet ?? this.hasInternet,
     );
   }
 
@@ -30,7 +30,7 @@ class InformaticsState extends Equatable {
     return {
       'tabIndex': state.tabIndex,
       'isEnabled': state.isEnabled,
-      'toggleUndoRedo': state.toggleUndoRedo,
+      'hasInternet': state.hasInternet,
     };
   }
 
@@ -38,7 +38,7 @@ class InformaticsState extends Equatable {
     return InformaticsState(
       tabIndex: map['tabIndex'],
       isEnabled: map['isEnabled'],
-      toggleUndoRedo: map['toggleUndoRedo'],
+      hasInternet: map['hasInternet'],
     );
   }
 }

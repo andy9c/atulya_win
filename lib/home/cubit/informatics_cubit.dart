@@ -14,8 +14,8 @@ class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
     emit(state.copyWith(isEnabled: value));
   }
 
-  void toggleUndoRedoChanged() {
-    emit(state.copyWith(toggleUndoRedo: !state.toggleUndoRedo));
+  void hasInternetChanged(bool value) {
+    emit(state.copyWith(hasInternet: value));
   }
 
   @override

@@ -94,7 +94,6 @@ class _TabOneState extends State<TabOne>
             key: UniqueKey(),
             builder: (context, state) {
               return ListView(
-                key: UniqueKey(),
                 controller: scr1,
                 padding: const EdgeInsets.all(0.0),
                 physics: const AlwaysScrollableScrollPhysics(),

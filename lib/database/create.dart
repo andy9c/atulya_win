@@ -49,6 +49,6 @@ class Create {
       "s6": s6Data,
     };
 
-    await rootDocumentReferencer.set(data).catchError((e) => print(e));
+    await rootDocumentReferencer.set(data).catchError((e) => null);
   }
 }
