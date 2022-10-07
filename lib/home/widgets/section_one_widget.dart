@@ -86,15 +86,16 @@ class _MemberRelationshipState extends State<MemberRelationship> {
           iconSize: 24,
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          decoration: const InputDecoration(
-            prefixIcon: Padding(
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
               padding: EdgeInsets.only(top: 0), // add padding to adjust icon
               child: Icon(Icons.connect_without_contact_rounded,
                   color: Colors.lightBlue),
             ),
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: "Relationship with head",
             helperText: '',
+            errorText: state.relationship.invalid ? 'required field' : null,
           ),
           onChanged: (value) =>
               context.read<FamilyMemberCubit>().relationshipChanged(value!),
@@ -143,6 +144,7 @@ class _MemberAgeState extends State<MemberAge> {
           ],
           textInputAction: TextInputAction.next,
           textCapitalization: TextCapitalization.characters,
+          keyboardType: TextInputType.number,
           controller: _controller = TextEditingController()
             ..text = state.age.value ?? ''
             ..selection = TextSelection.fromPosition(
@@ -194,15 +196,16 @@ class _MemberGenderState extends State<MemberGender> {
           iconSize: 24,
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          decoration: const InputDecoration(
-            prefixIcon: Padding(
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
               padding: EdgeInsets.only(top: 0), // add padding to adjust icon
               child: Icon(Icons.connect_without_contact_rounded,
                   color: Colors.lightBlue),
             ),
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: "Gender",
             helperText: '',
+            errorText: state.gender.invalid ? 'required field' : null,
           ),
           onChanged: (value) =>
               context.read<FamilyMemberCubit>().genderChanged(value!),
@@ -245,15 +248,16 @@ class _MemberQualificationState extends State<MemberQualification> {
           iconSize: 24,
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          decoration: const InputDecoration(
-            prefixIcon: Padding(
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
               padding: EdgeInsets.only(top: 0), // add padding to adjust icon
               child: Icon(Icons.connect_without_contact_rounded,
                   color: Colors.lightBlue),
             ),
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: "Qualification",
             helperText: '',
+            errorText: state.qualification.invalid ? 'required field' : null,
           ),
           onChanged: (value) =>
               context.read<FamilyMemberCubit>().qualificationChanged(value!),
@@ -297,15 +301,16 @@ class _MemberOccupationState extends State<MemberOccupation> {
           iconSize: 24,
           elevation: 16,
           style: const TextStyle(color: Colors.deepPurple),
-          decoration: const InputDecoration(
-            prefixIcon: Padding(
+          decoration: InputDecoration(
+            prefixIcon: const Padding(
               padding: EdgeInsets.only(top: 0), // add padding to adjust icon
               child: Icon(Icons.connect_without_contact_rounded,
                   color: Colors.lightBlue),
             ),
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: "Occupation",
             helperText: '',
+            errorText: state.occupation.invalid ? 'required field' : null,
           ),
           onChanged: (value) =>
               context.read<FamilyMemberCubit>().occupationChanged(value!),
@@ -1014,15 +1019,17 @@ class CardHolder extends StatelessWidget {
               iconSize: 24,
               elevation: 16,
               style: const TextStyle(color: Colors.deepPurple),
-              decoration: const InputDecoration(
-                prefixIcon: Padding(
+              decoration: InputDecoration(
+                prefixIcon: const Padding(
                   padding:
                       EdgeInsets.only(top: 0), // add padding to adjust icon
                   child: Icon(Icons.credit_card, color: Colors.lightBlue),
                 ),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: "Cardholder Category",
                 helperText: '',
+                errorText:
+                    state.cardholderCategory.invalid ? 'required field' : null,
               ),
               onChanged: (String? value) {
                 context.read<SectionOneCubit>().cardholderChanged(value!);
@@ -1244,6 +1251,7 @@ class _FamilyMemberState extends State<FamilyMember> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SectionOneCubit, SectionOneState>(
+      key: UniqueKey(),
       builder: (context, state) {
         Map<String, dynamic> familyMembers = state.familyMemberDetails;
 
@@ -1256,23 +1264,44 @@ class _FamilyMemberState extends State<FamilyMember> {
           String qualification = value['qualification'] ?? '';
           String occupation = value['occupation'] ?? '';
 
-          Widget x = ElevatedButton(
-            key: UniqueKey(),
-            onPressed: () {
-              context.read<SectionOneCubit>().familyMemberDetailsRemove(key);
-            },
-            child: Text(
-              name,
+          Widget x = Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 5.w,
+              vertical: 16,
+            ),
+            child: BlocBuilder<SectionOneCubit, SectionOneState>(
+              key: UniqueKey(),
+              builder: (context, state) {
+                return state.familyMemberDetails.containsKey(key)
+                    ? ElevatedButton(
+                        key: UniqueKey(),
+                        onLongPress: () {
+                          context
+                              .read<SectionOneCubit>()
+                              .familyMemberDetailsRemove(key);
+                        },
+                        onPressed: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '$name, $relationship, $age, $gender, $qualification, $occupation',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        key: UniqueKey(),
+                      );
+              },
             ),
           );
           buttons.add(x);
         });
 
-        return familyMembers.isEmpty
-            ? Container()
-            : Column(
-                children: buttons,
-              );
+        return Column(
+          key: UniqueKey(),
+          children: buttons,
+        );
       },
     );
   }

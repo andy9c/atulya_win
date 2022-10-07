@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
+FilteringTextInputFormatter textFormat() {
+  return FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z \,]'));
+}
+
 FilteringTextInputFormatter nameFormat() {
   return FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z ]'));
 }

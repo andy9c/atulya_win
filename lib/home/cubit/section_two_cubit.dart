@@ -47,7 +47,7 @@ class SectionTwoCubit extends Cubit<SectionTwoState>
   }
 
   void landHoldingChanged(Map<String, dynamic> value) {
-    Map<String, dynamic> newData = state.landHolding;
+    Map<String, dynamic> newData = Map.from(state.landHolding);
     newData.addAll(value);
     emit(state.copyWith(landHolding: newData));
   }

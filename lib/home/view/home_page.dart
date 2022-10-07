@@ -158,7 +158,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          key: UniqueKey(),
           title: const Text(
               'Family Member Details'), // To display the title it is optional
           content: SizedBox(
@@ -169,7 +168,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               thumbVisibility: true,
               child: FocusScope(
                 child: ListView(
-                  key: UniqueKey(),
                   controller: scrollController,
                   padding: const EdgeInsets.all(16.0),
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -197,7 +195,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
               builder: (context, state) {
                 return ElevatedButton(
-                  key: UniqueKey(),
                   // FlatButton widget is used to make a text to work like a button
                   //textColor: Colors.black,
                   onPressed: state.status.isValidated
