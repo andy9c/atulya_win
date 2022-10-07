@@ -1,6 +1,4 @@
-import 'package:atulya/configuration/configuration.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:duration/duration.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
@@ -26,36 +24,6 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(
       password: password,
       status: Formz.validate([state.email, password]),
-    ));
-  }
-
-  void timerChanged() {
-    var thisInstant = DateTime.now().toLocal();
-
-    var openTime = DateTime.utc(
-      startDateRegYear,
-      startDateRegMonth,
-      startDateRegDay - 1,
-      18,
-      30,
-    );
-
-    var closeTime = DateTime.utc(
-      lastDateRegYear,
-      lastDateRegMonth,
-      lastDateRegDay - 1,
-      18,
-      30,
-    );
-
-    var openDiff = openTime.difference(thisInstant);
-    var closeDiff = closeTime.difference(thisInstant);
-
-    emit(state.copyWith(
-      openTimer:
-          "Portal opens in ${printDuration(openDiff, abbreviated: true)}",
-      closeTimer:
-          "Portal closes in ${printDuration(closeDiff, abbreviated: true)}",
     ));
   }
 

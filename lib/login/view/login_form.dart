@@ -21,10 +21,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(
-      const Duration(seconds: 1),
-      (Timer t) => context.read<LoginCubit>().timerChanged(),
-    );
   }
 
   @override

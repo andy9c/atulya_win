@@ -1275,7 +1275,7 @@ class _FamilyMemberState extends State<FamilyMember> {
                         onLongPress: () {
                           context
                               .read<SectionOneCubit>()
-                              .familyMemberDetailsRemove(key);
+                              .familyMemberDetailsRemove([key]);
                         },
                         onPressed: () {},
                         child: Padding(

@@ -4,6 +4,9 @@ import 'package:atulya/app/bloc/app_bloc.dart';
 import 'package:atulya/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:sizer/sizer.dart';
 
 import '../cubit/cubit.dart';
@@ -91,7 +94,6 @@ class _TabOneState extends State<TabOne>
         controller: scr1,
         child: FocusScope(
           child: BlocBuilder<SectionOneCubit, SectionOneState>(
-            key: UniqueKey(),
             builder: (context, state) {
               return ListView(
                 controller: scr1,
@@ -143,8 +145,45 @@ class _TabOneState extends State<TabOne>
                   spacerWidget(),
                   const RespondentSecondaryOccupation(),
                   spacerWidget(),
-                  const FamilyMember(),
-                  spacerWidget(),
+                  //const FamilyMember(),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: state.familyMemberDetails.isEmpty
+                        ? Container()
+                        : MultiSelectDialogField(
+                            key: GlobalKey(),
+                            initialValue: state.familyMemberDetails.entries
+                                .map((e) => e.key)
+                                .toList(),
+                            onConfirm: (value) {
+                              context
+                                  .read<SectionOneCubit>()
+                                  .familyMemberDetailsRemove(value);
+                            },
+                            title: const Text("Select Family Members"),
+                            buttonText: const Text("Manage Family Members"),
+                            searchable: true,
+                            barrierColor: Colors.blueGrey.withOpacity(0.3),
+                            items: state.familyMemberDetails.entries
+                                .map((e) => MultiSelectItem(e.key,
+                                    '${e.value["name"]}, ${e.value["relationship"]}, ${e.value["age"]}, ${e.value["gender"]}, ${e.value["qualification"]}, ${e.value["occupation"]}'))
+                                .toList(),
+                            listType: MultiSelectListType.CHIP,
+                            confirmText: const Text("DELETE SELECTED"),
+                            separateSelectedItems: true,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  // color: Colors.green,
+                                  // width: 8,
+                                  ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                  ),
 
                   spacerWidget(),
                   spacerWidget(),
