@@ -2,6 +2,8 @@ import 'package:atulya/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../main.dart';
+
 String stripMessage(String errorMessage) {
   return errorMessage
       .replaceAll(RegExp(r'\].*'), "")
@@ -132,20 +134,22 @@ void showInfoSnackbar(BuildContext context, String message) {
 }
 
 void showMessageBanner(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showMaterialBanner(
-    MaterialBanner(
-      //backgroundColor: Colors.blue,
-      content: Text(message),
-      //contentTextStyle: const TextStyle(color: Colors.white),
-      actions: [
-        TextButton(
-          //style: TextButton.styleFrom(foregroundColor: Colors.white),
-          onPressed: () {
-            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          },
-          child: const Text("DISMISS"),
-        )
-      ],
-    ),
-  );
+  globalScaffoldMessenger.currentState
+    ?..removeCurrentMaterialBanner()
+    ..showMaterialBanner(
+      MaterialBanner(
+        //backgroundColor: Colors.blue,
+        content: Text(message),
+        //contentTextStyle: const TextStyle(color: Colors.white),
+        actions: [
+          TextButton(
+            //style: TextButton.styleFrom(foregroundColor: Colors.white),
+            onPressed: () {
+              globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner();
+            },
+            child: const Text("DISMISS"),
+          )
+        ],
+      ),
+    );
 }

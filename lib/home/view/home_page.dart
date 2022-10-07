@@ -106,10 +106,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Future<void> dispose() async {
-    await listener.cancel();
+    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    super.dispose();
     _tabController.dispose();
     _hideFabAnimController.dispose();
-    super.dispose();
+    await listener.cancel();
   }
 
   @override

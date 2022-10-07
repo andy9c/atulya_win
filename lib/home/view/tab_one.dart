@@ -4,9 +4,6 @@ import 'package:atulya/app/bloc/app_bloc.dart';
 import 'package:atulya/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:sizer/sizer.dart';
 
 import '../cubit/cubit.dart';
@@ -87,15 +84,15 @@ class _TabOneState extends State<TabOne>
     }
 
     super.build(context);
-    return Align(
-      alignment: const Alignment(0, -1 / 3),
-      child: Scrollbar(
-        thumbVisibility: true,
-        controller: scr1,
-        child: FocusScope(
-          child: BlocBuilder<SectionOneCubit, SectionOneState>(
-            builder: (context, state) {
-              return ListView(
+    return BlocBuilder<SectionOneCubit, SectionOneState>(
+      builder: (context, state) {
+        return Align(
+          alignment: const Alignment(0, -1 / 3),
+          child: Scrollbar(
+            thumbVisibility: true,
+            controller: scr1,
+            child: FocusScope(
+              child: ListView(
                 controller: scr1,
                 padding: const EdgeInsets.all(0.0),
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -154,33 +151,41 @@ class _TabOneState extends State<TabOne>
                     ),
                     child: state.familyMemberDetails.isEmpty
                         ? Container()
-                        : MultiSelectDialogField(
-                            key: GlobalKey(),
-                            initialValue: state.familyMemberDetails.entries
-                                .map((e) => e.key)
-                                .toList(),
-                            onConfirm: (value) {
-                              context
-                                  .read<SectionOneCubit>()
-                                  .familyMemberDetailsRemove(value);
-                            },
-                            title: const Text("Select Family Members"),
-                            buttonText: const Text("Manage Family Members"),
-                            searchable: true,
-                            barrierColor: Colors.blueGrey.withOpacity(0.3),
-                            items: state.familyMemberDetails.entries
-                                .map((e) => MultiSelectItem(e.key,
-                                    '${e.value["name"]}, ${e.value["relationship"]}, ${e.value["age"]}, ${e.value["gender"]}, ${e.value["qualification"]}, ${e.value["occupation"]}'))
-                                .toList(),
-                            listType: MultiSelectListType.CHIP,
-                            confirmText: const Text("DELETE SELECTED"),
-                            separateSelectedItems: true,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  // color: Colors.green,
-                                  // width: 8,
-                                  ),
-                              borderRadius: BorderRadius.circular(8),
+                        : SizedBox(
+                            width: 100.w,
+                            height: 400,
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: ListView.separated(
+                                key: UniqueKey(),
+                                itemCount: state.familyMemberDetails.length,
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    color: Theme.of(context).primaryColorLight,
+                                  );
+                                },
+                                itemBuilder: (context, i) {
+                                  int len = state.familyMemberDetails.length;
+                                  dynamic value = state
+                                      .familyMemberDetails['${(len - i - 1)}'];
+
+                                  String name = value["name"];
+                                  String relationship = value["relationship"];
+                                  String age = value["age"];
+                                  String gender = value["gender"];
+                                  String qualification = value["qualification"];
+                                  String occupation = value["occupation"];
+
+                                  return ListTile(
+                                    dense: true,
+                                    leading: Text((i + 1).toString()),
+                                    title: Text('$name ($relationship)'),
+                                    trailing: Text('$gender, $age'),
+                                    subtitle:
+                                        Text('$qualification, $occupation'),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                   ),
@@ -191,11 +196,11 @@ class _TabOneState extends State<TabOne>
                   spacerWidget(),
                   spacerWidget(),
                 ],
-              );
-            },
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../home/cubit/cubit.dart';
+import '../../main.dart';
 import '../routes/routes.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -69,6 +70,7 @@ class AppView extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
+        scaffoldMessengerKey: globalScaffoldMessenger,
         builder: (context, child) => ResponsiveWrapper.builder(
           BouncingScrollWrapper.builder(context, child!),
           maxWidth: 1200,
