@@ -14,6 +14,10 @@ class SectionThreeCubit extends Cubit<SectionThreeState>
     emit(const SectionThreeState());
   }
 
+  void setState(SectionThreeState? s) {
+    if (s != null) emit(s);
+  }
+
   void incomeSourcesChanged(List<String> value) {
     emit(state.copyWith(incomeSources: Compulsory.dirty(value)));
   }

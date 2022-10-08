@@ -2147,7 +2147,7 @@ class _TabThreeState extends State<TabThree>
                       onConfirm: (value) {
                         context
                             .read<SectionThreeCubit>()
-                            .forestProduceChanged(value);
+                            .forestProduceChanged(value as List<String>);
                       },
                       title: const Text("Select Forest Produce"),
                       buttonText: const Text("Select Forest Produce"),
@@ -2225,7 +2225,7 @@ class _TabThreeState extends State<TabThree>
                       onConfirm: (value) {
                         context
                             .read<SectionThreeCubit>()
-                            .forestProduceChanged(value);
+                            .forestProduceChanged(value as List<String>);
                       },
                       title: const Text("Select"),
                       buttonText: const Text("Select Fresh Water Produce"),

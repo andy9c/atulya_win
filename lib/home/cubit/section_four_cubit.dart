@@ -14,6 +14,10 @@ class SectionFourCubit extends Cubit<SectionFourState>
     emit(const SectionFourState());
   }
 
+  void setState(SectionFourState? s) {
+    if (s != null) emit(s);
+  }
+
   void lostlandChanged(String value) {
     emit(state.copyWith(lostland: Compulsory.dirty(value)));
   }

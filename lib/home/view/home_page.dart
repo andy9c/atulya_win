@@ -1,10 +1,9 @@
-// ignore_for_file: unused_element, unused_local_variable
+// ignore_for_file: unused_element
 
 import 'dart:async';
 
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
-import 'package:atulya/database/create.dart';
 import 'package:atulya/database/stream.dart';
 import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
@@ -12,10 +11,12 @@ import 'package:atulya/home/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:formz/formz.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../database/database.dart';
 import '../../main.dart';
 
 Future<void> execute(InternetConnectionChecker internetConnectionChecker,
@@ -56,8 +57,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _hideFabAnimController;
   late final StreamSubscription<InternetConnectionStatus> listener;
 
+  Future<void> secureScreen() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
   @override
   void initState() {
+    secureScreen();
+
     _tabController = TabController(
       length: 6,
       vsync: this,
@@ -264,8 +271,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                       return ListTile(
                         dense: true,
+                        isThreeLine: true,
                         leading: Text((index + 1).toString()),
-                        title: Text(docName),
+                        title: Text('$docName, (${user.email})'),
+                        subtitle: Text('${data["s1"]["gramPanchayat"]}'),
+                        trailing: Text(
+                            '${data["s1"]["gender"]}, ${data["s1"]["age"]}'),
+                        onTap: () async {
+                          DocumentSnapshot<Object?> data =
+                              await Read.execute(docName);
+
+                          SectionOneState s1 =
+                              SectionOneState.fromMap(data["s1"]);
+                          SectionTwoState s2 =
+                              SectionTwoState.fromMap(data["s2"]);
+                          SectionThreeState s3 =
+                              SectionThreeState.fromMap(data["s3"]);
+                          SectionFourState s4 =
+                              SectionFourState.fromMap(data["s4"]);
+                          SectionFiveState s5 =
+                              SectionFiveState.fromMap(data["s5"]);
+                          SectionSixState s6 =
+                              SectionSixState.fromMap(data["s6"]);
+
+                          if (mounted) {
+                            context.read<SectionOneCubit>().setState(s1);
+                            context.read<SectionTwoCubit>().setState(s2);
+                            context.read<SectionThreeCubit>().setState(s3);
+                            context.read<SectionFourCubit>().setState(s4);
+                            context.read<SectionFiveCubit>().setState(s5);
+                            context.read<SectionSixCubit>().setState(s6);
+
+                            Navigator.pop(context);
+                          }
+                        },
                       );
                     },
                   ),
@@ -562,19 +601,48 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     context.read<SectionFourCubit>().state.status.isValidated &&
                     context.read<SectionFiveCubit>().state.status.isValidated &&
                     context.read<SectionSixCubit>().state.status.isValidated) {
-                  if (!context.read<InformaticsCubit>().state.hasInternet) {
-                    String message =
-                        'Information will sync when internet is back !';
-                    showMessageBanner(message);
-                  }
-                  Create.execute(context);
+                  String message = "Confirm Save !";
 
-                  context.read<SectionOneCubit>().reset();
-                  context.read<SectionTwoCubit>().reset();
-                  context.read<SectionThreeCubit>().reset();
-                  context.read<SectionFourCubit>().reset();
-                  context.read<SectionFiveCubit>().reset();
-                  context.read<SectionSixCubit>().reset();
+                  globalScaffoldMessenger.currentState
+                    ?..removeCurrentMaterialBanner()
+                    ..showMaterialBanner(
+                      MaterialBanner(
+                        //backgroundColor: Colors.blue,
+                        content: Text(message),
+                        //contentTextStyle: const TextStyle(color: Colors.white),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              if (!context
+                                  .read<InformaticsCubit>()
+                                  .state
+                                  .hasInternet) {
+                                String message =
+                                    'Information will sync when internet is back !';
+                                showMessageBanner(message);
+                              }
+                              Create.execute(context);
+
+                              context.read<SectionOneCubit>().reset();
+                              context.read<SectionTwoCubit>().reset();
+                              context.read<SectionThreeCubit>().reset();
+                              context.read<SectionFourCubit>().reset();
+                              context.read<SectionFiveCubit>().reset();
+                              context.read<SectionSixCubit>().reset();
+                            },
+                            child: const Text("SAVE"),
+                          ),
+                          TextButton(
+                            //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                            onPressed: () {
+                              globalScaffoldMessenger.currentState!
+                                  .hideCurrentMaterialBanner();
+                            },
+                            child: const Text("DISMISS"),
+                          )
+                        ],
+                      ),
+                    );
                 } else {
                   String message = 'Required fields are missing !';
                   showMessageBanner(message);

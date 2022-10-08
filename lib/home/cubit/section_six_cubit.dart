@@ -14,6 +14,10 @@ class SectionSixCubit extends Cubit<SectionSixState>
     emit(const SectionSixState());
   }
 
+  void setState(SectionSixState? s) {
+    if (s != null) emit(s);
+  }
+
   void landMeanChanged(String value) {
     emit(state.copyWith(landMean: Compulsory.dirty(value)));
   }

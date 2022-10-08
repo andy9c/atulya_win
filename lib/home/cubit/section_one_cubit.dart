@@ -14,6 +14,10 @@ class SectionOneCubit extends Cubit<SectionOneState>
     emit(const SectionOneState());
   }
 
+  void setState(SectionOneState? s) {
+    if (s != null) emit(s);
+  }
+
   void pattaChanged(String value) {
     emit(state.copyWith(pattaNo: Compulsory.dirty(value)));
   }

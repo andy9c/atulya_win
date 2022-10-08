@@ -18,9 +18,9 @@ class SectionThreeState extends Equatable with FormzMixin {
   final Compulsory annualIncome;
   final Map<String, dynamic> cropsPattern;
   final Map<String, dynamic> vegetablesPattern;
-  final List<String> forestProduce;
+  final List<dynamic> forestProduce;
   final String otherForestProduce;
-  final List<String> freshWaterItems;
+  final List<dynamic> freshWaterItems;
   final String otherFreshWaterItems;
 
   @override

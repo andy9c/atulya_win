@@ -14,6 +14,10 @@ class SectionTwoCubit extends Cubit<SectionTwoState>
     emit(const SectionTwoState());
   }
 
+  void setState(SectionTwoState? s) {
+    if (s != null) emit(s);
+  }
+
   void generationCountChanged(String value) {
     emit(state.copyWith(generationCount: Compulsory.dirty(value)));
   }

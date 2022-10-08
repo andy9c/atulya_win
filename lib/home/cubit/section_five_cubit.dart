@@ -14,6 +14,10 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
     emit(const SectionFiveState());
   }
 
+  void setState(SectionFiveState? s) {
+    if (s != null) emit(s);
+  }
+
   void oclAcquiringChanged(String value) {
     emit(state.copyWith(oclAcquiring: Compulsory.dirty(value)));
   }

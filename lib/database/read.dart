@@ -1,22 +1,17 @@
-// import 'package:atulya/configuration/configuration.dart';
+import 'package:atulya/configuration/configuration.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// import '../home/cubit/student_cubit.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+class Read {
+  static Future<DocumentSnapshot<Object?>> execute(String docID) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // final User? user = FirebaseAuth.instance.currentUser;
 
-// class Read {
-//   static Future<StudentState> execute() async {
-//     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-//     final User? student = FirebaseAuth.instance.currentUser;
+    final CollectionReference mainCollection =
+        firestore.collection(rootCollection);
 
-//     final CollectionReference mainCollection =
-//         firestore.collection(rootCollection);
+    // final emailID = user!.email.toString();
+    var rootDocumentReferencer = mainCollection.doc(docID);
 
-//     final userID = student!.email.toString();
-//     var rootDocumentReferencer = mainCollection.doc(userID);
-
-//     return rootDocumentReferencer
-//         .get()
-//         .then((doc) => StudentState.fromSnapshot(doc));
-//   }
-// }
+    return rootDocumentReferencer.get();
+  }
+}
