@@ -1,7 +1,9 @@
 import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/home.dart';
+import 'package:atulya/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:sizer/sizer.dart';
 
 class MemberName extends StatefulWidget {
@@ -26,6 +28,7 @@ class _MemberNameState extends State<MemberName> {
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextFormField(
+          enabled: context.read<InformaticsCubit>().state.isEnabled,
           key: const Key('sectionOne_familyMember_name'),
           inputFormatters: [
             nameFormat(),
@@ -97,8 +100,10 @@ class _MemberRelationshipState extends State<MemberRelationship> {
             helperText: '',
             errorText: state.relationship.invalid ? 'required field' : null,
           ),
-          onChanged: (value) =>
-              context.read<FamilyMemberCubit>().relationshipChanged(value!),
+          onChanged: !context.read<InformaticsCubit>().state.isEnabled
+              ? null
+              : (value) =>
+                  context.read<FamilyMemberCubit>().relationshipChanged(value!),
           items: relationshipList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -138,6 +143,7 @@ class _MemberAgeState extends State<MemberAge> {
       buildWhen: (previous, current) => previous.age != current.age,
       builder: (context, state) {
         return TextFormField(
+          enabled: context.read<InformaticsCubit>().state.isEnabled,
           key: const Key('SectionOne_familyMember_age'),
           inputFormatters: [
             intFormat(),
@@ -207,8 +213,10 @@ class _MemberGenderState extends State<MemberGender> {
             helperText: '',
             errorText: state.gender.invalid ? 'required field' : null,
           ),
-          onChanged: (value) =>
-              context.read<FamilyMemberCubit>().genderChanged(value!),
+          onChanged: !context.read<InformaticsCubit>().state.isEnabled
+              ? null
+              : (value) =>
+                  context.read<FamilyMemberCubit>().genderChanged(value!),
           items: genderList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -259,8 +267,11 @@ class _MemberQualificationState extends State<MemberQualification> {
             helperText: '',
             errorText: state.qualification.invalid ? 'required field' : null,
           ),
-          onChanged: (value) =>
-              context.read<FamilyMemberCubit>().qualificationChanged(value!),
+          onChanged: !context.read<InformaticsCubit>().state.isEnabled
+              ? null
+              : (value) => context
+                  .read<FamilyMemberCubit>()
+                  .qualificationChanged(value!),
           items:
               qualificationList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -312,8 +323,10 @@ class _MemberOccupationState extends State<MemberOccupation> {
             helperText: '',
             errorText: state.occupation.invalid ? 'required field' : null,
           ),
-          onChanged: (value) =>
-              context.read<FamilyMemberCubit>().occupationChanged(value!),
+          onChanged: !context.read<InformaticsCubit>().state.isEnabled
+              ? null
+              : (value) =>
+                  context.read<FamilyMemberCubit>().occupationChanged(value!),
           items: professionList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -360,6 +373,7 @@ class _PattaNumberState extends State<PattaNumber> {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              enabled: context.read<InformaticsCubit>().state.isEnabled,
               inputFormatters: [
                 alphaNumericFormat(),
                 UpperCaseFormatter(),
@@ -432,6 +446,7 @@ class _RespondentFullNameState extends State<RespondentFullName> {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              enabled: context.read<InformaticsCubit>().state.isEnabled,
               inputFormatters: [
                 nameFormat(),
                 UpperCaseFormatter(),
@@ -505,6 +520,7 @@ class _HeadOfHouseholdState extends State<HeadOfHousehold> {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              enabled: context.read<InformaticsCubit>().state.isEnabled,
               inputFormatters: [
                 nameFormat(),
                 UpperCaseFormatter(),
@@ -578,6 +594,7 @@ class _RespondentAgeState extends State<RespondentAge> {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              enabled: context.read<InformaticsCubit>().state.isEnabled,
               inputFormatters: [
                 intFormat(),
               ],
@@ -652,6 +669,7 @@ class _CommunityNameState extends State<CommunityName> {
               horizontal: 5.w,
             ),
             child: TextFormField(
+              enabled: context.read<InformaticsCubit>().state.isEnabled,
               inputFormatters: [
                 nameFormat(),
                 UpperCaseFormatter(),
@@ -730,9 +748,11 @@ class GenderSelection extends StatelessWidget {
                 helperText: '',
                 errorText: state.gender.invalid ? 'required field' : null,
               ),
-              onChanged: (String? gender) {
-                context.read<SectionOneCubit>().genderChanged(gender!);
-              },
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? gender) {
+                      context.read<SectionOneCubit>().genderChanged(gender!);
+                    },
               items: genderList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -790,9 +810,11 @@ class RespondentRelationship extends StatelessWidget {
                 helperText: '',
                 errorText: state.relationship.invalid ? 'required field' : null,
               ),
-              onChanged: (String? motherTongue) => context
-                  .read<SectionOneCubit>()
-                  .relationshipChanged(motherTongue!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? motherTongue) => context
+                      .read<SectionOneCubit>()
+                      .relationshipChanged(motherTongue!),
               items: relationshipList
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -851,9 +873,11 @@ class GramPanchayat extends StatelessWidget {
                 errorText:
                     state.gramPanchayat.invalid ? 'required field' : null,
               ),
-              onChanged: (String? bloodGroup) => context
-                  .read<SectionOneCubit>()
-                  .gramPanchayatChanged(bloodGroup!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? bloodGroup) => context
+                      .read<SectionOneCubit>()
+                      .gramPanchayatChanged(bloodGroup!),
               items:
                   bloodGroupList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -911,8 +935,11 @@ class ReligionSelection extends StatelessWidget {
                 helperText: '',
                 errorText: state.religion.invalid ? 'required field' : null,
               ),
-              onChanged: (String? religion) =>
-                  context.read<SectionOneCubit>().religionChanged(religion!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? religion) => context
+                      .read<SectionOneCubit>()
+                      .religionChanged(religion!),
               items: religionList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -970,9 +997,11 @@ class SocialCategorySelection extends StatelessWidget {
                 errorText:
                     state.socialCategory.invalid ? 'required field' : null,
               ),
-              onChanged: (String? socialCategory) => context
-                  .read<SectionOneCubit>()
-                  .socialCategoryChanged(socialCategory!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? socialCategory) => context
+                      .read<SectionOneCubit>()
+                      .socialCategoryChanged(socialCategory!),
               items: socialCategoryList
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -1031,9 +1060,11 @@ class CardHolder extends StatelessWidget {
                 errorText:
                     state.cardholderCategory.invalid ? 'required field' : null,
               ),
-              onChanged: (String? value) {
-                context.read<SectionOneCubit>().cardholderChanged(value!);
-              },
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? value) {
+                      context.read<SectionOneCubit>().cardholderChanged(value!);
+                    },
               items: hasAadharCardList
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -1092,8 +1123,11 @@ class RespondentQualification extends StatelessWidget {
                 errorText:
                     state.qualification.invalid ? 'required field' : null,
               ),
-              onChanged: (String? value) =>
-                  context.read<SectionOneCubit>().qualificationChanged(value!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? value) => context
+                      .read<SectionOneCubit>()
+                      .qualificationChanged(value!),
               items: qualificationList
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -1153,9 +1187,11 @@ class RespondentPrimaryOccupation extends StatelessWidget {
                 errorText:
                     state.primaryOccupation.invalid ? 'required field' : null,
               ),
-              onChanged: (String? value) => context
-                  .read<SectionOneCubit>()
-                  .primaryOccupationChanged(value!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? value) => context
+                      .read<SectionOneCubit>()
+                      .primaryOccupationChanged(value!),
               items:
                   professionList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -1215,9 +1251,11 @@ class RespondentSecondaryOccupation extends StatelessWidget {
                 errorText:
                     state.secondaryOccupation.invalid ? 'required field' : null,
               ),
-              onChanged: (String? value) => context
-                  .read<SectionOneCubit>()
-                  .secondaryOccupationChanged(value!),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? value) => context
+                      .read<SectionOneCubit>()
+                      .secondaryOccupationChanged(value!),
               items:
                   professionList.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -1255,6 +1293,7 @@ class _FamilyMemberState extends State<FamilyMember> {
         Map<String, dynamic> familyMembers = state.familyMemberDetails;
 
         List<Widget> buttons = [];
+
         familyMembers.forEach((key, value) {
           String name = value['name'] ?? '';
           String relationship = value['relationship'] ?? '';
@@ -1266,18 +1305,85 @@ class _FamilyMemberState extends State<FamilyMember> {
           Widget x = Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 5.w,
-              vertical: 16,
+              vertical: 8,
             ),
             child: BlocBuilder<SectionOneCubit, SectionOneState>(
               builder: (context, state) {
                 return state.familyMemberDetails.containsKey(key)
                     ? ElevatedButton(
-                        onLongPress: () {
-                          context
-                              .read<SectionOneCubit>()
-                              .familyMemberDetailsRemove([key]);
-                        },
-                        onPressed: () {},
+                        onLongPress:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : () {
+                                    String message = "Confirm Delete ($name) !";
+
+                                    globalScaffoldMessenger.currentState
+                                      ?..removeCurrentMaterialBanner()
+                                      ..showMaterialBanner(
+                                        MaterialBanner(
+                                          //backgroundColor: Colors.blue,
+                                          content: Text(message),
+                                          //contentTextStyle: const TextStyle(color: Colors.white),
+                                          onVisible: () => Future.delayed(
+                                            const Duration(seconds: 7),
+                                            () => globalScaffoldMessenger
+                                                .currentState!
+                                                .hideCurrentMaterialBanner(),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<SectionOneCubit>()
+                                                    .familyMemberDetailsRemove(
+                                                        [key]);
+
+                                                globalScaffoldMessenger
+                                                    .currentState!
+                                                    .hideCurrentMaterialBanner();
+                                              },
+                                              child: const Text("DELETE"),
+                                            ),
+                                            TextButton(
+                                              //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                                              onPressed: () {
+                                                globalScaffoldMessenger
+                                                    .currentState!
+                                                    .hideCurrentMaterialBanner();
+                                              },
+                                              child: const Text("CANCEL"),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                  },
+                        onPressed:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : () {
+                                    FamilyMemberState currentState =
+                                        context.read<FamilyMemberCubit>().state;
+
+                                    FamilyMemberState? seeState =
+                                        FamilyMemberCubit().fromJson(
+                                            value as Map<String, dynamic>);
+
+                                    context
+                                        .read<FamilyMemberCubit>()
+                                        .setState(seeState);
+
+                                    addFamilyMembers(key, currentState);
+                                  },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 50,
+                            vertical: 20,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          // backgroundColor: Colors.blueAccent,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -1297,6 +1403,83 @@ class _FamilyMemberState extends State<FamilyMember> {
           children: buttons,
         );
       },
+    );
+  }
+
+  void addFamilyMembers(String key, FamilyMemberState currentState) async {
+    final ScrollController scrollController = ScrollController();
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+            'Family Member Details'), // To display the title it is optional
+        content: SizedBox(
+          height: 600,
+          width: 400,
+          child: Scrollbar(
+            controller: scrollController,
+            thumbVisibility: true,
+            child: FocusScope(
+              child: ListView(
+                controller: scrollController,
+                padding: const EdgeInsets.all(16.0),
+                physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: false,
+                children: <Widget>[
+                  const MemberName(),
+                  spacerWidget(),
+                  const MemberRelationship(),
+                  spacerWidget(),
+                  const MemberAge(),
+                  spacerWidget(),
+                  const MemberGender(),
+                  spacerWidget(),
+                  const MemberQualification(),
+                  spacerWidget(),
+                  const MemberOccupation(),
+                  spacerWidget(),
+                ],
+              ),
+            ),
+          ),
+        ), // Message which will be pop up on the screen
+        // Action widget which will provide the user to acknowledge the choice
+        actions: [
+          BlocBuilder<FamilyMemberCubit, FamilyMemberState>(
+            builder: (context, state) {
+              return ElevatedButton(
+                // FlatButton widget is used to make a text to work like a button
+                //textColor: Colors.black,
+                onPressed: state.status.isValidated
+                    ? () {
+                        context
+                            .read<SectionOneCubit>()
+                            .familyMemberDetailsUpdate(
+                                key, FamilyMemberState.toMap(state));
+
+                        context.read<FamilyMemberCubit>().reset();
+
+                        Navigator.pop(context);
+                      }
+                    : null, // function used to perform after pressing the button
+                child: const Text('SAVE'),
+              );
+            },
+          ),
+          ElevatedButton(
+            // FlatButton widget is used to make a text to work like a button
+            //textColor: Colors.black,
+
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<FamilyMemberCubit>().setState(currentState);
+            }, // function used to perform after pressing the button
+            child: const Text('CANCEL'),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
     );
   }
 }

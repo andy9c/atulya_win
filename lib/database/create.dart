@@ -41,6 +41,7 @@ class Create {
     Map<String, dynamic> data = <String, dynamic>{
       "email": emailID,
       "timestamp": timeStamp,
+      "isDeleted": false,
       "s1": s1Data,
       "s2": s2Data,
       "s3": s3Data,

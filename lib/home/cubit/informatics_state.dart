@@ -3,7 +3,7 @@ part of 'informatics_cubit.dart';
 class InformaticsState extends Equatable {
   const InformaticsState({
     this.tabIndex = 0,
-    this.isEnabled = true,
+    this.isEnabled = false,
     this.hasInternet = false,
   });
 

@@ -1,3 +1,4 @@
+export 'tab_zero.dart';
 export 'tab_one.dart';
 export 'tab_two.dart';
 export 'tab_three.dart';

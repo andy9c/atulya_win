@@ -133,7 +133,7 @@ void showInfoSnackbar(BuildContext context, String message) {
   );
 }
 
-void showMessageBanner(BuildContext context, String message) {
+void showMessageBanner(String message) {
   globalScaffoldMessenger.currentState
     ?..removeCurrentMaterialBanner()
     ..showMaterialBanner(
@@ -141,6 +141,11 @@ void showMessageBanner(BuildContext context, String message) {
         //backgroundColor: Colors.blue,
         content: Text(message),
         //contentTextStyle: const TextStyle(color: Colors.white),
+        // onVisible: () => Future.delayed(
+        //   const Duration(seconds: 7),
+        //   () =>
+        //       globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner(),
+        // ),
         actions: [
           TextButton(
             //style: TextButton.styleFrom(foregroundColor: Colors.white),

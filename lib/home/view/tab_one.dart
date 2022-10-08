@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import '../cubit/cubit.dart';
-import '../widgets/section_one_widget.dart';
 
 class TabOne extends StatefulWidget {
   const TabOne({super.key});
@@ -141,60 +140,14 @@ class _TabOneState extends State<TabOne>
                   const RespondentPrimaryOccupation(),
                   spacerWidget(),
                   const RespondentSecondaryOccupation(),
-                  spacerWidget(),
-                  //const FamilyMember(),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: 5.w,
-                    ),
-                    child: state.familyMemberDetails.isEmpty
-                        ? Container()
-                        : SizedBox(
-                            width: 100.w,
-                            height: 400,
-                            child: Scrollbar(
-                              thumbVisibility: true,
-                              child: ListView.separated(
-                                key: UniqueKey(),
-                                itemCount: state.familyMemberDetails.length,
-                                separatorBuilder: (context, index) {
-                                  return Divider(
-                                    color: Theme.of(context).primaryColorLight,
-                                  );
-                                },
-                                itemBuilder: (context, i) {
-                                  // Reached top of the list, show a progress indicator.
-                                  if (i < state.familyMemberDetails.length) {
-                                    return const Align(
-                                        child: CircularProgressIndicator());
-                                  }
-
-                                  int len = state.familyMemberDetails.length;
-                                  dynamic value = state
-                                      .familyMemberDetails['${(len - i - 1)}'];
-
-                                  String name = value["name"];
-                                  String relationship = value["relationship"];
-                                  String age = value["age"];
-                                  String gender = value["gender"];
-                                  String qualification = value["qualification"];
-                                  String occupation = value["occupation"];
-
-                                  return ListTile(
-                                    dense: true,
-                                    leading: Text((i + 1).toString()),
-                                    title: Text('$name ($relationship)'),
-                                    trailing: Text('$gender, $age'),
-                                    subtitle:
-                                        Text('$qualification, $occupation'),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                  ),
+                  state.familyMemberDetails.isEmpty
+                      ? Container()
+                      : sectionInfo("Family Members"),
+                  state.familyMemberDetails.isEmpty
+                      ? Container()
+                      : spacerWidget(),
+                  const FamilyMember(),
 
                   spacerWidget(),
                   spacerWidget(),

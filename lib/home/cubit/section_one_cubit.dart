@@ -78,11 +78,19 @@ class SectionOneCubit extends Cubit<SectionOneState>
     emit(state.copyWith(familyMemberDetails: data));
   }
 
-  familyMemberDetailsRemove(List<String> key) {
-    Map<String, dynamic> data = state.familyMemberDetails;
-    data.removeWhere((k, value) => key.contains(k));
+  familyMemberDetailsUpdate(String key, Map<String, dynamic> value) {
+    Map<String, dynamic> newData = Map.from(state.familyMemberDetails);
+    Map<String, dynamic> data = {key: value};
+    newData.addAll(data);
 
-    emit(state.copyWith(familyMemberDetails: data));
+    emit(state.copyWith(familyMemberDetails: newData));
+  }
+
+  familyMemberDetailsRemove(List<String> key) {
+    Map<String, dynamic> newData = Map.from(state.familyMemberDetails);
+    newData.removeWhere((k, value) => key.contains(k));
+
+    emit(state.copyWith(familyMemberDetails: newData));
   }
 
   @override

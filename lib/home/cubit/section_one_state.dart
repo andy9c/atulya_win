@@ -17,7 +17,7 @@ class SectionOneState extends Equatable with FormzMixin {
     this.primaryOccupation = const Compulsory.pure(),
     this.secondaryOccupation = const Compulsory.pure(),
     this.familyMemberDetails = const {},
-  });
+  }) : super();
 
   final Compulsory pattaNo;
   final Compulsory fullName;

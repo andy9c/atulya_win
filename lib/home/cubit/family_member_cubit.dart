@@ -14,6 +14,10 @@ class FamilyMemberCubit extends Cubit<FamilyMemberState>
     emit(const FamilyMemberState());
   }
 
+  void setState(FamilyMemberState? s) {
+    if (s != null) emit(s);
+  }
+
   void nameChanged(String value) {
     emit(state.copyWith(name: Compulsory.dirty(value)));
   }

@@ -104,7 +104,6 @@ class _TabThreeState extends State<TabThree>
     super.build(context);
     ScrollController scr3 = ScrollController();
     return BlocBuilder<SectionThreeCubit, SectionThreeState>(
-      key: UniqueKey(),
       builder: (context, state) {
         return Align(
           alignment: const Alignment(0, -1 / 3),

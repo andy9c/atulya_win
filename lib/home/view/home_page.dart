@@ -1,19 +1,22 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, unused_local_variable
 
 import 'dart:async';
 
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
 import 'package:atulya/database/create.dart';
+import 'package:atulya/database/stream.dart';
 import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
-import 'package:atulya/home/widgets/section_one_widget.dart';
 import 'package:atulya/home/widgets/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../main.dart';
 
 Future<void> execute(InternetConnectionChecker internetConnectionChecker,
     BuildContext context) async {
@@ -88,14 +91,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             // print('Data connection is available.');
             context.read<InformaticsCubit>().hasInternetChanged(true);
             String message = 'Connected to internet !';
-            showMessageBanner(context, message);
+            showMessageBanner(message);
             break;
           case InternetConnectionStatus.disconnected:
             // ignore: avoid_print
             // print('You are disconnected from the internet.');
             context.read<InformaticsCubit>().hasInternetChanged(false);
             String message = 'No internet !';
-            showMessageBanner(context, message);
+            showMessageBanner(message);
             break;
         }
       },
@@ -106,7 +109,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Future<void> dispose() async {
-    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner();
     super.dispose();
     _tabController.dispose();
     _hideFabAnimController.dispose();
@@ -213,6 +216,75 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             //printButton(context),
           ],
         ),
+      );
+    }
+
+    void listData() async {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Records'), // To display the title it is optional
+          content: SizedBox(
+            height: 600,
+            width: 400,
+            child: StreamBuilder(
+              stream:
+                  StreamData.getRecords().asyncMap((event) => event).distinct(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  );
+                }
+
+                return Scrollbar(
+                  thumbVisibility: true,
+                  child: ListView.separated(
+                    // separatorBuilder: separatorBuilder,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data!.size,
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        color: Theme.of(context).primaryColorLight,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot document = snapshot.data!.docs[index];
+                      String docName = document.id;
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+
+                      return ListTile(
+                        dense: true,
+                        leading: Text((index + 1).toString()),
+                        title: Text(docName),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ), // Message which will be pop up on the screen
+          // Action widget which will provide the user to acknowledge the choice
+          actions: [
+            ElevatedButton(
+              // FlatButton widget is used to make a text to work like a button
+              //textColor: Colors.black,
+              onPressed: () => Navigator.pop(
+                  context), // function used to perform after pressing the button
+              child: const Text('CLOSE'),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
       );
     }
 
@@ -384,20 +456,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       );
     }
 
-    Widget loadStudent() {
-      return TabBarView(
-        controller: _tabController,
-        children: const [
-          TabOne(),
-          TabTwo(),
-          TabThree(),
-          TabFour(),
-          TabFive(),
-          TabSix(),
-        ],
-      );
-    }
-
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -487,7 +545,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.view_list_rounded),
-              onPressed: () {},
+              onPressed: () {
+                listData();
+              },
             ),
             IconButton(
               icon: const Icon(Icons.save_rounded),
@@ -505,7 +565,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   if (!context.read<InformaticsCubit>().state.hasInternet) {
                     String message =
                         'Information will sync when internet is back !';
-                    showMessageBanner(context, message);
+                    showMessageBanner(message);
                   }
                   Create.execute(context);
 
@@ -517,25 +577,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   context.read<SectionSixCubit>().reset();
                 } else {
                   String message = 'Required fields are missing !';
-                  showMessageBanner(context, message);
+                  showMessageBanner(message);
                 }
-              },
-            ),
-            BlocBuilder<InformaticsCubit, InformaticsState>(
-              builder: (context, state) {
-                return IconButton(
-                  key: UniqueKey(),
-                  onPressed: () {},
-                  icon: state.hasInternet
-                      ? Icon(
-                          Icons.sync,
-                          key: UniqueKey(),
-                        )
-                      : Icon(
-                          Icons.sync_disabled_rounded,
-                          key: UniqueKey(),
-                        ),
-                );
               },
             ),
             IconButton(
@@ -544,13 +587,55 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             IconButton(
               icon: const Icon(Icons.exit_to_app_rounded),
-              onPressed: () =>
-                  context.read<AppBloc>().add(AppLogoutRequested()),
+              onPressed: () {
+                String message = "Confirm Signout !";
+
+                globalScaffoldMessenger.currentState
+                  ?..removeCurrentMaterialBanner()
+                  ..showMaterialBanner(
+                    MaterialBanner(
+                      //backgroundColor: Colors.blue,
+                      content: Text(message),
+                      //contentTextStyle: const TextStyle(color: Colors.white),
+                      onVisible: () => Future.delayed(
+                        const Duration(seconds: 7),
+                        () => globalScaffoldMessenger.currentState!
+                            .hideCurrentMaterialBanner(),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.read<AppBloc>().add(AppLogoutRequested());
+                          },
+                          child: const Text("SIGNOUT"),
+                        ),
+                        TextButton(
+                          //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                          onPressed: () {
+                            globalScaffoldMessenger.currentState!
+                                .hideCurrentMaterialBanner();
+                          },
+                          child: const Text("DISMISS"),
+                        )
+                      ],
+                    ),
+                  );
+              },
             ),
           ],
         ),
         floatingActionButton: getFab() is Container ? null : getFab(),
-        body: loadStudent(),
+        body: TabBarView(
+          controller: _tabController,
+          children: const [
+            TabOne(),
+            TabTwo(),
+            TabThree(),
+            TabFour(),
+            TabFive(),
+            TabSix(),
+          ],
+        ),
       ),
     );
   }

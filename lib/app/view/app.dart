@@ -1,34 +1,33 @@
-import 'package:responsive_framework/responsive_framework.dart';
-
-import '../../home/cubit/cubit.dart';
-import '../../main.dart';
-import '../routes/routes.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../app.dart';
-import '../../theme.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../home/cubit/cubit.dart';
+import '../../main.dart';
+import '../../theme.dart';
+import '../app.dart';
+import '../routes/routes.dart';
 
 class App extends StatelessWidget {
   const App({
     Key? key,
-    required AuthenticationRepository authenticationRepository,
-  })  : _authenticationRepository = authenticationRepository,
-        super(key: key);
+    required this.authenticationRepository,
+  }) : super(key: key);
 
-  final AuthenticationRepository _authenticationRepository;
+  final AuthenticationRepository authenticationRepository;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: _authenticationRepository,
+      value: authenticationRepository,
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (_) => AppBloc(
-              authenticationRepository: _authenticationRepository,
+              authenticationRepository: authenticationRepository,
             ),
           ),
           BlocProvider(

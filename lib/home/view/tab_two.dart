@@ -96,7 +96,6 @@ class _TabTwoState extends State<TabTwo>
 
     super.build(context);
     return BlocBuilder<SectionTwoCubit, SectionTwoState>(
-      key: UniqueKey(),
       builder: (context, state) {
         return Align(
           alignment: const Alignment(0, -1 / 3),
