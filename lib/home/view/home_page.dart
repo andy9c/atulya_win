@@ -113,6 +113,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final user = context.select((AppBloc bloc) => bloc.state.user);
     // final ScrollController scrollController = ScrollController();
 
+    if (context.read<InformaticsCubit>().state.documentID.value != null) {
+      context.read<InformaticsCubit>().isEnabledChanged(context, false);
+    } else {
+      context.read<InformaticsCubit>().isEnabledChanged(context, true);
+    }
+
     Widget registrationEmailID() {
       return Align(
         alignment: Alignment.center,
@@ -269,9 +275,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     isThreeLine: true,
                                     leading: Text((index + 1).toString()),
                                     title: Text(
-                                        '${data["s1"]["fullName"]}, (${user.email})'),
-                                    subtitle:
-                                        Text('${data["s1"]["gramPanchayat"]}'),
+                                        '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                    subtitle: Text('${data['email']}'),
                                     trailing: IconButton(
                                       onPressed: () {
                                         showDialog(
@@ -287,9 +292,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                       Icons.list_rounded,
                                                     ),
                                                     title: Text(
-                                                        '${data["s1"]["fullName"]}, (${user.email})'),
+                                                        '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
                                                     subtitle: Text(
-                                                        '${data["s1"]["gramPanchayat"]}'),
+                                                        '${data['email']}'),
                                                   ),
                                                   icon: const Icon(
                                                     Icons.delete,

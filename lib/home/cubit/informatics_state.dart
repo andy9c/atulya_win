@@ -47,15 +47,24 @@ class InformaticsState extends Equatable {
     );
   }
 
-  static Map<String, dynamic> toMap(InformaticsState state) {
-    return {
-      'tabIndex': state.tabIndex,
-    };
-  }
-
   factory InformaticsState.fromMap(Map<String, dynamic> map) {
     return InformaticsState(
       tabIndex: map['tabIndex'],
+      isEnabled: map['isEnabled'],
+      hasInternet: map['hasInternet'],
+      isEditMode: map['isEditMode'],
+      isLoadingDocument: map['isLoadingDocument'],
+      documentID: Compulsory.dirty(map['documentID']),
     );
+  }
+  static Map<String, dynamic> toMap(InformaticsState state) {
+    return {
+      'tabIndex': state.tabIndex,
+      'isEnabled': state.isEnabled,
+      'hasInternet': state.hasInternet,
+      'isEditMode': state.isEditMode,
+      'isLoadingDocument': state.isLoadingDocument,
+      'documentID': state.documentID.value,
+    };
   }
 }
