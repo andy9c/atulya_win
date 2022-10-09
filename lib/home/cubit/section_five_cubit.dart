@@ -56,10 +56,6 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
     emit(state.copyWith(aware: Compulsory.dirty(value)));
   }
 
-  void lawChanged(String value) {
-    emit(state.copyWith(law: Compulsory.dirty(value)));
-  }
-
   void gramsabhaChanged(String value) {
     emit(state.copyWith(gramsabha: Compulsory.dirty(value)));
   }

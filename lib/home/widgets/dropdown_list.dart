@@ -17,6 +17,27 @@ List<String> relationshipList = [
   "OTHER",
 ];
 
+List<String> communityList = [
+  "BHUIYA",
+  "CHIK/BADAIK",
+  "DOM",
+  "GANDA",
+  "GHASI",
+  "GOND",
+  "GOUD",
+  "KISAN",
+  "KHADIA",
+  "KUMBHAR",
+  "LOHAR",
+  "MAHLI",
+  "MUNDA",
+  "ORAON",
+  "PANO",
+  "SUNAR",
+  "TELI",
+  "OTHER",
+];
+
 List<String> genderList = [
   "MALE",
   "FEMALE",
@@ -113,9 +134,10 @@ List<String> professionList = [
 
 List<String> qualificationList = [
   "ILLITERATE",
-  "PRIMARY SCHOOL",
-  "SECONDARY SCHOOL",
-  "HIGHER SECONDARY",
+  "PRIMARY SCHOOL (1-5)",
+  "UPPER PRIMARY SCHOOL (6-8)",
+  "SECONDARY SCHOOL (9-10)",
+  "HIGHER SECONDARY (11-12)",
   "DIPLOMA",
   "BACHELOR STUDIES",
   "MASTER STUDIES",
@@ -142,7 +164,7 @@ List<String> sourcesOfincomeList = [
 List<String> protestActionList = [
   "RETURNED THE NOTIFICATION",
   "SUBMITTED THE GRIEVANCE TO THE COLLECTOR OFFICE",
-  "JOINED THE PROTEST IN BHUBANESWAR/ SUNDARARGH",
+  "JOINED THE PROTEST IN BHUBANESWAR/SUNDERGARH",
 ];
 
 List<String> cropPurposeList = [

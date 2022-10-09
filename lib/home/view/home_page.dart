@@ -634,7 +634,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       length: 6,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(configSchoolName),
+          title: BlocBuilder<SectionOneCubit, SectionOneState>(
+            builder: (context, state) {
+              return (state.fullName.value ?? '').isEmpty
+                  ? Text((configSchoolName))
+                  : Text('${state.fullName.value}');
+            },
+          ),
           bottom: TabBar(
             controller: _tabController,
             labelColor: Colors.blueGrey,

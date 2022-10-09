@@ -53,8 +53,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .cropsPatternChanged({"paddy": value});
               },
-              title: const Text("Select Paddy"),
-              buttonText: const Text("Select Paddy"),
+              title: const Text("Select Paddy (Dhan)"),
+              buttonText: const Text("Select Paddy (Dhan)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),
@@ -83,8 +83,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .cropsPatternChanged({"millet": value});
               },
-              title: const Text("Select Millet"),
-              buttonText: const Text("Select Millet"),
+              title: const Text("Select Millet (Madwa)"),
+              buttonText: const Text("Select Millet (Madwa)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),
@@ -113,8 +113,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .cropsPatternChanged({"gangai": value});
               },
-              title: const Text("Select Gangai"),
-              buttonText: const Text("Select Gangai"),
+              title: const Text("Select Gangai (Jowar)"),
+              buttonText: const Text("Select Gangai (Jowar)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),
@@ -143,8 +143,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .cropsPatternChanged({"maize": value});
               },
-              title: const Text("Select Maize"),
-              buttonText: const Text("Select Maize"),
+              title: const Text("Select Maize (Makka)"),
+              buttonText: const Text("Select Maize (Makka)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),
@@ -590,8 +590,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .cropsPatternChanged({"jada": value});
               },
-              title: const Text("Select Jada"),
-              buttonText: const Text("Select Jada"),
+              title: const Text("Select Jada (Castor)"),
+              buttonText: const Text("Select Jada (Castor)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),
@@ -982,8 +982,8 @@ Widget cropAndVegetable() {
                     .read<SectionThreeCubit>()
                     .vegetablesPatternChanged({"yam": value});
               },
-              title: const Text("Select Yam"),
-              buttonText: const Text("Select Yam"),
+              title: const Text("Select Yam (Pechki)"),
+              buttonText: const Text("Select Yam (Pechki)"),
               searchable: true,
               barrierColor: Colors.blueGrey.withOpacity(0.3),
               items: cropPurposeList.map((e) => MultiSelectItem(e, e)).toList(),

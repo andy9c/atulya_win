@@ -14,6 +14,10 @@ FilteringTextInputFormatter intFormat() {
   return FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
 }
 
+FilteringTextInputFormatter multipleIntFormat() {
+  return FilteringTextInputFormatter.allow(RegExp(r'[0-9 \,\/\\]'));
+}
+
 FilteringTextInputFormatter doubleFormat() {
   return FilteringTextInputFormatter.allow(RegExp(r'[0-9\.]'));
 }

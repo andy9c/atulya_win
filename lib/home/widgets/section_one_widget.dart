@@ -575,13 +575,6 @@ class CommunityName extends StatefulWidget {
 }
 
 class _CommunityNameState extends State<CommunityName> {
-  late TextEditingController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SectionOneCubit, SectionOneState>(
@@ -595,43 +588,46 @@ class _CommunityNameState extends State<CommunityName> {
               vertical: 0,
               horizontal: 5.w,
             ),
-            child: TextFormField(
-              enabled: context.read<InformaticsCubit>().state.isEnabled,
-              inputFormatters: [
-                nameFormat(),
-                UpperCaseFormatter(),
-              ],
-              // initialValue: state.nameOfCommunity.value,
-              controller: _controller = TextEditingController()
-                ..text = state.nameOfCommunity.value ?? ''
-                ..selection = TextSelection.fromPosition(
-                  TextPosition(
-                    offset: state.nameOfCommunity.value == null
-                        ? 0
-                        : _controller.selection.base.offset >
-                                state.nameOfCommunity.value.length
-                            ? state.nameOfCommunity.value.length
-                            : _controller.selection.base.offset,
-                  ),
-                ),
-              maxLines: 1,
-              textCapitalization: TextCapitalization.characters,
-              textInputAction: TextInputAction.next,
+            child: DropdownButtonFormField<String>(
               key: const Key('sectionOne_communityName'),
-              onChanged: (value) =>
-                  context.read<SectionOneCubit>().nameOfCommunityChanged(value),
-              obscureText: false,
+              isExpanded: true,
+              value: state.nameOfCommunity.value,
+              icon: const Icon(Icons.arrow_downward_rounded),
+              iconSize: 24,
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
               decoration: InputDecoration(
                 prefixIcon: const Padding(
                   padding:
                       EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.group_rounded, color: Colors.lightBlue),
+                  child: Icon(Icons.group, color: Colors.lightBlue),
                 ),
                 border: const OutlineInputBorder(),
                 labelText: "Name of the Community",
                 helperText: '',
                 errorText:
                     state.nameOfCommunity.invalid ? 'required field' : null,
+              ),
+              onChanged: !context.read<InformaticsCubit>().state.isEnabled
+                  ? null
+                  : (String? community) {
+                      context
+                          .read<SectionOneCubit>()
+                          .nameOfCommunityChanged(community!);
+                    },
+              items:
+                  communityList.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: const Text(
+                "Please select Community Name",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ),

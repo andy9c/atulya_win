@@ -626,7 +626,10 @@ class _TabFiveState extends State<TabFive>
                       ),
                     ),
                   ),
-                  sectionInfo("If no, what action has been taken by you?"),
+                  sectionInfo("Has any action been taken by you ?"),
+                  spacerWidget(),
+                  sectionInfo(
+                      "1) Returned The Notification\n2) Submitted The Grievance To The Collector Office\n3) Joined The Protest In Bhubaneswar/Sundergarh"),
                   spacerWidget(),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -646,7 +649,7 @@ class _TabFiveState extends State<TabFive>
                               .whatActionChanged(value);
                         },
                         buttonText: const Text(
-                          'Select Action',
+                          'Select Action Taken',
                           style: TextStyle(
                             color: Colors.lightBlue,
                           ),
@@ -800,61 +803,6 @@ class _TabFiveState extends State<TabFive>
                           helperText: '',
                           errorText:
                               state.aware.invalid ? 'required field' : null,
-                        ),
-                        items: yesNoList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        hint: const Text(
-                          "Please select yes/no",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                  sectionInfo(
-                      "Are you aware of the law under which the land is being taken?"),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        value: state.law.value,
-                        onChanged:
-                            !context.read<InformaticsCubit>().state.isEnabled
-                                ? null
-                                : (String? value) => context
-                                    .read<SectionFiveCubit>()
-                                    .lawChanged(value!),
-                        isExpanded: true,
-                        //value: "YES",
-                        icon: const Icon(Icons.arrow_downward_rounded),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child:
-                                Icon(Icons.wc_rounded, color: Colors.lightBlue),
-                          ),
-                          border: const OutlineInputBorder(),
-                          labelText:
-                              "Are you aware of the law under which the land is being taken?",
-                          helperText: '',
-                          errorText:
-                              state.law.invalid ? 'required field' : null,
                         ),
                         items: yesNoList
                             .map<DropdownMenuItem<String>>((String value) {

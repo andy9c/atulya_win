@@ -281,7 +281,7 @@ class _TabFourState extends State<TabFour>
                         enabled:
                             context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
-                          intFormat(),
+                          multipleIntFormat(),
                         ],
                         controller: c2 = TextEditingController()
                           ..text = state.yearOflandLost.value ?? ''
@@ -298,7 +298,7 @@ class _TabFourState extends State<TabFour>
                         maxLines: 1,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         key: const Key('sectionFour_yearOfLandLost'),
                         onChanged: (value) => context
                             .read<SectionFourCubit>()
@@ -312,11 +312,13 @@ class _TabFourState extends State<TabFour>
                           ),
                           border: OutlineInputBorder(),
                           labelText: "Year of the land lost",
-                          helperText: '',
+                          helperText:
+                              'Use (comma, space, / or \\ as separators)',
                         ),
                       ),
                     ),
                   ),
+                  spacerWidget(),
                   Align(
                     alignment: Alignment.center,
                     child: Padding(

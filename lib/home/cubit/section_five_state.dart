@@ -10,7 +10,6 @@ class SectionFiveState extends Equatable with FormzMixin {
     this.givenConsent = const Compulsory.pure(),
     this.reason = "",
     this.aware = const Compulsory.pure(),
-    this.law = const Compulsory.pure(),
     this.gramsabha = const Compulsory.pure(),
     this.participate = const Compulsory.pure(),
     this.resolution = "",
@@ -30,7 +29,6 @@ class SectionFiveState extends Equatable with FormzMixin {
   final Compulsory givenConsent;
   final String reason;
   final Compulsory aware;
-  final Compulsory law;
   final Compulsory gramsabha;
   final Compulsory participate;
   final String resolution;
@@ -52,7 +50,6 @@ class SectionFiveState extends Equatable with FormzMixin {
       givenConsent,
       reason,
       aware,
-      law,
       gramsabha,
       participate,
       resolution,
@@ -73,7 +70,6 @@ class SectionFiveState extends Equatable with FormzMixin {
         whatAction,
         givenConsent,
         aware,
-        law,
         gramsabha,
         participate,
         compensationAware,
@@ -91,7 +87,6 @@ class SectionFiveState extends Equatable with FormzMixin {
       'givenConsent': state.givenConsent.value,
       'reason': state.reason,
       'aware': state.aware.value,
-      'law': state.law.value,
       'gramsabha': state.gramsabha.value,
       'participate': state.participate.value,
       'resolution': state.resolution,
@@ -113,7 +108,6 @@ class SectionFiveState extends Equatable with FormzMixin {
       givenConsent: Compulsory.dirty(map['givenConsent']),
       reason: map['reason'],
       aware: Compulsory.dirty(map['aware']),
-      law: Compulsory.dirty(map['law']),
       gramsabha: Compulsory.dirty(map['gramsabha']),
       participate: Compulsory.dirty(map['participate']),
       resolution: map['resolution'],
@@ -134,7 +128,6 @@ class SectionFiveState extends Equatable with FormzMixin {
     Compulsory? givenConsent,
     String? reason,
     Compulsory? aware,
-    Compulsory? law,
     Compulsory? gramsabha,
     Compulsory? participate,
     String? resolution,
@@ -154,7 +147,6 @@ class SectionFiveState extends Equatable with FormzMixin {
       givenConsent: givenConsent ?? this.givenConsent,
       reason: reason ?? this.reason,
       aware: aware ?? this.aware,
-      law: law ?? this.law,
       gramsabha: gramsabha ?? this.gramsabha,
       participate: participate ?? this.participate,
       resolution: resolution ?? this.resolution,
