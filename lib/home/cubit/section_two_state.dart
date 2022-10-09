@@ -16,6 +16,7 @@ class SectionTwoState extends Equatable with FormzMixin {
     this.appliedOwnership = const Compulsory.pure(),
     this.receivedEntitlement = const Compulsory.pure(),
     this.cropTypes = "",
+    this.reloadToggle = false,
   });
 
   final Compulsory generationCount;
@@ -32,6 +33,7 @@ class SectionTwoState extends Equatable with FormzMixin {
   final Compulsory appliedOwnership;
   final Compulsory receivedEntitlement;
   final String cropTypes;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
@@ -50,6 +52,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       appliedOwnership,
       receivedEntitlement,
       cropTypes,
+      reloadToggle,
     ];
   }
 
@@ -68,6 +71,7 @@ class SectionTwoState extends Equatable with FormzMixin {
     Compulsory? appliedOwnership,
     Compulsory? receivedEntitlement,
     String? cropTypes,
+    bool? reloadToggle,
   }) {
     return SectionTwoState(
       generationCount: generationCount ?? this.generationCount,
@@ -84,6 +88,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       appliedOwnership: appliedOwnership ?? this.appliedOwnership,
       receivedEntitlement: receivedEntitlement ?? this.receivedEntitlement,
       cropTypes: cropTypes ?? this.cropTypes,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 

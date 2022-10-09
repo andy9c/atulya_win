@@ -127,11 +127,14 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.generationCount.value,
-                        onChanged: (String? value) {
-                          context
-                              .read<SectionTwoCubit>()
-                              .generationCountChanged(value!);
-                        },
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) {
+                                    context
+                                        .read<SectionTwoCubit>()
+                                        .generationCountChanged(value!);
+                                  },
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -177,11 +180,14 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.ownLand.value,
-                        onChanged: (String? value) {
-                          context
-                              .read<SectionTwoCubit>()
-                              .ownLandChanged(value!);
-                        },
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) {
+                                    context
+                                        .read<SectionTwoCubit>()
+                                        .ownLandChanged(value!);
+                                  },
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -224,6 +230,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           nameFormat(),
                           UpperCaseFormatter(),
@@ -268,6 +276,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           nameFormat(),
                           UpperCaseFormatter(),
@@ -314,11 +324,14 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.relationship.value,
-                        onChanged: (String? value) {
-                          context
-                              .read<SectionTwoCubit>()
-                              .relationshipChanged(value!);
-                        },
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) {
+                                    context
+                                        .read<SectionTwoCubit>()
+                                        .relationshipChanged(value!);
+                                  },
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -365,11 +378,14 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.isAlive.value,
-                        onChanged: (String? value) {
-                          context
-                              .read<SectionTwoCubit>()
-                              .isAliveChanged(value!);
-                        },
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) {
+                                    context
+                                        .read<SectionTwoCubit>()
+                                        .isAliveChanged(value!);
+                                  },
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -415,6 +431,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           intFormat(),
                         ],
@@ -468,6 +486,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           intFormat(),
                         ],
@@ -523,6 +543,10 @@ class _TabTwoState extends State<TabTwo>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -590,6 +614,10 @@ class _TabTwoState extends State<TabTwo>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -657,6 +685,10 @@ class _TabTwoState extends State<TabTwo>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -724,6 +756,10 @@ class _TabTwoState extends State<TabTwo>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -791,6 +827,10 @@ class _TabTwoState extends State<TabTwo>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -858,9 +898,12 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.cultivateAnabadi.value,
-                        onChanged: (String? value) => context
-                            .read<SectionTwoCubit>()
-                            .cultivateAnabadiChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionTwoCubit>()
+                                    .cultivateAnabadiChanged(value!),
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -905,6 +948,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           intFormat(),
                         ],
@@ -951,9 +996,12 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.appliedOwnership.value,
-                        onChanged: (String? value) => context
-                            .read<SectionTwoCubit>()
-                            .appliedOwnershipChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionTwoCubit>()
+                                    .appliedOwnershipChanged(value!),
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -1000,9 +1048,12 @@ class _TabTwoState extends State<TabTwo>
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
                         value: state.receivedEntitlement.value,
-                        onChanged: (String? value) => context
-                            .read<SectionTwoCubit>()
-                            .receivedEntitlementChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionTwoCubit>()
+                                    .receivedEntitlementChanged(value!),
                         icon: const Icon(Icons.arrow_downward_rounded),
                         iconSize: 24,
                         elevation: 16,
@@ -1047,6 +1098,8 @@ class _TabTwoState extends State<TabTwo>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           textFormat(),
                           UpperCaseFormatter(),

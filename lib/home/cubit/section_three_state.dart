@@ -11,6 +11,7 @@ class SectionThreeState extends Equatable with FormzMixin {
     this.otherForestProduce = "",
     this.freshWaterItems = const [],
     this.otherFreshWaterItems = "",
+    this.reloadToggle = false,
   });
 
   final Compulsory incomeSources;
@@ -22,6 +23,7 @@ class SectionThreeState extends Equatable with FormzMixin {
   final String otherForestProduce;
   final List<dynamic> freshWaterItems;
   final String otherFreshWaterItems;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
@@ -35,6 +37,7 @@ class SectionThreeState extends Equatable with FormzMixin {
       otherForestProduce,
       freshWaterItems,
       otherFreshWaterItems,
+      reloadToggle,
     ];
   }
 
@@ -48,6 +51,7 @@ class SectionThreeState extends Equatable with FormzMixin {
     String? otherForestProduce,
     List<String>? freshWaterItems,
     String? otherFreshWaterItems,
+    bool? reloadToggle,
   }) {
     return SectionThreeState(
       incomeSources: incomeSources ?? this.incomeSources,
@@ -59,6 +63,7 @@ class SectionThreeState extends Equatable with FormzMixin {
       otherForestProduce: otherForestProduce ?? this.otherForestProduce,
       freshWaterItems: freshWaterItems ?? this.freshWaterItems,
       otherFreshWaterItems: otherFreshWaterItems ?? this.otherFreshWaterItems,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 

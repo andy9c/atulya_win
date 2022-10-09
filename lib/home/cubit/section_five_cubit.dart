@@ -10,6 +10,10 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
     with HydratedMixin, ReplayCubitMixin {
   SectionFiveCubit() : super(const SectionFiveState());
 
+  void reloadToggleChanged() {
+    emit(state.copyWith(reloadToggle: !state.reloadToggle));
+  }
+
   void reset() {
     emit(const SectionFiveState());
   }

@@ -105,6 +105,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -152,6 +154,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -202,6 +206,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -254,6 +260,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -306,6 +314,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -355,6 +365,8 @@ class _TabSixState extends State<TabSix>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),

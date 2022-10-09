@@ -4,3 +4,4 @@ export 'elements.dart';
 export 'build_pdf.dart';
 export 'message.dart';
 export 'section_one_widget.dart';
+export 'section_three_widget.dart';

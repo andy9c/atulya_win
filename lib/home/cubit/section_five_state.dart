@@ -19,6 +19,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     this.happyWithCompensation = const Compulsory.pure(),
     this.resettlementPlan = const Compulsory.pure(),
     this.resettlementOpinion = "",
+    this.reloadToggle = false,
   });
 
   final Compulsory oclAcquiring;
@@ -38,6 +39,7 @@ class SectionFiveState extends Equatable with FormzMixin {
   final Compulsory happyWithCompensation;
   final Compulsory resettlementPlan;
   final String resettlementOpinion;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
@@ -59,6 +61,7 @@ class SectionFiveState extends Equatable with FormzMixin {
       happyWithCompensation,
       resettlementPlan,
       resettlementOpinion,
+      reloadToggle,
     ];
   }
 
@@ -140,6 +143,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     Compulsory? happyWithCompensation,
     Compulsory? resettlementPlan,
     String? resettlementOpinion,
+    bool? reloadToggle,
   }) {
     return SectionFiveState(
       oclAcquiring: oclAcquiring ?? this.oclAcquiring,
@@ -160,6 +164,7 @@ class SectionFiveState extends Equatable with FormzMixin {
           happyWithCompensation ?? this.happyWithCompensation,
       resettlementPlan: resettlementPlan ?? this.resettlementPlan,
       resettlementOpinion: resettlementOpinion ?? this.resettlementOpinion,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 }

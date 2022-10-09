@@ -12,6 +12,7 @@ class SectionFourState extends Equatable with FormzMixin {
     this.employmentDetails = "",
     this.landDetails = "",
     this.otherComments = "",
+    this.reloadToggle = false,
   });
 
   final Compulsory lostland;
@@ -24,6 +25,7 @@ class SectionFourState extends Equatable with FormzMixin {
   final String employmentDetails;
   final String landDetails;
   final String otherComments;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
@@ -38,6 +40,7 @@ class SectionFourState extends Equatable with FormzMixin {
       employmentDetails,
       landDetails,
       otherComments,
+      reloadToggle,
     ];
   }
 
@@ -52,6 +55,7 @@ class SectionFourState extends Equatable with FormzMixin {
     String? employmentDetails,
     String? landDetails,
     String? otherComments,
+    bool? reloadToggle,
   }) {
     return SectionFourState(
       lostland: lostland ?? this.lostland,
@@ -64,6 +68,7 @@ class SectionFourState extends Equatable with FormzMixin {
       employmentDetails: employmentDetails ?? this.employmentDetails,
       landDetails: landDetails ?? this.landDetails,
       otherComments: otherComments ?? this.otherComments,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 

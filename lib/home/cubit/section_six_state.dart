@@ -8,6 +8,7 @@ class SectionSixState extends Equatable with FormzMixin {
     this.miningActivity = const Compulsory.pure(),
     this.discussion = const Compulsory.pure(),
     this.comments = "",
+    this.reloadToggle = false,
   });
 
   final Compulsory landMean;
@@ -16,6 +17,7 @@ class SectionSixState extends Equatable with FormzMixin {
   final Compulsory miningActivity;
   final Compulsory discussion;
   final String comments;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
@@ -26,6 +28,7 @@ class SectionSixState extends Equatable with FormzMixin {
       miningActivity,
       discussion,
       comments,
+      reloadToggle,
     ];
   }
 
@@ -67,6 +70,7 @@ class SectionSixState extends Equatable with FormzMixin {
     Compulsory? miningActivity,
     Compulsory? discussion,
     String? comments,
+    bool? reloadToggle,
   }) {
     return SectionSixState(
       landMean: landMean ?? this.landMean,
@@ -75,6 +79,7 @@ class SectionSixState extends Equatable with FormzMixin {
       miningActivity: miningActivity ?? this.miningActivity,
       discussion: discussion ?? this.discussion,
       comments: comments ?? this.comments,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 }
