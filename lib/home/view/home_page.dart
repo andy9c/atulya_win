@@ -770,6 +770,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             .hasInternet) {
                                           String message =
                                               'Information will sync when internet is back !';
+
                                           showMessageBanner(message);
                                         } else {
                                           String message = 'Record Saved !';
@@ -821,9 +822,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 );
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.picture_as_pdf),
-              onPressed: () => {},
+            const IconButton(
+              icon: Icon(Icons.picture_as_pdf),
+              onPressed: null,
             ),
             IconButton(
               icon: const Icon(Icons.exit_to_app_rounded),

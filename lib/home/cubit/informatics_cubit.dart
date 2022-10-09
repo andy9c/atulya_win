@@ -1,4 +1,5 @@
 import 'package:atulya/home/cubit/cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
@@ -15,14 +16,23 @@ class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
   }
 
   void isEnabledChanged(BuildContext context, bool value) {
-    emit(state.copyWith(isEnabled: value));
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String emailID = user!.email.toString();
 
-    context.read<SectionOneCubit>().reloadToggleChanged();
-    context.read<SectionTwoCubit>().reloadToggleChanged();
-    context.read<SectionThreeCubit>().reloadToggleChanged();
-    context.read<SectionFourCubit>().reloadToggleChanged();
-    context.read<SectionFiveCubit>().reloadToggleChanged();
-    context.read<SectionSixCubit>().reloadToggleChanged();
+    final adminDomain = RegExp(r'^[A-Za-z0-9]*@admin\.edu$');
+
+    if (!adminDomain.hasMatch(emailID)) {
+      emit(state.copyWith(isEnabled: value));
+
+      context.read<SectionOneCubit>().reloadToggleChanged();
+      context.read<SectionTwoCubit>().reloadToggleChanged();
+      context.read<SectionThreeCubit>().reloadToggleChanged();
+      context.read<SectionFourCubit>().reloadToggleChanged();
+      context.read<SectionFiveCubit>().reloadToggleChanged();
+      context.read<SectionSixCubit>().reloadToggleChanged();
+    } else if (value == true) {
+      emit(state.copyWith(isEnabled: value));
+    }
   }
 
   void hasInternetChanged(bool value) {
