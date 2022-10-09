@@ -10,16 +10,16 @@ class SectionOneCubit extends Cubit<SectionOneState>
     with HydratedMixin, ReplayCubitMixin {
   SectionOneCubit() : super(const SectionOneState());
 
+  void reloadToggleChanged() {
+    emit(state.copyWith(reloadToggle: !state.reloadToggle));
+  }
+
   void reset() {
     emit(const SectionOneState());
   }
 
   void setState(SectionOneState? s) {
     if (s != null) emit(s);
-  }
-
-  void pattaChanged(String value) {
-    emit(state.copyWith(pattaNo: Compulsory.dirty(value)));
   }
 
   void fullNameChanged(String value) {

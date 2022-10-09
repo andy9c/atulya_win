@@ -344,79 +344,6 @@ class _MemberOccupationState extends State<MemberOccupation> {
   }
 }
 
-class PattaNumber extends StatefulWidget {
-  const PattaNumber({Key? key}) : super(key: key);
-
-  @override
-  State<PattaNumber> createState() => _PattaNumberState();
-}
-
-class _PattaNumberState extends State<PattaNumber> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SectionOneCubit, SectionOneState>(
-      buildWhen: (previous, current) => previous.pattaNo != current.pattaNo,
-      builder: (context, state) {
-        return Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 0,
-              horizontal: 5.w,
-            ),
-            child: TextFormField(
-              enabled: context.read<InformaticsCubit>().state.isEnabled,
-              inputFormatters: [
-                alphaNumericFormat(),
-                UpperCaseFormatter(),
-              ],
-              // initialValue: state.pattaNo.value,
-              controller: _controller = TextEditingController()
-                ..text = state.pattaNo.value ?? ''
-                ..selection = TextSelection.fromPosition(
-                  TextPosition(
-                    offset: state.pattaNo.value == null
-                        ? 0
-                        : _controller.selection.base.offset >
-                                state.pattaNo.value.length
-                            ? state.pattaNo.value.length
-                            : _controller.selection.base.offset,
-                  ),
-                ),
-              maxLines: 1,
-              textCapitalization: TextCapitalization.characters,
-              textInputAction: TextInputAction.next,
-              key: const Key('sectionOne_pattaNo'),
-              onChanged: (value) =>
-                  context.read<SectionOneCubit>().pattaChanged(value),
-              obscureText: false,
-              decoration: InputDecoration(
-                prefixIcon: const Padding(
-                  padding:
-                      EdgeInsets.only(top: 0), // add padding to adjust icon
-                  child: Icon(Icons.person, color: Colors.lightBlue),
-                ),
-                border: const OutlineInputBorder(),
-                labelText: "Patta No",
-                helperText: '',
-                errorText: state.pattaNo.invalid ? 'required field' : null,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
 class RespondentFullName extends StatefulWidget {
   const RespondentFullName({Key? key}) : super(key: key);
 
@@ -1292,121 +1219,146 @@ class _FamilyMemberState extends State<FamilyMember> {
       builder: (context, state) {
         Map<String, dynamic> familyMembers = state.familyMemberDetails;
 
-        List<Widget> buttons = [];
-
-        familyMembers.forEach((key, value) {
-          String name = value['name'] ?? '';
-          String relationship = value['relationship'] ?? '';
-          String age = value['age'] ?? '';
-          String gender = value['gender'] ?? '';
-          String qualification = value['qualification'] ?? '';
-          String occupation = value['occupation'] ?? '';
-
-          Widget x = Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 5.w,
-              vertical: 8,
+        Widget addButton = ElevatedButton(
+          onPressed: !context.read<InformaticsCubit>().state.isEnabled
+              ? null
+              : () {
+                  addFamilyMembers(null, null);
+                },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 50,
+              vertical: 20,
             ),
-            child: BlocBuilder<SectionOneCubit, SectionOneState>(
-              builder: (context, state) {
-                return state.familyMemberDetails.containsKey(key)
-                    ? ElevatedButton(
-                        onLongPress:
-                            !context.read<InformaticsCubit>().state.isEnabled
-                                ? null
-                                : () {
-                                    String message = "Confirm Delete ($name) !";
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            // backgroundColor: Colors.blueAccent,
+          ),
+          child: const Text('Add Family Members'),
+        );
 
-                                    globalScaffoldMessenger.currentState
-                                      ?..removeCurrentMaterialBanner()
-                                      ..showMaterialBanner(
-                                        MaterialBanner(
-                                          //backgroundColor: Colors.blue,
-                                          content: Text(message),
-                                          //contentTextStyle: const TextStyle(color: Colors.white),
-                                          onVisible: () => Future.delayed(
-                                            const Duration(seconds: 7),
-                                            () => globalScaffoldMessenger
-                                                .currentState!
-                                                .hideCurrentMaterialBanner(),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                context
-                                                    .read<SectionOneCubit>()
-                                                    .familyMemberDetailsRemove(
-                                                        [key]);
+        List<Widget> widgets = [spacerWidget(), addButton, spacerWidget()];
 
-                                                globalScaffoldMessenger
-                                                    .currentState!
-                                                    .hideCurrentMaterialBanner();
-                                              },
-                                              child: const Text("DELETE"),
-                                            ),
-                                            TextButton(
-                                              //style: TextButton.styleFrom(foregroundColor: Colors.white),
-                                              onPressed: () {
-                                                globalScaffoldMessenger
-                                                    .currentState!
-                                                    .hideCurrentMaterialBanner();
-                                              },
-                                              child: const Text("CANCEL"),
-                                            )
-                                          ],
+        familyMembers.forEach(
+          (key, value) {
+            String name = value['name'] ?? '';
+            String relationship = value['relationship'] ?? '';
+            String age = value['age'] ?? '';
+            String gender = value['gender'] ?? '';
+            String qualification = value['qualification'] ?? '';
+            String occupation = value['occupation'] ?? '';
+
+            Widget x = Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 5.w,
+                vertical: 8,
+              ),
+              child: BlocBuilder<SectionOneCubit, SectionOneState>(
+                builder: (context, state) {
+                  return state.familyMemberDetails.containsKey(key)
+                      ? ElevatedButton(
+                          onLongPress: !context
+                                  .read<InformaticsCubit>()
+                                  .state
+                                  .isEnabled
+                              ? null
+                              : () {
+                                  String message = "Confirm Delete ($name) !";
+
+                                  globalScaffoldMessenger.currentState
+                                    ?..removeCurrentMaterialBanner()
+                                    ..showMaterialBanner(
+                                      MaterialBanner(
+                                        //backgroundColor: Colors.blue,
+                                        content: Text(message),
+                                        //contentTextStyle: const TextStyle(color: Colors.white),
+                                        onVisible: () => Future.delayed(
+                                          const Duration(seconds: 7),
+                                          () => globalScaffoldMessenger
+                                              .currentState!
+                                              .hideCurrentMaterialBanner(),
                                         ),
-                                      );
-                                  },
-                        onPressed:
-                            !context.read<InformaticsCubit>().state.isEnabled
-                                ? null
-                                : () {
-                                    FamilyMemberState currentState =
-                                        context.read<FamilyMemberCubit>().state;
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              context
+                                                  .read<SectionOneCubit>()
+                                                  .familyMemberDetailsRemove(
+                                                      [key]);
 
-                                    FamilyMemberState? seeState =
-                                        FamilyMemberCubit().fromJson(
-                                            value as Map<String, dynamic>);
+                                              globalScaffoldMessenger
+                                                  .currentState!
+                                                  .hideCurrentMaterialBanner();
+                                            },
+                                            child: const Text("DELETE"),
+                                          ),
+                                          TextButton(
+                                            //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                                            onPressed: () {
+                                              globalScaffoldMessenger
+                                                  .currentState!
+                                                  .hideCurrentMaterialBanner();
+                                            },
+                                            child: const Text("CANCEL"),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                },
+                          onPressed: !context
+                                  .read<InformaticsCubit>()
+                                  .state
+                                  .isEnabled
+                              ? null
+                              : () {
+                                  FamilyMemberState currentState =
+                                      context.read<FamilyMemberCubit>().state;
 
-                                    context
-                                        .read<FamilyMemberCubit>()
-                                        .setState(seeState);
+                                  FamilyMemberState? seeState =
+                                      FamilyMemberCubit().fromJson(
+                                          value as Map<String, dynamic>);
 
-                                    addFamilyMembers(key, currentState);
-                                  },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                            vertical: 20,
+                                  context
+                                      .read<FamilyMemberCubit>()
+                                      .setState(seeState);
+
+                                  addFamilyMembers(key, currentState);
+                                },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 50,
+                              vertical: 20,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            // backgroundColor: Colors.blueAccent,
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '$name, $relationship, $age, $gender, $qualification, $occupation',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          // backgroundColor: Colors.blueAccent,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '$name, $relationship, $age, $gender, $qualification, $occupation',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      )
-                    : Container();
-              },
-            ),
-          );
-          buttons.add(x);
-        });
+                        )
+                      : Container();
+                },
+              ),
+            );
+            widgets.add(x);
+          },
+        );
 
         return Column(
-          children: buttons,
+          children: widgets,
         );
       },
     );
   }
 
-  void addFamilyMembers(String key, FamilyMemberState currentState) async {
+  void addFamilyMembers(String? key, FamilyMemberState? currentState) async {
     final ScrollController scrollController = ScrollController();
 
     await showDialog(
@@ -1453,13 +1405,19 @@ class _FamilyMemberState extends State<FamilyMember> {
                 //textColor: Colors.black,
                 onPressed: state.status.isValidated
                     ? () {
-                        context
-                            .read<SectionOneCubit>()
-                            .familyMemberDetailsUpdate(
-                                key, FamilyMemberState.toMap(state));
+                        if (key == null) {
+                          context
+                              .read<SectionOneCubit>()
+                              .familyMemberDetailsAdd(
+                                  FamilyMemberState.toMap(state));
+                        } else {
+                          context
+                              .read<SectionOneCubit>()
+                              .familyMemberDetailsUpdate(
+                                  key, FamilyMemberState.toMap(state));
+                        }
 
                         context.read<FamilyMemberCubit>().reset();
-
                         Navigator.pop(context);
                       }
                     : null, // function used to perform after pressing the button

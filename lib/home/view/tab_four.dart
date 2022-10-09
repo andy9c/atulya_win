@@ -110,9 +110,12 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.lostland.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFourCubit>()
-                            .lostlandChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFourCubit>()
+                                    .lostlandChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -157,33 +160,38 @@ class _TabFourState extends State<TabFour>
                       vertical: 0,
                       horizontal: 5.w,
                     ),
-                    child: MultiSelectDialogField(
-                      key: GlobalKey(),
-                      initialValue: state.lostLandtoprojects.value,
-                      onConfirm: (value) {
-                        context
-                            .read<SectionFourCubit>()
-                            .lostLandtoprojectsChanged(value);
-                      },
-                      title: const Text("Select Projects"),
-                      buttonText: const Text(
-                        "Select Projects",
-                        style: TextStyle(
-                          color: Colors.lightBlue,
+                    child: AbsorbPointer(
+                      absorbing:
+                          !context.read<InformaticsCubit>().state.isEnabled,
+                      child: MultiSelectDialogField(
+                        key: GlobalKey(),
+                        initialValue: List<String>.from(
+                            state.lostLandtoprojects.value ?? []),
+                        onConfirm: (value) {
+                          context
+                              .read<SectionFourCubit>()
+                              .lostLandtoprojectsChanged(value);
+                        },
+                        title: const Text("Select Projects"),
+                        buttonText: const Text(
+                          "Select Projects",
+                          style: TextStyle(
+                            color: Colors.lightBlue,
+                          ),
                         ),
-                      ),
-                      searchable: true,
-                      barrierColor: Colors.blueGrey.withOpacity(0.3),
-                      items: projectLossList
-                          .map((e) => MultiSelectItem(e, e))
-                          .toList(),
-                      listType: MultiSelectListType.CHIP,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            // color: Colors.green,
-                            // width: 8,
-                            ),
-                        borderRadius: BorderRadius.circular(8),
+                        searchable: true,
+                        barrierColor: Colors.blueGrey.withOpacity(0.3),
+                        items: projectLossList
+                            .map((e) => MultiSelectItem(e, e))
+                            .toList(),
+                        listType: MultiSelectListType.CHIP,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              // color: Colors.green,
+                              // width: 8,
+                              ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ),
@@ -201,6 +209,10 @@ class _TabFourState extends State<TabFour>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -266,6 +278,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           intFormat(),
                         ],
@@ -312,9 +326,12 @@ class _TabFourState extends State<TabFour>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.gotCompensation.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFourCubit>()
-                            .gotCompensationChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFourCubit>()
+                                    .gotCompensationChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -364,6 +381,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -411,6 +430,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -458,6 +479,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -505,6 +528,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -551,6 +576,8 @@ class _TabFourState extends State<TabFour>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),

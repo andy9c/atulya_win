@@ -31,6 +31,7 @@ List<String> areaList = [
 List<String> yesNoList = [
   "YES",
   "NO",
+  "N.A.",
 ];
 
 List<String> bloodGroupList = [
@@ -48,7 +49,6 @@ List<String> religionList = [
   "HINDU",
   "ISLAM",
   "SARNAISM",
-  "INDIGENOUS",
   "NOT APPLICABLE",
 ];
 
@@ -106,6 +106,8 @@ List<String> professionList = [
   "FISHING",
   "UNEMPLOYED",
   "NO RESPONSE",
+  "NOT APPLICABLE",
+  "NOTHING",
   "OTHERS",
 ];
 
@@ -147,6 +149,7 @@ List<String> cropPurposeList = [
   "CROP GROWN",
   "SELF CONSUMPTION PURPOSE",
   "SELLING PURPOSE",
+  "BOTH",
 ];
 
 List<String> freshWaterProduceList = [

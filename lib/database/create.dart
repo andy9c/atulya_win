@@ -11,6 +11,9 @@ import '../home/cubit/cubit.dart';
 
 class Create {
   static Future<void> execute(BuildContext context) async {
+    String? documentID =
+        context.read<InformaticsCubit>().state.documentID.value;
+
     SectionOneState s1 = context.read<SectionOneCubit>().state;
     SectionTwoState s2 = context.read<SectionTwoCubit>().state;
     SectionThreeState s3 = context.read<SectionThreeCubit>().state;
@@ -25,11 +28,11 @@ class Create {
         firestore.collection(rootCollection);
 
     final timeStamp = DateTime.now().format('MMMM dd y, h:mm:ss a');
-
-    final String uidDoc = '${s1.fullName.value} (${s1.pattaNo.value})';
     final String emailID = student!.email.toString();
+    final String uidDoc =
+        '${s1.fullName.value} (${s1.gramPanchayat.value}) (${mainCollection.doc().id})';
 
-    var rootDocumentReferencer = mainCollection.doc(uidDoc);
+    var rootDocumentReferencer = mainCollection.doc(documentID ?? uidDoc);
 
     Map<String, dynamic> s1Data = SectionOneState.toMap(s1);
     Map<String, dynamic> s2Data = SectionTwoState.toMap(s2);
@@ -50,6 +53,18 @@ class Create {
       "s6": s6Data,
     };
 
-    await rootDocumentReferencer.set(data).catchError((e) => null);
+    Map<String, dynamic> updateData = <String, dynamic>{
+      "UpdateTimestamp": timeStamp,
+      "s1": s1Data,
+      "s2": s2Data,
+      "s3": s3Data,
+      "s4": s4Data,
+      "s5": s5Data,
+      "s6": s6Data,
+    };
+
+    await rootDocumentReferencer
+        .set(documentID == null ? data : updateData, SetOptions(merge: true))
+        .catchError((e) => null);
   }
 }

@@ -112,9 +112,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.oclAcquiring.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .oclAcquiringChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .oclAcquiringChanged(value!),
                         isExpanded: true,
                         //value: "1",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -162,9 +165,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.looseLand.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .looseLandChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .looseLandChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -215,6 +221,10 @@ class _TabFiveState extends State<TabFive>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -283,6 +293,10 @@ class _TabFiveState extends State<TabFive>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -351,6 +365,10 @@ class _TabFiveState extends State<TabFive>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -420,6 +438,10 @@ class _TabFiveState extends State<TabFive>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -489,6 +511,10 @@ class _TabFiveState extends State<TabFive>
                         Expanded(
                           flex: 2,
                           child: TextFormField(
+                            enabled: context
+                                .read<InformaticsCubit>()
+                                .state
+                                .isEnabled,
                             inputFormatters: [
                               doubleFormat(),
                             ],
@@ -557,9 +583,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.gotNotification.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .gotNotificationChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .gotNotificationChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -604,32 +633,37 @@ class _TabFiveState extends State<TabFive>
                       vertical: 0,
                       horizontal: 5.w,
                     ),
-                    child: MultiSelectDialogField(
-                      key: GlobalKey(),
-                      initialValue: state.whatAction.value,
-                      onConfirm: (value) {
-                        context
-                            .read<SectionFiveCubit>()
-                            .whatActionChanged(value);
-                      },
-                      buttonText: const Text(
-                        'Select Action',
-                        style: TextStyle(
-                          color: Colors.lightBlue,
+                    child: AbsorbPointer(
+                      absorbing:
+                          !context.read<InformaticsCubit>().state.isEnabled,
+                      child: MultiSelectDialogField(
+                        key: GlobalKey(),
+                        initialValue:
+                            List<String>.from(state.whatAction.value ?? []),
+                        onConfirm: (value) {
+                          context
+                              .read<SectionFiveCubit>()
+                              .whatActionChanged(value);
+                        },
+                        buttonText: const Text(
+                          'Select Action',
+                          style: TextStyle(
+                            color: Colors.lightBlue,
+                          ),
                         ),
-                      ),
-                      searchable: true,
-                      barrierColor: Colors.blueGrey.withOpacity(0.3),
-                      items: protestActionList
-                          .map((e) => MultiSelectItem(e, e))
-                          .toList(),
-                      listType: MultiSelectListType.CHIP,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            // color: Colors.green,
-                            // width: 8,
-                            ),
-                        borderRadius: BorderRadius.circular(8),
+                        searchable: true,
+                        barrierColor: Colors.blueGrey.withOpacity(0.3),
+                        items: protestActionList
+                            .map((e) => MultiSelectItem(e, e))
+                            .toList(),
+                        listType: MultiSelectListType.CHIP,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              // color: Colors.green,
+                              // width: 8,
+                              ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ),
@@ -643,9 +677,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.givenConsent.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .givenConsentChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .givenConsentChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -692,6 +729,8 @@ class _TabFiveState extends State<TabFive>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -736,9 +775,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.aware.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .awareChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .awareChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -788,8 +830,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.law.value,
-                        onChanged: (String? value) =>
-                            context.read<SectionFiveCubit>().lawChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .lawChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -839,9 +885,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.gramsabha.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .gramsabhaChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .gramsabhaChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -888,9 +937,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.participate.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .participateChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .participateChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -937,6 +989,8 @@ class _TabFiveState extends State<TabFive>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -985,9 +1039,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.compensationAware.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .compensationAwareChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .compensationAwareChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -1037,6 +1094,8 @@ class _TabFiveState extends State<TabFive>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),
@@ -1082,9 +1141,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.happyWithCompensation.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .happyWithCompensationChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .happyWithCompensationChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -1099,7 +1161,7 @@ class _TabFiveState extends State<TabFive>
                                 Icon(Icons.wc_rounded, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
-                          labelText: "Are you happy with this Compensation?",
+                          labelText: "Are you satisfied with the Compensation?",
                           helperText: '',
                           errorText: state.happyWithCompensation.invalid
                               ? 'required field'
@@ -1131,9 +1193,12 @@ class _TabFiveState extends State<TabFive>
                       ),
                       child: DropdownButtonFormField<String>(
                         value: state.resettlementPlan.value,
-                        onChanged: (String? value) => context
-                            .read<SectionFiveCubit>()
-                            .resettlementPlanChanged(value!),
+                        onChanged:
+                            !context.read<InformaticsCubit>().state.isEnabled
+                                ? null
+                                : (String? value) => context
+                                    .read<SectionFiveCubit>()
+                                    .resettlementPlanChanged(value!),
                         isExpanded: true,
                         //value: "YES",
                         icon: const Icon(Icons.arrow_downward_rounded),
@@ -1183,6 +1248,8 @@ class _TabFiveState extends State<TabFive>
                         horizontal: 5.w,
                       ),
                       child: TextFormField(
+                        enabled:
+                            context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
                           alphaNumericFormat(),
                           UpperCaseFormatter(),

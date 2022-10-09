@@ -54,7 +54,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
-  late AnimationController _hideFabAnimController;
   late final StreamSubscription<InternetConnectionStatus> listener;
 
   Future<void> secureScreen() async {
@@ -73,21 +72,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     _tabController.addListener(() {
       context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
-      switch (_tabController.index) {
-        case 0:
-          _hideFabAnimController.forward();
-          break;
-        default:
-          _hideFabAnimController.reverse();
-          break;
-      }
     });
-
-    _hideFabAnimController = AnimationController(
-      vsync: this,
-      duration: kThemeAnimationDuration,
-      value: 1, // initially visible
-    );
 
     // actively listen for status updates
     listener = InternetConnectionChecker().onStatusChange.listen(
@@ -98,14 +83,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             // print('Data connection is available.');
             context.read<InformaticsCubit>().hasInternetChanged(true);
             String message = 'Connected to internet !';
-            showMessageBanner(message);
+            showMessageBanner(message, dismiss: true);
             break;
           case InternetConnectionStatus.disconnected:
             // ignore: avoid_print
             // print('You are disconnected from the internet.');
             context.read<InformaticsCubit>().hasInternetChanged(false);
             String message = 'No internet !';
-            showMessageBanner(message);
+            showMessageBanner(message, dismiss: true);
             break;
         }
       },
@@ -119,7 +104,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner();
     super.dispose();
     _tabController.dispose();
-    _hideFabAnimController.dispose();
     await listener.cancel();
   }
 
@@ -128,10 +112,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AppBloc bloc) => bloc.state.user);
     // final ScrollController scrollController = ScrollController();
-
-    context.read<InformaticsCubit>().state.tabIndex == 0
-        ? _hideFabAnimController.forward()
-        : _hideFabAnimController.reverse();
 
     Widget registrationEmailID() {
       return Align(
@@ -252,62 +232,160 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   );
                 }
 
-                return Scrollbar(
-                  thumbVisibility: true,
-                  child: ListView.separated(
-                    // separatorBuilder: separatorBuilder,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.data!.size,
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        color: Theme.of(context).primaryColorLight,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      DocumentSnapshot document = snapshot.data!.docs[index];
-                      String docName = document.id;
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
+                return BlocBuilder<InformaticsCubit, InformaticsState>(
+                  builder: (context, state) {
+                    return AbsorbPointer(
+                      absorbing: state.isLoadingDocument,
+                      child: Scrollbar(
+                        thumbVisibility: true,
+                        child: Column(
+                          children: [
+                            !state.isLoadingDocument
+                                ? Container()
+                                : const LinearProgressIndicator(
+                                    value: null,
+                                    semanticsLabel: 'Linear progress indicator',
+                                  ),
+                            spacerWidget(),
+                            Flexible(
+                              child: ListView.separated(
+                                // separatorBuilder: separatorBuilder,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: snapshot.data!.size,
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    color: Theme.of(context).primaryColorLight,
+                                  );
+                                },
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot document =
+                                      snapshot.data!.docs[index];
+                                  String docID = document.id;
+                                  Map<String, dynamic> data =
+                                      document.data()! as Map<String, dynamic>;
 
-                      return ListTile(
-                        dense: true,
-                        isThreeLine: true,
-                        leading: Text((index + 1).toString()),
-                        title: Text('$docName, (${user.email})'),
-                        subtitle: Text('${data["s1"]["gramPanchayat"]}'),
-                        trailing: Text(
-                            '${data["s1"]["gender"]}, ${data["s1"]["age"]}'),
-                        onTap: () async {
-                          DocumentSnapshot<Object?> data =
-                              await Read.execute(docName);
+                                  return ListTile(
+                                    dense: true,
+                                    isThreeLine: true,
+                                    leading: Text((index + 1).toString()),
+                                    title: Text(
+                                        '${data["s1"]["fullName"]}, (${user.email})'),
+                                    subtitle:
+                                        Text('${data["s1"]["gramPanchayat"]}'),
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                                  title: const Text(
+                                                    'Confirm Delete !',
+                                                  ),
+                                                  content: ListTile(
+                                                    dense: true,
+                                                    isThreeLine: true,
+                                                    leading: const Icon(
+                                                      Icons.list_rounded,
+                                                    ),
+                                                    title: Text(
+                                                        '${data["s1"]["fullName"]}, (${user.email})'),
+                                                    subtitle: Text(
+                                                        '${data["s1"]["gramPanchayat"]}'),
+                                                  ),
+                                                  icon: const Icon(
+                                                    Icons.delete,
+                                                  ),
+                                                  actions: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        Delete.execute(docID);
+                                                        Navigator.pop(context);
+                                                        showInfo(
+                                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
+                                                      },
+                                                      child:
+                                                          const Text("DELETE"),
+                                                    ),
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child:
+                                                          const Text("CANCEL"),
+                                                    ),
+                                                  ],
+                                                ));
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      context
+                                          .read<InformaticsCubit>()
+                                          .isLoadingDocumentChanged(true);
 
-                          SectionOneState s1 =
-                              SectionOneState.fromMap(data["s1"]);
-                          SectionTwoState s2 =
-                              SectionTwoState.fromMap(data["s2"]);
-                          SectionThreeState s3 =
-                              SectionThreeState.fromMap(data["s3"]);
-                          SectionFourState s4 =
-                              SectionFourState.fromMap(data["s4"]);
-                          SectionFiveState s5 =
-                              SectionFiveState.fromMap(data["s5"]);
-                          SectionSixState s6 =
-                              SectionSixState.fromMap(data["s6"]);
+                                      DocumentSnapshot<Object?> data =
+                                          await Read.execute(docID);
 
-                          if (mounted) {
-                            context.read<SectionOneCubit>().setState(s1);
-                            context.read<SectionTwoCubit>().setState(s2);
-                            context.read<SectionThreeCubit>().setState(s3);
-                            context.read<SectionFourCubit>().setState(s4);
-                            context.read<SectionFiveCubit>().setState(s5);
-                            context.read<SectionSixCubit>().setState(s6);
+                                      if (mounted) {
+                                        context
+                                            .read<InformaticsCubit>()
+                                            .documentIDChanged(docID);
 
-                            Navigator.pop(context);
-                          }
-                        },
-                      );
-                    },
-                  ),
+                                        context
+                                            .read<InformaticsCubit>()
+                                            .isEnabledChanged(context, false);
+                                      }
+
+                                      SectionOneState s1 =
+                                          SectionOneState.fromMap(data["s1"]);
+                                      SectionTwoState s2 =
+                                          SectionTwoState.fromMap(data["s2"]);
+                                      SectionThreeState s3 =
+                                          SectionThreeState.fromMap(data["s3"]);
+                                      SectionFourState s4 =
+                                          SectionFourState.fromMap(data["s4"]);
+                                      SectionFiveState s5 =
+                                          SectionFiveState.fromMap(data["s5"]);
+                                      SectionSixState s6 =
+                                          SectionSixState.fromMap(data["s6"]);
+
+                                      if (mounted) {
+                                        context
+                                            .read<InformaticsCubit>()
+                                            .isLoadingDocumentChanged(false);
+
+                                        context
+                                            .read<SectionOneCubit>()
+                                            .setState(s1);
+                                        context
+                                            .read<SectionTwoCubit>()
+                                            .setState(s2);
+                                        context
+                                            .read<SectionThreeCubit>()
+                                            .setState(s3);
+                                        context
+                                            .read<SectionFourCubit>()
+                                            .setState(s4);
+                                        context
+                                            .read<SectionFiveCubit>()
+                                            .setState(s5);
+                                        context
+                                            .read<SectionSixCubit>()
+                                            .setState(s6);
+
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
@@ -406,15 +484,64 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         children: [
           Align(
             alignment: Alignment.bottomRight,
-            child: FadeTransition(
-              opacity: _hideFabAnimController,
-              child: ScaleTransition(
-                scale: _hideFabAnimController,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    addFamilyMembers();
-                  },
-                  child: const Icon(Icons.person_add),
+            child: FloatingActionButton.extended(
+              enableFeedback: true,
+              onPressed: () {
+                String message =
+                    "Create New Record ? Unsaved changes will be lost !";
+
+                globalScaffoldMessenger.currentState
+                  ?..removeCurrentMaterialBanner()
+                  ..showMaterialBanner(
+                    MaterialBanner(
+                      //backgroundColor: Colors.blue,
+                      content: Text(message),
+                      //contentTextStyle: const TextStyle(color: Colors.white),
+                      onVisible: () => Future.delayed(
+                        const Duration(seconds: 7),
+                        () => globalScaffoldMessenger.currentState!
+                            .hideCurrentMaterialBanner(),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.read<SectionOneCubit>().reset();
+                            context.read<SectionTwoCubit>().reset();
+                            context.read<SectionThreeCubit>().reset();
+                            context.read<SectionFourCubit>().reset();
+                            context.read<SectionFiveCubit>().reset();
+                            context.read<SectionSixCubit>().reset();
+
+                            globalScaffoldMessenger.currentState!
+                                .hideCurrentMaterialBanner();
+
+                            context
+                                .read<InformaticsCubit>()
+                                .documentIDChanged(null);
+
+                            context
+                                .read<InformaticsCubit>()
+                                .isEnabledChanged(context, true);
+                          },
+                          child: const Text("CREATE"),
+                        ),
+                        TextButton(
+                          //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                          onPressed: () {
+                            globalScaffoldMessenger.currentState!
+                                .hideCurrentMaterialBanner();
+                          },
+                          child: const Text("DISMISS"),
+                        )
+                      ],
+                    ),
+                  );
+              },
+              icon: const Icon(Icons.add),
+              label: const Text(
+                'New',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -588,65 +715,110 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 listData();
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.save_rounded),
-              onPressed: () async {
-                if (context.read<SectionOneCubit>().state.status.isValidated &&
-                    context.read<SectionTwoCubit>().state.status.isValidated &&
-                    context
-                        .read<SectionThreeCubit>()
-                        .state
-                        .status
-                        .isValidated &&
-                    context.read<SectionFourCubit>().state.status.isValidated &&
-                    context.read<SectionFiveCubit>().state.status.isValidated &&
-                    context.read<SectionSixCubit>().state.status.isValidated) {
-                  String message = "Confirm Save !";
-
-                  globalScaffoldMessenger.currentState
-                    ?..removeCurrentMaterialBanner()
-                    ..showMaterialBanner(
-                      MaterialBanner(
-                        //backgroundColor: Colors.blue,
-                        content: Text(message),
-                        //contentTextStyle: const TextStyle(color: Colors.white),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              if (!context
-                                  .read<InformaticsCubit>()
+            BlocBuilder<InformaticsCubit, InformaticsState>(
+              builder: (context, state) {
+                return IconButton(
+                  icon: const Icon(Icons.save_rounded),
+                  onPressed: !state.isEnabled
+                      ? null
+                      : () async {
+                          if (context
+                                  .read<SectionOneCubit>()
                                   .state
-                                  .hasInternet) {
-                                String message =
-                                    'Information will sync when internet is back !';
-                                showMessageBanner(message);
-                              }
-                              Create.execute(context);
+                                  .status
+                                  .isValidated &&
+                              context
+                                  .read<SectionTwoCubit>()
+                                  .state
+                                  .status
+                                  .isValidated &&
+                              context
+                                  .read<SectionThreeCubit>()
+                                  .state
+                                  .status
+                                  .isValidated &&
+                              context
+                                  .read<SectionFourCubit>()
+                                  .state
+                                  .status
+                                  .isValidated &&
+                              context
+                                  .read<SectionFiveCubit>()
+                                  .state
+                                  .status
+                                  .isValidated &&
+                              context
+                                  .read<SectionSixCubit>()
+                                  .state
+                                  .status
+                                  .isValidated) {
+                            String message = "Confirm Save !";
 
-                              context.read<SectionOneCubit>().reset();
-                              context.read<SectionTwoCubit>().reset();
-                              context.read<SectionThreeCubit>().reset();
-                              context.read<SectionFourCubit>().reset();
-                              context.read<SectionFiveCubit>().reset();
-                              context.read<SectionSixCubit>().reset();
-                            },
-                            child: const Text("SAVE"),
-                          ),
-                          TextButton(
-                            //style: TextButton.styleFrom(foregroundColor: Colors.white),
-                            onPressed: () {
-                              globalScaffoldMessenger.currentState!
-                                  .hideCurrentMaterialBanner();
-                            },
-                            child: const Text("DISMISS"),
-                          )
-                        ],
-                      ),
-                    );
-                } else {
-                  String message = 'Required fields are missing !';
-                  showMessageBanner(message);
-                }
+                            globalScaffoldMessenger.currentState
+                              ?..removeCurrentMaterialBanner()
+                              ..showMaterialBanner(
+                                MaterialBanner(
+                                  //backgroundColor: Colors.blue,
+                                  content: Text(message),
+                                  //contentTextStyle: const TextStyle(color: Colors.white),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        if (!context
+                                            .read<InformaticsCubit>()
+                                            .state
+                                            .hasInternet) {
+                                          String message =
+                                              'Information will sync when internet is back !';
+                                          showMessageBanner(message);
+                                        } else {
+                                          String message = 'Record Saved !';
+                                          showMessageBanner(message,
+                                              dismiss: true);
+                                        }
+
+                                        Create.execute(context);
+
+                                        context.read<SectionOneCubit>().reset();
+                                        context.read<SectionTwoCubit>().reset();
+                                        context
+                                            .read<SectionThreeCubit>()
+                                            .reset();
+                                        context
+                                            .read<SectionFourCubit>()
+                                            .reset();
+                                        context
+                                            .read<SectionFiveCubit>()
+                                            .reset();
+                                        context.read<SectionSixCubit>().reset();
+
+                                        context
+                                            .read<InformaticsCubit>()
+                                            .documentIDChanged(null);
+
+                                        context
+                                            .read<InformaticsCubit>()
+                                            .isEnabledChanged(context, true);
+                                      },
+                                      child: const Text("SAVE"),
+                                    ),
+                                    TextButton(
+                                      //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                                      onPressed: () {
+                                        globalScaffoldMessenger.currentState!
+                                            .hideCurrentMaterialBanner();
+                                      },
+                                      child: const Text("DISMISS"),
+                                    )
+                                  ],
+                                ),
+                              );
+                          } else {
+                            String message = 'Required fields are missing !';
+                            showMessageBanner(message);
+                          }
+                        },
+                );
               },
             ),
             IconButton(

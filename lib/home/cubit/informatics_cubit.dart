@@ -1,3 +1,7 @@
+import 'package:atulya/home/cubit/cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,12 +14,33 @@ class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
     emit(state.copyWith(tabIndex: value));
   }
 
-  void isEnabledChanged(bool value) {
+  void isEnabledChanged(BuildContext context, bool value) {
     emit(state.copyWith(isEnabled: value));
+
+    context.read<SectionOneCubit>().reloadToggleChanged();
+    context.read<SectionTwoCubit>().reloadToggleChanged();
+    context.read<SectionThreeCubit>().reloadToggleChanged();
+    context.read<SectionFourCubit>().reloadToggleChanged();
+    context.read<SectionFiveCubit>().reloadToggleChanged();
+    context.read<SectionSixCubit>().reloadToggleChanged();
   }
 
   void hasInternetChanged(bool value) {
     emit(state.copyWith(hasInternet: value));
+  }
+
+  void toggleEditMode() {
+    emit(state.copyWith(isEditMode: !state.isEditMode));
+  }
+
+  void isLoadingDocumentChanged(bool value) {
+    emit(state.copyWith(isLoadingDocument: value));
+  }
+
+  void documentIDChanged(String? value) {
+    value == null
+        ? emit(state.copyWith(documentID: const Compulsory.pure()))
+        : emit(state.copyWith(documentID: Compulsory.dirty(value)));
   }
 
   @override

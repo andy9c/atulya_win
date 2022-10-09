@@ -2,7 +2,6 @@ part of 'section_one_cubit.dart';
 
 class SectionOneState extends Equatable with FormzMixin {
   const SectionOneState({
-    this.pattaNo = const Compulsory.pure(),
     this.fullName = const Compulsory.pure(),
     this.relationship = const Compulsory.pure(),
     this.headOfHousehold = const Compulsory.pure(),
@@ -17,9 +16,9 @@ class SectionOneState extends Equatable with FormzMixin {
     this.primaryOccupation = const Compulsory.pure(),
     this.secondaryOccupation = const Compulsory.pure(),
     this.familyMemberDetails = const {},
-  }) : super();
+    this.reloadToggle = false,
+  });
 
-  final Compulsory pattaNo;
   final Compulsory fullName;
   final Compulsory relationship;
   final Compulsory headOfHousehold;
@@ -34,11 +33,11 @@ class SectionOneState extends Equatable with FormzMixin {
   final Compulsory primaryOccupation;
   final Compulsory secondaryOccupation;
   final Map<String, dynamic> familyMemberDetails;
+  final bool reloadToggle;
 
   @override
   List<Object> get props {
     return [
-      pattaNo,
       fullName,
       relationship,
       headOfHousehold,
@@ -53,11 +52,11 @@ class SectionOneState extends Equatable with FormzMixin {
       primaryOccupation,
       secondaryOccupation,
       familyMemberDetails,
+      reloadToggle,
     ];
   }
 
   SectionOneState copyWith({
-    Compulsory? pattaNo,
     Compulsory? fullName,
     Compulsory? relationship,
     Compulsory? headOfHousehold,
@@ -72,9 +71,9 @@ class SectionOneState extends Equatable with FormzMixin {
     Compulsory? primaryOccupation,
     Compulsory? secondaryOccupation,
     Map<String, dynamic>? familyMemberDetails,
+    bool? reloadToggle,
   }) {
     return SectionOneState(
-      pattaNo: pattaNo ?? this.pattaNo,
       fullName: fullName ?? this.fullName,
       relationship: relationship ?? this.relationship,
       headOfHousehold: headOfHousehold ?? this.headOfHousehold,
@@ -89,12 +88,12 @@ class SectionOneState extends Equatable with FormzMixin {
       primaryOccupation: primaryOccupation ?? this.primaryOccupation,
       secondaryOccupation: secondaryOccupation ?? this.secondaryOccupation,
       familyMemberDetails: familyMemberDetails ?? this.familyMemberDetails,
+      reloadToggle: reloadToggle ?? this.reloadToggle,
     );
   }
 
   static Map<String, dynamic> toMap(SectionOneState state) {
     return {
-      'pattaNo': state.pattaNo.value,
       'fullName': state.fullName.value,
       'relationship': state.relationship.value,
       'headOfHousehold': state.headOfHousehold.value,
@@ -114,7 +113,6 @@ class SectionOneState extends Equatable with FormzMixin {
 
   factory SectionOneState.fromMap(Map<String, dynamic> map) {
     return SectionOneState(
-      pattaNo: Compulsory.dirty(map['pattaNo']),
       fullName: Compulsory.dirty(map['fullName']),
       relationship: Compulsory.dirty(map['relationship']),
       headOfHousehold: Compulsory.dirty(map['headOfHousehold']),
@@ -134,7 +132,6 @@ class SectionOneState extends Equatable with FormzMixin {
 
   @override
   List<FormzInput> get inputs => [
-        pattaNo,
         fullName,
         relationship,
         headOfHousehold,
