@@ -89,7 +89,7 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
   }
 
   void resettlementOpinionChanged(String value) {
-    emit(state.copyWith(resettlementOpinion: ""));
+    emit(state.copyWith(resettlementOpinion: value));
   }
 
   @override

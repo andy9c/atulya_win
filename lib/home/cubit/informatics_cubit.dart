@@ -30,8 +30,8 @@ class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
       context.read<SectionFourCubit>().reloadToggleChanged();
       context.read<SectionFiveCubit>().reloadToggleChanged();
       context.read<SectionSixCubit>().reloadToggleChanged();
-    } else if (value == true) {
-      emit(state.copyWith(isEnabled: value));
+    } else {
+      emit(state.copyWith(isEnabled: true));
     }
   }
 

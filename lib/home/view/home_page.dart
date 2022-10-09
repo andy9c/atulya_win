@@ -96,6 +96,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       },
     );
 
+    if (context.read<InformaticsCubit>().state.documentID.value != null) {
+      context.read<InformaticsCubit>().isEnabledChanged(context, false);
+    } else {
+      context.read<InformaticsCubit>().isEnabledChanged(context, true);
+    }
+
     super.initState();
   }
 
@@ -112,12 +118,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AppBloc bloc) => bloc.state.user);
     // final ScrollController scrollController = ScrollController();
-
-    if (context.read<InformaticsCubit>().state.documentID.value != null) {
-      context.read<InformaticsCubit>().isEnabledChanged(context, false);
-    } else {
-      context.read<InformaticsCubit>().isEnabledChanged(context, true);
-    }
 
     Widget registrationEmailID() {
       return Align(
@@ -527,6 +527,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             context
                                 .read<InformaticsCubit>()
                                 .isEnabledChanged(context, true);
+
+                            _tabController.animateTo(0,
+                                duration: const Duration(seconds: 1));
                           },
                           child: const Text("CREATE"),
                         ),
@@ -805,6 +808,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         context
                                             .read<InformaticsCubit>()
                                             .isEnabledChanged(context, true);
+
+                                        _tabController.animateTo(0,
+                                            duration:
+                                                const Duration(seconds: 1));
                                       },
                                       child: const Text("SAVE"),
                                     ),
