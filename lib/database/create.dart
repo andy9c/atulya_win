@@ -54,7 +54,7 @@ class Create {
     };
 
     Map<String, dynamic> updateData = <String, dynamic>{
-      "UpdateTimestamp": timeStamp,
+      "updateTimestamp": timeStamp,
       "s1": s1Data,
       "s2": s2Data,
       "s3": s3Data,
