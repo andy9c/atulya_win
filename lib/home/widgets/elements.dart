@@ -1,7 +1,3 @@
-import 'package:atulya/configuration/configuration.dart';
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
@@ -404,47 +400,47 @@ class LoadingState extends StatelessWidget {
 //   );
 // }
 
-Future<dynamic> showInfoPDF(BuildContext context) async {
-  final ByteData bytes = await rootBundle.load('assets/instructions.pdf');
-  final Uint8List data = bytes.buffer.asUint8List();
+// Future<dynamic> showInfoPDF(BuildContext context) async {
+//   final ByteData bytes = await rootBundle.load('assets/instructions.pdf');
+//   final Uint8List data = bytes.buffer.asUint8List();
 
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        elevation: 16,
-        title: Text("ADMISSION INSTRUCTIONS $academicYear"),
-        content: SizedBox(
-          width: 70.w,
-          child: PdfPreview(
-            initialPageFormat: PdfPageFormat.a4.portrait,
-            canDebug: false,
-            build: (format) => data,
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 50,
-                vertical: 20,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              backgroundColor: Colors.blueAccent,
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('DONE'),
-          ),
-        ],
-      );
-    },
-  );
-}
+//   return showDialog(
+//     context: context,
+//     builder: (context) {
+//       return AlertDialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(12),
+//         ),
+//         elevation: 16,
+//         title: Text("ADMISSION INSTRUCTIONS $academicYear"),
+//         content: SizedBox(
+//           width: 70.w,
+//           child: PdfPreview(
+//             initialPageFormat: PdfPageFormat.a4.portrait,
+//             canDebug: false,
+//             build: (format) => data,
+//           ),
+//         ),
+//         actions: [
+//           ElevatedButton(
+//             style: ElevatedButton.styleFrom(
+//               padding: const EdgeInsets.symmetric(
+//                 horizontal: 50,
+//                 vertical: 20,
+//               ),
+//               shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(10),
+//               ),
+//               backgroundColor: Colors.blueAccent,
+//             ),
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: const Text('DONE'),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 
 // Widget printButton(BuildContext context, StudentState state) {
 //   return ElevatedButton(

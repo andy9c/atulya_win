@@ -32,11 +32,8 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   cloud_firestore: ^3.5.0
-  cupertino_icons: ^1.0.5
   dart_date: ^1.1.1
   date_format: ^2.0.7
-  duration: ^3.0.12
-  easy_mask: ^2.0.1
   equatable: ^2.0.5
   firebase_analytics: ^9.3.7
   firebase_app_check: ^0.0.9
@@ -60,8 +57,6 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   multi_select_flutter: ^4.1.2
   path_provider: ^2.0.11
-  pdf: ^3.8.3
-  printing: ^5.9.3
   replay_bloc: ^0.2.2
   responsive_framework: ^0.2.0
   sizer: ^2.0.15

@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:date_format/date_format.dart';
-
 String academicYear = "2022";
 
 int startDateRegYear = 2022;
@@ -48,21 +46,21 @@ String schoolEmail = "admission@stpaulsrourkela.org";
 // const String schoolEmail = "andy9c@gmail.com";
 
 void configurationUpdate() {
-  startDateOfRegistration = formatDate(
-      DateTime(startDateRegYear, startDateRegMonth, startDateRegDay),
-      [d, '-', M, '-', yyyy]).toUpperCase();
+  // startDateOfRegistration = formatDate(
+  //     DateTime(startDateRegYear, startDateRegMonth, startDateRegDay),
+  //     [d, '-', M, '-', yyyy]).toUpperCase();
 
-  lastDateOfRegistration = formatDate(
-      DateTime(lastDateRegYear, lastDateRegMonth, lastDateRegDay),
-      [d, '-', M, '-', yyyy]).toUpperCase();
+  // lastDateOfRegistration = formatDate(
+  //     DateTime(lastDateRegYear, lastDateRegMonth, lastDateRegDay),
+  //     [d, '-', M, '-', yyyy]).toUpperCase();
 
-  startDateOfSubmission = formatDate(
-      DateTime(startDateSubYear, startDateSubMonth, startDateSubDay),
-      [d, '-', M, '-', yyyy]).toUpperCase();
+  // startDateOfSubmission = formatDate(
+  //     DateTime(startDateSubYear, startDateSubMonth, startDateSubDay),
+  //     [d, '-', M, '-', yyyy]).toUpperCase();
 
-  lastDateOfSubmission = formatDate(
-      DateTime(lastDateSubYear, lastDateSubMonth, lastDateSubDay),
-      [d, '-', M, '-', yyyy]).toUpperCase();
+  // lastDateOfSubmission = formatDate(
+  //     DateTime(lastDateSubYear, lastDateSubMonth, lastDateSubDay),
+  //     [d, '-', M, '-', yyyy]).toUpperCase();
 
   calendarLastYear = lastDateRegYear + 1;
 
