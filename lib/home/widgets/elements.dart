@@ -24,7 +24,7 @@ FilteringTextInputFormatter doubleFormat() {
 
 FilteringTextInputFormatter alphaNumericFormat() {
   return FilteringTextInputFormatter.allow(
-      RegExp(r'[A-Z0-9a-z \,\-\:\/\.\(\)\&]'));
+      RegExp(r'[A-Z0-9a-z \,\-\:\/\.\(\)\&\;]'));
 }
 
 class UpperCaseFormatter extends TextInputFormatter {
@@ -32,6 +32,19 @@ class UpperCaseFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     String textValue = newValue.text.toUpperCase();
+
+    return TextEditingValue(
+      text: textValue,
+      selection: newValue.selection,
+    );
+  }
+}
+
+class LowerCaseFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String textValue = newValue.text.toLowerCase();
 
     return TextEditingValue(
       text: textValue,
