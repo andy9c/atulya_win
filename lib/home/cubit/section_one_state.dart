@@ -10,6 +10,7 @@ class SectionOneState extends Equatable with FormzMixin {
     this.religion = const Compulsory.pure(),
     this.socialCategory = const Compulsory.pure(),
     this.nameOfCommunity = const Compulsory.pure(),
+    this.villageName = const Compulsory.pure(),
     this.gramPanchayat = const Compulsory.pure(),
     this.cardholderCategory = const Compulsory.pure(),
     this.qualification = const Compulsory.pure(),
@@ -27,6 +28,7 @@ class SectionOneState extends Equatable with FormzMixin {
   final Compulsory religion;
   final Compulsory socialCategory;
   final Compulsory nameOfCommunity;
+  final Compulsory villageName;
   final Compulsory gramPanchayat;
   final Compulsory cardholderCategory;
   final Compulsory qualification;
@@ -46,6 +48,7 @@ class SectionOneState extends Equatable with FormzMixin {
       religion,
       socialCategory,
       nameOfCommunity,
+      villageName,
       gramPanchayat,
       cardholderCategory,
       qualification,
@@ -65,6 +68,7 @@ class SectionOneState extends Equatable with FormzMixin {
     Compulsory? religion,
     Compulsory? socialCategory,
     Compulsory? nameOfCommunity,
+    Compulsory? villageName,
     Compulsory? gramPanchayat,
     Compulsory? cardholderCategory,
     Compulsory? qualification,
@@ -82,6 +86,7 @@ class SectionOneState extends Equatable with FormzMixin {
       religion: religion ?? this.religion,
       socialCategory: socialCategory ?? this.socialCategory,
       nameOfCommunity: nameOfCommunity ?? this.nameOfCommunity,
+      villageName: villageName ?? this.villageName,
       gramPanchayat: gramPanchayat ?? this.gramPanchayat,
       cardholderCategory: cardholderCategory ?? this.cardholderCategory,
       qualification: qualification ?? this.qualification,
@@ -102,6 +107,7 @@ class SectionOneState extends Equatable with FormzMixin {
       'religion': state.religion.value,
       'socialCategory': state.socialCategory.value,
       'nameOfCommunity': state.nameOfCommunity.value,
+      'villageName': state.villageName.value,
       'gramPanchayat': state.gramPanchayat.value,
       'cardholderCategory': state.cardholderCategory.value,
       'qualification': state.qualification.value,
@@ -121,6 +127,7 @@ class SectionOneState extends Equatable with FormzMixin {
       religion: Compulsory.dirty(map['religion']),
       socialCategory: Compulsory.dirty(map['socialCategory']),
       nameOfCommunity: Compulsory.dirty(map['nameOfCommunity']),
+      villageName: Compulsory.dirty(map['villageName']),
       gramPanchayat: Compulsory.dirty(map['gramPanchayat']),
       cardholderCategory: Compulsory.dirty(map['cardholderCategory']),
       qualification: Compulsory.dirty(map['qualification']),
@@ -140,6 +147,7 @@ class SectionOneState extends Equatable with FormzMixin {
         religion,
         socialCategory,
         nameOfCommunity,
+        villageName,
         gramPanchayat,
         cardholderCategory,
         qualification,

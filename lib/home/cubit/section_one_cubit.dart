@@ -54,6 +54,10 @@ class SectionOneCubit extends Cubit<SectionOneState>
     emit(state.copyWith(nameOfCommunity: Compulsory.dirty(value)));
   }
 
+  void villageNameChanged(String value) {
+    emit(state.copyWith(villageName: Compulsory.dirty(value)));
+  }
+
   void gramPanchayatChanged(String value) {
     emit(state.copyWith(gramPanchayat: Compulsory.dirty(value)));
   }

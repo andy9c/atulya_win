@@ -130,6 +130,8 @@ class _TabOneState extends State<TabOne>
                   spacerWidget(),
                   const CommunityName(),
                   spacerWidget(),
+                  const VillageName(),
+                  spacerWidget(),
                   const GramPanchayat(),
                   spacerWidget(),
 
