@@ -314,7 +314,7 @@ class _TabFourState extends State<TabFour>
                           border: OutlineInputBorder(),
                           labelText: "Year of the land lost",
                           helperText:
-                              'Use (comma, space, / or \\ as separators); e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
+                              'Use (comma, space, etc. as separators); e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
                         ),
                       ),
                     ),
