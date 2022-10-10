@@ -901,7 +901,6 @@ class _TabTwoState extends State<TabTwo>
                       ],
                     ),
                   ),
-                  spacerWidget(),
                   sectionInfo(
                       "Do you cultivate in community land (Anabadi) apart from your patta land ?"),
                   spacerWidget(),
@@ -957,7 +956,6 @@ class _TabTwoState extends State<TabTwo>
                       ),
                     ),
                   ),
-                  spacerWidget(),
                   sectionInfo(
                       "Since how many years have you been cultivating in that land?"),
                   spacerWidget(),
@@ -1059,7 +1057,6 @@ class _TabTwoState extends State<TabTwo>
                       ),
                     ),
                   ),
-                  spacerWidget(),
                   sectionInfo(
                       "Have you received the entitlement (patta) from the government?"),
                   spacerWidget(),

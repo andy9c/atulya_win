@@ -28,39 +28,45 @@ class _VillageNameState extends State<VillageName> {
       buildWhen: (previous, current) =>
           previous.villageName != current.villageName,
       builder: (context, state) {
-        return TextFormField(
-          enabled: context.read<InformaticsCubit>().state.isEnabled,
-          key: const Key('sectionOne_villageName'),
-          inputFormatters: [
-            nameFormat(),
-            UpperCaseFormatter(),
-          ],
-          textInputAction: TextInputAction.next,
-          textCapitalization: TextCapitalization.characters,
-          controller: _controller = TextEditingController()
-            ..text = state.villageName.value ?? ''
-            ..selection = TextSelection.fromPosition(
-              TextPosition(
-                offset: state.villageName.value == null
-                    ? 0
-                    : _controller.selection.base.offset >
-                            state.villageName.value.length
-                        ? state.villageName.value.length
-                        : _controller.selection.base.offset,
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal: 5.w,
+          ),
+          child: TextFormField(
+            enabled: context.read<InformaticsCubit>().state.isEnabled,
+            key: const Key('sectionOne_villageName'),
+            inputFormatters: [
+              nameFormat(),
+              UpperCaseFormatter(),
+            ],
+            textInputAction: TextInputAction.next,
+            textCapitalization: TextCapitalization.characters,
+            controller: _controller = TextEditingController()
+              ..text = state.villageName.value ?? ''
+              ..selection = TextSelection.fromPosition(
+                TextPosition(
+                  offset: state.villageName.value == null
+                      ? 0
+                      : _controller.selection.base.offset >
+                              state.villageName.value.length
+                          ? state.villageName.value.length
+                          : _controller.selection.base.offset,
+                ),
               ),
+            // initialValue: state.name.value,
+            onChanged: (value) =>
+                context.read<SectionOneCubit>().villageNameChanged(value),
+            decoration: InputDecoration(
+              prefixIcon: const Padding(
+                padding: EdgeInsets.only(top: 0), // add padding to adjust icon
+                child: Icon(Icons.place_rounded, color: Colors.lightBlue),
+              ),
+              border: const OutlineInputBorder(),
+              labelText: "Village Name",
+              helperText: '',
+              errorText: state.villageName.invalid ? 'required field' : null,
             ),
-          // initialValue: state.name.value,
-          onChanged: (value) =>
-              context.read<SectionOneCubit>().villageNameChanged(value),
-          decoration: InputDecoration(
-            prefixIcon: const Padding(
-              padding: EdgeInsets.only(top: 0), // add padding to adjust icon
-              child: Icon(Icons.place_rounded, color: Colors.lightBlue),
-            ),
-            border: const OutlineInputBorder(),
-            labelText: "Village Name",
-            helperText: '',
-            errorText: state.villageName.invalid ? 'required field' : null,
           ),
         );
       },
