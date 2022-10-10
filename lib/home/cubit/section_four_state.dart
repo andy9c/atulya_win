@@ -105,9 +105,5 @@ class SectionFourState extends Equatable with FormzMixin {
   @override
   List<FormzInput> get inputs => [
         lostland,
-        lostLandtoprojects,
-        landAreaLost,
-        yearOflandLost,
-        gotCompensation,
       ];
 }

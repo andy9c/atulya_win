@@ -165,6 +165,7 @@ List<String> protestActionList = [
   "RETURNED THE NOTIFICATION",
   "SUBMITTED THE GRIEVANCE TO THE COLLECTOR OFFICE",
   "JOINED THE PROTEST IN BHUBANESWAR/SUNDERGARH",
+  "NOTHING",
 ];
 
 List<String> cropPurposeList = [
@@ -228,4 +229,5 @@ List<String> projectLossList = [
   "ROAD",
   "WATER RESERVOIRS",
   "PUBLIC BUILDINGS",
+  "OTHER",
 ];

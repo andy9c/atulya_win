@@ -131,7 +131,7 @@ class _TabFourState extends State<TabFour>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "Have you lost land in any projects in the past?",
+                              "Have you lost land in any projects in the past ?",
                           helperText: '',
                           errorText:
                               state.lostland.invalid ? 'required field' : null,
@@ -175,9 +175,6 @@ class _TabFourState extends State<TabFour>
                         title: const Text("Select Projects"),
                         buttonText: const Text(
                           "Select Projects",
-                          style: TextStyle(
-                            color: Colors.lightBlue,
-                          ),
                         ),
                         searchable: true,
                         barrierColor: Colors.blueGrey.withOpacity(0.3),
@@ -237,8 +234,7 @@ class _TabFourState extends State<TabFour>
                             prefixIcon: Padding(
                               padding: EdgeInsets.only(
                                   top: 0), // add padding to adjust icon
-                              child:
-                                  Icon(Icons.person, color: Colors.lightBlue),
+                              child: Icon(Icons.person),
                             ),
                             border: OutlineInputBorder(),
                             labelText: "How much land lost ?",
@@ -305,7 +301,7 @@ class _TabFourState extends State<TabFour>
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person, color: Colors.lightBlue),
+                            child: Icon(Icons.person),
                           ),
                           border: OutlineInputBorder(),
                           labelText: "Year of the land lost",
@@ -338,19 +334,18 @@ class _TabFourState extends State<TabFour>
                         iconSize: 24,
                         elevation: 16,
                         style: const TextStyle(color: Colors.deepPurple),
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
+                        decoration: const InputDecoration(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child:
-                                Icon(Icons.wc_rounded, color: Colors.lightBlue),
+                            child: Icon(Icons.wc_rounded),
                           ),
-                          border: const OutlineInputBorder(),
+                          border: OutlineInputBorder(),
                           labelText: "Did you get any compensation ?",
                           helperText: '',
-                          errorText: state.gotCompensation.invalid
-                              ? 'required field'
-                              : null,
+                          // errorText: state.gotCompensation.invalid
+                          //     ? 'required field'
+                          //     : null,
                         ),
                         items: yesNoList
                             .map<DropdownMenuItem<String>>((String value) {
@@ -469,7 +464,7 @@ class _TabFourState extends State<TabFour>
                     ),
                   ),
                   sectionInfo(
-                      "If Employment was it permanent or contractual, were you satisfied with the job? "),
+                      "If Employment was it permanent or contractual, were you satisfied with the job ? "),
                   spacerWidget(),
                   Align(
                     alignment: Alignment.center,

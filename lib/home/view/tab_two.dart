@@ -957,7 +957,7 @@ class _TabTwoState extends State<TabTwo>
                     ),
                   ),
                   sectionInfo(
-                      "Since how many years have you been cultivating in that land?"),
+                      "Since how many years have you been cultivating in that land ?"),
                   spacerWidget(),
                   Align(
                     alignment: Alignment.center,
@@ -999,7 +999,7 @@ class _TabTwoState extends State<TabTwo>
                           ),
                           border: OutlineInputBorder(),
                           labelText:
-                              "Since how many years have you been cultivating in that land?",
+                              "Since how many years have you been cultivating in that land ?",
                           helperText: '',
                         ),
                       ),
@@ -1025,20 +1025,19 @@ class _TabTwoState extends State<TabTwo>
                         iconSize: 24,
                         elevation: 16,
                         style: const TextStyle(color: Colors.deepPurple),
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
+                        decoration: const InputDecoration(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child:
-                                Icon(Icons.wc_rounded, color: Colors.lightBlue),
+                            child: Icon(Icons.wc_rounded),
                           ),
-                          border: const OutlineInputBorder(),
+                          border: OutlineInputBorder(),
                           labelText:
-                              "Have you applied for Individual Ownership?",
+                              "Have you applied for Individual Ownership ?",
                           helperText: '',
-                          errorText: state.appliedOwnership.invalid
-                              ? 'required field'
-                              : null,
+                          // errorText: state.appliedOwnership.invalid
+                          //     ? 'required field'
+                          //     : null,
                         ),
                         items: yesNoList
                             .map<DropdownMenuItem<String>>((String value) {
@@ -1058,7 +1057,7 @@ class _TabTwoState extends State<TabTwo>
                     ),
                   ),
                   sectionInfo(
-                      "Have you received the entitlement (patta) from the government?"),
+                      "Have you received the entitlement (patta) from the government ?"),
                   spacerWidget(),
                   Align(
                     alignment: Alignment.center,
@@ -1080,20 +1079,19 @@ class _TabTwoState extends State<TabTwo>
                         iconSize: 24,
                         elevation: 16,
                         style: const TextStyle(color: Colors.deepPurple),
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
+                        decoration: const InputDecoration(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.only(
                                 top: 0), // add padding to adjust icon
-                            child:
-                                Icon(Icons.wc_rounded, color: Colors.lightBlue),
+                            child: Icon(Icons.wc_rounded),
                           ),
-                          border: const OutlineInputBorder(),
+                          border: OutlineInputBorder(),
                           labelText:
-                              "Have you received the entitlement (patta) from the government?",
+                              "Have you received the entitlement (patta) from the government ?",
                           helperText: '',
-                          errorText: state.receivedEntitlement.invalid
-                              ? 'required field'
-                              : null,
+                          // errorText: state.receivedEntitlement.invalid
+                          //     ? 'required field'
+                          //     : null,
                         ),
                         items: yesNoList
                             .map<DropdownMenuItem<String>>((String value) {
@@ -1151,7 +1149,8 @@ class _TabTwoState extends State<TabTwo>
                             child: Icon(Icons.person),
                           ),
                           border: OutlineInputBorder(),
-                          labelText: "The types of crop you grow in this land?",
+                          labelText:
+                              "The types of crop you grow in this land ?",
                           helperText: '',
                         ),
                       ),

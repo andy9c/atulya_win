@@ -629,7 +629,7 @@ class _TabFiveState extends State<TabFive>
                   sectionInfo("Has any action been taken by you ?"),
                   spacerWidget(),
                   sectionInfo(
-                      "1) Returned The Notification\n2) Submitted The Grievance To The Collector Office\n3) Joined The Protest In Bhubaneswar/Sundergarh"),
+                      "1) Returned The Notification\n2) Submitted The Grievance To The Collector Office\n3) Joined The Protest In Bhubaneswar/Sundergarh\n4) Nothing"),
                   spacerWidget(),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -701,7 +701,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "Have you given consent to sell the land to OCL?",
+                              "Have you given consent to sell the land to OCL ?",
                           helperText: '',
                           errorText: state.givenConsent.invalid
                               ? 'required field'
@@ -799,7 +799,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "Are you aware of 'why' the land is being acquired for?",
+                              "Are you aware of 'why' the land is being acquired for ?",
                           helperText: '',
                           errorText:
                               state.aware.invalid ? 'required field' : null,
@@ -822,7 +822,7 @@ class _TabFiveState extends State<TabFive>
                     ),
                   ),
                   sectionInfo(
-                      "Was there Gramsabha in your village/panchayat held to discuss whether to give the land to OCL?"),
+                      "Was there Gramsabha in your village/panchayat held to discuss whether to give the land to OCL ?"),
                   spacerWidget(),
                   Align(
                     alignment: Alignment.center,
@@ -854,7 +854,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "Was there Gramsabha in your village/panchayat held to discuss whether to give the land to OCL?",
+                              "Was there Gramsabha in your village/panchayat held to discuss whether to give the land to OCL ?",
                           helperText: '',
                           errorText:
                               state.gramsabha.invalid ? 'required field' : null,
@@ -906,7 +906,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "If yes, did you participate in the gram sabha?",
+                              "If yes, did you participate in the gram sabha ?",
                           helperText: '',
                           errorText: state.participate.invalid
                               ? 'required field'
@@ -969,7 +969,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: OutlineInputBorder(),
                           labelText:
-                              "What resolution was passed in the gram sabha?",
+                              "What resolution was passed in the gram sabha ?",
                           helperText: '',
                         ),
                       ),
@@ -1008,7 +1008,7 @@ class _TabFiveState extends State<TabFive>
                           ),
                           border: const OutlineInputBorder(),
                           labelText:
-                              "Are you aware of the compensation you will be paid for the loss of land?",
+                              "Are you aware of the compensation you will be paid for the loss of land ?",
                           helperText: '',
                           errorText: state.compensationAware.invalid
                               ? 'required field'
@@ -1109,7 +1109,8 @@ class _TabFiveState extends State<TabFive>
                                 Icon(Icons.wc_rounded, color: Colors.lightBlue),
                           ),
                           border: const OutlineInputBorder(),
-                          labelText: "Are you satisfied with the Compensation?",
+                          labelText:
+                              "Are you satisfied with the Compensation ?",
                           helperText: '',
                           errorText: state.happyWithCompensation.invalid
                               ? 'required field'

@@ -1283,23 +1283,41 @@ class _FamilyMemberState extends State<FamilyMember> {
       builder: (context, state) {
         Map<String, dynamic> familyMembers = state.familyMemberDetails;
 
-        Widget addButton = ElevatedButton(
-          onPressed: !context.read<InformaticsCubit>().state.isEnabled
-              ? null
-              : () {
-                  addFamilyMembers(null, null);
-                },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 50,
-              vertical: 20,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            // backgroundColor: Colors.blueAccent,
+        Widget addButton = Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 5.w,
+            vertical: 8,
           ),
-          child: const Text('Add Family Members'),
+          child: ElevatedButton(
+            onPressed: !context.read<InformaticsCubit>().state.isEnabled
+                ? null
+                : () {
+                    addFamilyMembers(null, null);
+                  },
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 50,
+                vertical: 20,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              // backgroundColor: Colors.blueAccent,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.add,
+                ),
+                spacerWidget(),
+                const Text(
+                  'Add Family Members',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
         );
 
         List<Widget> widgets = [spacerWidget(), addButton, spacerWidget()];

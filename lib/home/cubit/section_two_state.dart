@@ -139,7 +139,5 @@ class SectionTwoState extends Equatable with FormzMixin {
         countChulha,
         totalPeople,
         cultivateAnabadi,
-        appliedOwnership,
-        receivedEntitlement,
       ];
 }
