@@ -22,6 +22,10 @@ FilteringTextInputFormatter doubleFormat() {
   return FilteringTextInputFormatter.allow(RegExp(r'[0-9\.]'));
 }
 
+FilteringTextInputFormatter multipledoubleFormat() {
+  return FilteringTextInputFormatter.allow(RegExp(r'[0-9\.\,]'));
+}
+
 FilteringTextInputFormatter alphaNumericFormat() {
   return FilteringTextInputFormatter.allow(
       RegExp(r'[A-Z0-9a-z \,\-\:\/\.\(\)\&\;]'));

@@ -17,6 +17,19 @@ String getArea(String? area) {
   return '${sp[0]} ac, ${sp[1]} dm';
 }
 
+String getMultipleArea(String? area) {
+  area = area ?? '0';
+
+  List<String> multiple = area.split(',');
+  String result = "";
+
+  for (var element in multiple) {
+    result = "$result(${getArea(element)}) ";
+  }
+
+  return result.trim();
+}
+
 class TabTwo extends StatefulWidget {
   const TabTwo({super.key});
 

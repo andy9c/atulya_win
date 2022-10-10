@@ -203,73 +203,69 @@ class _TabFourState extends State<TabFour>
                       vertical: 0,
                       horizontal: 5.w,
                     ),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: TextFormField(
-                            enabled: context
-                                .read<InformaticsCubit>()
-                                .state
-                                .isEnabled,
-                            inputFormatters: [
-                              doubleFormat(),
-                            ],
-                            controller: c1 = TextEditingController()
-                              ..text = state.landAreaLost.value ?? ''
-                              ..selection = TextSelection.fromPosition(
-                                TextPosition(
-                                  offset: state.landAreaLost.value == null
-                                      ? 0
-                                      : c1.selection.base.offset >
-                                              state.landAreaLost.value.length
-                                          ? state.landAreaLost.value.length
-                                          : c1.selection.base.offset,
-                                ),
+                        TextFormField(
+                          enabled:
+                              context.read<InformaticsCubit>().state.isEnabled,
+                          inputFormatters: [
+                            multipledoubleFormat(),
+                          ],
+                          controller: c1 = TextEditingController()
+                            ..text = state.landAreaLost.value ?? ''
+                            ..selection = TextSelection.fromPosition(
+                              TextPosition(
+                                offset: state.landAreaLost.value == null
+                                    ? 0
+                                    : c1.selection.base.offset >
+                                            state.landAreaLost.value.length
+                                        ? state.landAreaLost.value.length
+                                        : c1.selection.base.offset,
                               ),
-                            maxLines: 1,
-                            textCapitalization: TextCapitalization.characters,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            key: const Key('sectionFour_landAreaLost'),
-                            onChanged: (value) => context
-                                .read<SectionFourCubit>()
-                                .landAreaLostChanged(value),
-                            obscureText: false,
-                            decoration: const InputDecoration(
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 0), // add padding to adjust icon
-                                child:
-                                    Icon(Icons.person, color: Colors.lightBlue),
-                              ),
-                              border: OutlineInputBorder(),
-                              labelText: "How much land lost ?",
-                              helperText: '',
                             ),
+                          maxLines: 1,
+                          textCapitalization: TextCapitalization.characters,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          key: const Key('sectionFour_landAreaLost'),
+                          onChanged: (value) => context
+                              .read<SectionFourCubit>()
+                              .landAreaLostChanged(value),
+                          obscureText: false,
+                          decoration: const InputDecoration(
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(
+                                  top: 0), // add padding to adjust icon
+                              child:
+                                  Icon(Icons.person, color: Colors.lightBlue),
+                            ),
+                            border: OutlineInputBorder(),
+                            labelText: "How much land lost ?",
+                            helperText:
+                                'Use comma as separator; e.g. 2.3,4.5,6.2',
                           ),
                         ),
                         spacerWidget(),
-                        Expanded(
-                          flex: 1,
-                          child: TextFormField(
-                            enabled: false,
-                            controller: TextEditingController(
-                              text: getArea(state.landAreaLost.value),
-                            ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.blueGrey.shade50,
-                              border: const OutlineInputBorder(),
-                              labelText: 'acre/decimal',
-                              helperText: '',
-                            ),
+                        spacerWidget(),
+                        TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(
+                            text: getMultipleArea(state.landAreaLost.value),
+                          ),
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.blueGrey.shade50,
+                            border: const OutlineInputBorder(),
+                            labelText: 'acre/decimal',
+                            helperText: '',
                           ),
                         ),
                       ],
                     ),
                   ),
+                  spacerWidget(),
                   Align(
                     alignment: Alignment.center,
                     child: Padding(
@@ -296,7 +292,7 @@ class _TabFourState extends State<TabFour>
                                       : c2.selection.base.offset,
                             ),
                           ),
-                        maxLines: 5,
+                        maxLines: 3,
                         textCapitalization: TextCapitalization.none,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.text,
@@ -314,7 +310,7 @@ class _TabFourState extends State<TabFour>
                           border: OutlineInputBorder(),
                           labelText: "Year of the land lost",
                           helperText:
-                              'Use (comma, space, etc. as separators); e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
+                              'Use separators as needed; e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
                         ),
                       ),
                     ),
