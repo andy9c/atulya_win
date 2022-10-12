@@ -23,7 +23,7 @@ class SectionOneCubit extends Cubit<SectionOneState>
   }
 
   void fullNameChanged(String value) {
-    emit(state.copyWith(fullName: Compulsory.dirty(value)));
+    emit(state.copyWith(fullName: Compulsory.dirty(value.trim())));
   }
 
   void relationshipChanged(String value) {
@@ -31,7 +31,7 @@ class SectionOneCubit extends Cubit<SectionOneState>
   }
 
   void headOfHouseholdChanged(String value) {
-    emit(state.copyWith(headOfHousehold: Compulsory.dirty(value)));
+    emit(state.copyWith(headOfHousehold: Compulsory.dirty(value.trim())));
   }
 
   void ageChanged(String value) {
@@ -51,11 +51,11 @@ class SectionOneCubit extends Cubit<SectionOneState>
   }
 
   void nameOfCommunityChanged(String value) {
-    emit(state.copyWith(nameOfCommunity: Compulsory.dirty(value)));
+    emit(state.copyWith(nameOfCommunity: Compulsory.dirty(value.trim())));
   }
 
   void villageNameChanged(String value) {
-    emit(state.copyWith(villageName: Compulsory.dirty(value)));
+    emit(state.copyWith(villageName: Compulsory.dirty(value.trim())));
   }
 
   void gramPanchayatChanged(String value) {

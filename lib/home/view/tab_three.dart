@@ -777,7 +777,7 @@ class _TabThreeState extends State<TabThree>
                         maxLines: 1,
                         textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         key: const Key('sectionThree_annualIncome'),
                         onChanged: (value) => context
                             .read<SectionThreeCubit>()

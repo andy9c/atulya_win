@@ -30,7 +30,7 @@ class Create {
     final timeStamp = DateTime.now().format('MMMM dd y, h:mm:ss a');
     final String emailID = student!.email.toString();
     final String uidDoc =
-        '${s1.fullName.value} (${s1.gramPanchayat.value}) (${mainCollection.doc().id})';
+        '${s1.fullName.value.toString().trim()} (${s1.gramPanchayat.value.toString().trim()}) (${mainCollection.doc().id})';
 
     var rootDocumentReferencer = mainCollection.doc(documentID ?? uidDoc);
 

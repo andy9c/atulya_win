@@ -24,6 +24,10 @@ class _TabOneState extends State<TabOne>
   bool get wantKeepAlive => true;
   final ScrollController scr1 = ScrollController();
 
+  void scrollUp() {
+    scr1.jumpTo(scr1.position.minScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -92,7 +96,7 @@ class _TabOneState extends State<TabOne>
           alignment: const Alignment(0, -1 / 3),
           child: Scrollbar(
             thumbVisibility: true,
-            controller: scr1..jumpTo(scr1.position.minScrollExtent),
+            controller: scr1,
             child: FocusScope(
               child: ListView(
                 controller: scr1,

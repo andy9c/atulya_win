@@ -19,30 +19,6 @@ import 'package:sizer/sizer.dart';
 import '../../database/database.dart';
 import '../../main.dart';
 
-Future<void> execute(InternetConnectionChecker internetConnectionChecker,
-    BuildContext context) async {
-  // Simple check to see if we have Internet
-  // ignore: avoid_print
-  //print('''The statement 'this machine is connected to the Internet' is: ''');
-  // final bool isConnected = await InternetConnectionChecker().hasConnection;
-  // ignore: avoid_print
-  // print(
-  //   isConnected.toString(),
-  // );
-  // returns a bool
-
-  // We can also get an enum instead of a bool
-  // ignore: avoid_print
-  // print(
-  //   'Current status: ${await InternetConnectionChecker().connectionStatus}',
-  // );
-  // Prints either InternetConnectionStatus.connected
-  // or InternetConnectionStatus.disconnected
-
-  // close listener after 30 seconds, so the program doesn't run forever
-  // await Future<void>.delayed(const Duration(seconds: 30));
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -238,6 +214,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   );
                 }
 
+                if (snapshot.data!.size == 0) {
+                  return const Text('Record Empty');
+                }
+
                 return BlocBuilder<InformaticsCubit, InformaticsState>(
                   builder: (context, state) {
                     return AbsorbPointer(
@@ -414,11 +394,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             duration:
                                                 const Duration(seconds: 1));
 
-                                        ScrollController scr1 =
-                                            TabOne.of(context)!.scr1;
-
-                                        scr1.jumpTo(
-                                            scr1.position.minScrollExtent);
+                                        TabOne.of(context)?.scrollUp();
                                       }
                                     },
                                   );
@@ -570,9 +546,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             _tabController.animateTo(0,
                                 duration: const Duration(seconds: 1));
 
-                            ScrollController scr1 = TabOne.of(context)!.scr1;
-
-                            scr1.jumpTo(scr1.position.minScrollExtent);
+                            TabOne.of(context)?.scrollUp();
                           },
                           child: const Text("CREATE"),
                         ),
@@ -681,7 +655,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             builder: (context, state) {
               return (state.fullName.value ?? '').isEmpty
                   ? Text((configSchoolName))
-                  : Text('${state.fullName.value}');
+                  : Text(
+                      '${state.fullName.value} (${state.gramPanchayat.value})');
             },
           ),
           bottom: TabBar(
