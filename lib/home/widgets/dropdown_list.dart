@@ -97,6 +97,7 @@ List<String> hasAadharCardList = [
   "ANTODAYA",
   "BPL",
   "APL",
+  "N.A.",
 ];
 
 List<String> classList = [

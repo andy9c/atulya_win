@@ -760,7 +760,7 @@ class _TabThreeState extends State<TabThree>
                         enabled:
                             context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
-                          intFormat(),
+                          intFormatRange(),
                         ],
                         controller: c13 = TextEditingController()
                           ..text = state.annualIncome.value ?? ''
@@ -792,7 +792,7 @@ class _TabThreeState extends State<TabThree>
                           ),
                           border: OutlineInputBorder(),
                           labelText: "Annual Income of Family",
-                          helperText: '',
+                          helperText: 'annual income range e.g. 3000-5000',
                         ),
                       ),
                     ),

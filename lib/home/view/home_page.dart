@@ -270,12 +270,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   Map<String, dynamic> data =
                                       document.data()! as Map<String, dynamic>;
 
+                                  bool isEdited = data['isEdited'] ?? false;
+
                                   return ListTile(
                                     dense: true,
                                     isThreeLine: true,
                                     leading: Text((index + 1).toString()),
-                                    title: Text(
-                                        '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                    title: isEdited
+                                        ? Text(
+                                            '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
+                                        : Text(
+                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
                                     subtitle: Text('${data['email']}'),
                                     trailing: IconButton(
                                       onPressed: () {
@@ -291,8 +296,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     leading: const Icon(
                                                       Icons.list_rounded,
                                                     ),
-                                                    title: Text(
-                                                        '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                                    title: isEdited
+                                                        ? Text(
+                                                            '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
+                                                        : Text(
+                                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
                                                     subtitle: Text(
                                                         '${data['email']}'),
                                                   ),
@@ -304,8 +312,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                       onPressed: () {
                                                         Delete.execute(docID);
                                                         Navigator.pop(context);
-                                                        showInfo(
-                                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
+                                                        showInfo(isEdited
+                                                            ? '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]}) deleted !'
+                                                            : '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
                                                       },
                                                       child:
                                                           const Text("DELETE"),
@@ -342,18 +351,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             .isEnabledChanged(context, false);
                                       }
 
-                                      SectionOneState s1 =
-                                          SectionOneState.fromMap(data["s1"]);
-                                      SectionTwoState s2 =
-                                          SectionTwoState.fromMap(data["s2"]);
-                                      SectionThreeState s3 =
-                                          SectionThreeState.fromMap(data["s3"]);
-                                      SectionFourState s4 =
-                                          SectionFourState.fromMap(data["s4"]);
-                                      SectionFiveState s5 =
-                                          SectionFiveState.fromMap(data["s5"]);
-                                      SectionSixState s6 =
-                                          SectionSixState.fromMap(data["s6"]);
+                                      SectionOneState s1 = isEdited
+                                          ? SectionOneState.fromMap(
+                                              data["s1_edit"])
+                                          : SectionOneState.fromMap(data["s1"]);
+
+                                      SectionTwoState s2 = isEdited
+                                          ? SectionTwoState.fromMap(
+                                              data["s2_edit"])
+                                          : SectionTwoState.fromMap(data["s2"]);
+
+                                      SectionThreeState s3 = isEdited
+                                          ? SectionThreeState.fromMap(
+                                              data["s3_edit"])
+                                          : SectionThreeState.fromMap(
+                                              data["s3"]);
+
+                                      SectionFourState s4 = isEdited
+                                          ? SectionFourState.fromMap(
+                                              data["s4_edit"])
+                                          : SectionFourState.fromMap(
+                                              data["s4"]);
+
+                                      SectionFiveState s5 = isEdited
+                                          ? SectionFiveState.fromMap(
+                                              data["s5_edit"])
+                                          : SectionFiveState.fromMap(
+                                              data["s5"]);
+
+                                      SectionSixState s6 = isEdited
+                                          ? SectionSixState.fromMap(
+                                              data["s6_edit"])
+                                          : SectionSixState.fromMap(data["s6"]);
 
                                       if (mounted) {
                                         context
@@ -380,6 +409,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             .setState(s6);
 
                                         Navigator.pop(context);
+
+                                        _tabController.animateTo(0,
+                                            duration:
+                                                const Duration(seconds: 1));
+
+                                        ScrollController scr1 =
+                                            TabOne.of(context)!.scr1;
+
+                                        scr1.jumpTo(
+                                            scr1.position.minScrollExtent);
                                       }
                                     },
                                   );
@@ -530,6 +569,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                             _tabController.animateTo(0,
                                 duration: const Duration(seconds: 1));
+
+                            ScrollController scr1 = TabOne.of(context)!.scr1;
+
+                            scr1.jumpTo(scr1.position.minScrollExtent);
                           },
                           child: const Text("CREATE"),
                         ),

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'package:atulya/app/bloc/app_bloc.dart';
 import 'package:atulya/home/home.dart';
@@ -10,6 +10,9 @@ import '../cubit/cubit.dart';
 
 class TabOne extends StatefulWidget {
   const TabOne({super.key});
+  //this line makes it possible to access stateful widget functions from it's child.
+  static _TabOneState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_TabOneState>();
 
   @override
   State<TabOne> createState() => _TabOneState();
@@ -19,12 +22,12 @@ class _TabOneState extends State<TabOne>
     with AutomaticKeepAliveClientMixin<TabOne> {
   @override
   bool get wantKeepAlive => true;
+  final ScrollController scr1 = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AppBloc bloc) => bloc.state.user);
-    final ScrollController scr1 = ScrollController();
 
     Widget registrationEmailID() {
       return Align(
@@ -89,7 +92,7 @@ class _TabOneState extends State<TabOne>
           alignment: const Alignment(0, -1 / 3),
           child: Scrollbar(
             thumbVisibility: true,
-            controller: scr1,
+            controller: scr1..jumpTo(scr1.position.minScrollExtent),
             child: FocusScope(
               child: ListView(
                 controller: scr1,

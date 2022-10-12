@@ -45,6 +45,7 @@ class Create {
       "email": emailID,
       "timestamp": timeStamp,
       "isDeleted": false,
+      "isEdited": false,
       "s1": s1Data,
       "s2": s2Data,
       "s3": s3Data,
@@ -55,12 +56,13 @@ class Create {
 
     Map<String, dynamic> updateData = <String, dynamic>{
       "updateTimestamp": timeStamp,
-      "s1": s1Data,
-      "s2": s2Data,
-      "s3": s3Data,
-      "s4": s4Data,
-      "s5": s5Data,
-      "s6": s6Data,
+      "isEdited": true,
+      "s1_edit": s1Data,
+      "s2_edit": s2Data,
+      "s3_edit": s3Data,
+      "s4_edit": s4Data,
+      "s5_edit": s5Data,
+      "s6_edit": s6Data,
     };
 
     await rootDocumentReferencer
