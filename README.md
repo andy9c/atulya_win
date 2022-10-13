@@ -1,6 +1,6 @@
 # atulya
 
-A new Flutter project.
+an indigenous aboriginal initiative.
 
 ## Getting Started
 
