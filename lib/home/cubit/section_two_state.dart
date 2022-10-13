@@ -127,7 +127,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       isAlive: Compulsory.dirty(map['isAlive']),
       countChulha: Compulsory.dirty(map['countChulha']),
       totalPeople: Compulsory.dirty(map['totalPeople']),
-      totalUndividedLand: Compulsory.dirty(map['totalUndividedLand'] ?? ''),
+      totalUndividedLand: Compulsory.dirty(map['totalUndividedLand'] ?? '0'),
       landHolding: map['landHolding'],
       cultivateAnabadi: Compulsory.dirty(map['cultivateAnabadi']),
       yearsAnabadi: map['yearsAnabadi'],
