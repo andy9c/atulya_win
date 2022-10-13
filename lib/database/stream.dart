@@ -22,22 +22,24 @@ class StreamData {
     final String emailID = user!.email.toString();
 
     final adminDomain = RegExp(r'^[A-Za-z0-9]*@admin\.edu$');
+    final specDomain = RegExp(r'^[A-Za-z0-9]*@watch\.edu$');
 
-    var userCollectionReferencer = adminDomain.hasMatch(emailID)
-        ? firestore.collection(rootCollection).where(
-              "isDeleted",
-              isEqualTo: false,
-            )
-        : firestore
-            .collection(rootCollection)
-            .where(
-              "isDeleted",
-              isEqualTo: false,
-            )
-            .where(
-              "email",
-              isEqualTo: emailID,
-            );
+    var userCollectionReferencer =
+        adminDomain.hasMatch(emailID) || specDomain.hasMatch(emailID)
+            ? firestore.collection(rootCollection).where(
+                  "isDeleted",
+                  isEqualTo: false,
+                )
+            : firestore
+                .collection(rootCollection)
+                .where(
+                  "isDeleted",
+                  isEqualTo: false,
+                )
+                .where(
+                  "email",
+                  isEqualTo: emailID,
+                );
 
     // var userDocumentReferencer = userCollection.doc(inviterID);
     // var superviseCollectionReferencer = userDocumentReferencer
