@@ -201,6 +201,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     void listData() async {
+      final User? user = FirebaseAuth.instance.currentUser;
+      final String emailID = user!.email.toString();
+
+      final specDomain = RegExp(r'^[A-Za-z0-9]*@watch\.edu$');
+
+      bool isVisitor = specDomain.hasMatch(emailID);
+
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -273,50 +280,58 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
                                   subtitle: Text('${data['email']}'),
                                   trailing: IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                                title: const Text(
-                                                  'Confirm Delete !',
-                                                ),
-                                                content: ListTile(
-                                                  dense: true,
-                                                  isThreeLine: true,
-                                                  leading: const Icon(
-                                                    Icons.list_rounded,
-                                                  ),
-                                                  title: isEdited
-                                                      ? Text(
-                                                          '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
-                                                      : Text(
-                                                          '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
-                                                  subtitle:
-                                                      Text('${data['email']}'),
-                                                ),
-                                                icon: const Icon(
-                                                  Icons.delete,
-                                                ),
-                                                actions: [
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Delete.execute(docID);
-                                                      Navigator.pop(context);
-                                                      showInfo(isEdited
-                                                          ? '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]}) deleted !'
-                                                          : '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
-                                                    },
-                                                    child: const Text("DELETE"),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text("CANCEL"),
-                                                  ),
-                                                ],
-                                              ));
-                                    },
+                                    onPressed: isVisitor
+                                        ? null
+                                        : () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                      title: const Text(
+                                                        'Confirm Delete !',
+                                                      ),
+                                                      content: ListTile(
+                                                        dense: true,
+                                                        isThreeLine: true,
+                                                        leading: const Icon(
+                                                          Icons.list_rounded,
+                                                        ),
+                                                        title: isEdited
+                                                            ? Text(
+                                                                '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
+                                                            : Text(
+                                                                '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                                        subtitle: Text(
+                                                            '${data['email']}'),
+                                                      ),
+                                                      icon: const Icon(
+                                                        Icons.delete,
+                                                      ),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            Delete.execute(
+                                                                docID);
+                                                            Navigator.pop(
+                                                                context);
+                                                            showInfo(isEdited
+                                                                ? '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]}) deleted !'
+                                                                : '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
+                                                          },
+                                                          child: const Text(
+                                                              "DELETE"),
+                                                        ),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                              "CANCEL"),
+                                                        ),
+                                                      ],
+                                                    ));
+                                          },
                                     icon: const Icon(
                                       Icons.delete,
                                     ),
