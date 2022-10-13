@@ -98,6 +98,7 @@ List<String> hasAadharCardList = [
   "BPL",
   "APL",
   "N.A.",
+  "OTHER",
 ];
 
 List<String> classList = [

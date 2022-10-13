@@ -21,7 +21,8 @@ Future<void> main() async {
   // in order to use BefaultFirebaseOptions use this
   // dart pub global activate flutterfire_cli (execute this line)
   // flutterfire configure (then this)
-  // set PATH for "C:\Users\OFFICE\AppData\Local\Pub\Cache\bin"
+  // set PATH for "C:\Users\OFFICE\AppData\Local\Pub\Cache\bin" (Windows)
+  // export PATH="$PATH":"$HOME/.pub-cache/bin" (macOS)
   // restart VSCode
 
   await Firebase.initializeApp(
