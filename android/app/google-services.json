@@ -49,35 +49,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:850170061240:android:f28a20b3802683bf8a6f4d",
-        "android_client_info": {
-          "package_name": "in.i9studios.atulya"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "850170061240-g7rs68eqac4ht757a35nica1l9sh7ddd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDPOYjsDz7ComNezH0UoJLm--XQMWSMSp8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "850170061240-g7rs68eqac4ht757a35nica1l9sh7ddd.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"

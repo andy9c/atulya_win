@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+// import 'dart:io';
 
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
@@ -9,11 +10,12 @@ import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
 import 'package:atulya/home/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+// import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:formz/formz.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+// import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../database/database.dart';
@@ -30,15 +32,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
-  late final StreamSubscription<InternetConnectionStatus> listener;
+  // late final StreamSubscription<InternetConnectionStatus>? listener;
 
-  Future<void> secureScreen() async {
-    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  }
+  // Future<void> secureScreen() async {
+  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  // }
 
   @override
   void initState() {
-    secureScreen();
+    // if (Platform.isAndroid) {
+    //   secureScreen();
+    // }
 
     _tabController = TabController(
       length: 6,
@@ -50,27 +54,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
     });
 
-    // actively listen for status updates
-    listener = InternetConnectionChecker().onStatusChange.listen(
-      (InternetConnectionStatus status) {
-        switch (status) {
-          case InternetConnectionStatus.connected:
-            // ignore: avoid_print
-            // print('Data connection is available.');
-            context.read<InformaticsCubit>().hasInternetChanged(true);
-            String message = 'Connected to internet !';
-            showMessageBanner(message, dismiss: true);
-            break;
-          case InternetConnectionStatus.disconnected:
-            // ignore: avoid_print
-            // print('You are disconnected from the internet.');
-            context.read<InformaticsCubit>().hasInternetChanged(false);
-            String message = 'No internet !';
-            showMessageBanner(message, dismiss: true);
-            break;
-        }
-      },
-    );
+    // if (kIsWeb) {
+    //   // actively listen for status updates
+    //   listener = InternetConnectionChecker().onStatusChange.listen(
+    //     (InternetConnectionStatus status) {
+    //       switch (status) {
+    //         case InternetConnectionStatus.connected:
+    //           // ignore: avoid_print
+    //           // print('Data connection is available.');
+    //           context.read<InformaticsCubit>().hasInternetChanged(true);
+    //           String message = 'Connected to internet !';
+    //           showMessageBanner(message, dismiss: true);
+    //           break;
+    //         case InternetConnectionStatus.disconnected:
+    //           // ignore: avoid_print
+    //           // print('You are disconnected from the internet.');
+    //           context.read<InformaticsCubit>().hasInternetChanged(false);
+    //           String message = 'No internet !';
+    //           showMessageBanner(message, dismiss: true);
+    //           break;
+    //       }
+    //     },
+    //   );
+    // } else {
+    //   listener = null;
+    // }
 
     if (context.read<InformaticsCubit>().state.documentID.value != null) {
       context.read<InformaticsCubit>().isEnabledChanged(context, false);
@@ -83,10 +91,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Future<void> dispose() async {
-    globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner();
     super.dispose();
+    globalScaffoldMessenger.currentState!.hideCurrentMaterialBanner();
     _tabController.dispose();
-    await listener.cancel();
+
+    // if (kIsWeb) {
+    //   await listener!.cancel();
+    // }
   }
 
   @override
@@ -222,187 +233,178 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   builder: (context, state) {
                     return AbsorbPointer(
                       absorbing: state.isLoadingDocument,
-                      child: Scrollbar(
-                        thumbVisibility: true,
-                        child: Column(
-                          children: [
-                            !state.isLoadingDocument
-                                ? Container()
-                                : const LinearProgressIndicator(
-                                    value: null,
-                                    semanticsLabel: 'Linear progress indicator',
-                                  ),
-                            spacerWidget(),
-                            Flexible(
-                              child: ListView.separated(
-                                // separatorBuilder: separatorBuilder,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: snapshot.data!.size,
-                                separatorBuilder: (context, index) {
-                                  return Divider(
-                                    color: Theme.of(context).primaryColorLight,
-                                  );
-                                },
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot document =
-                                      snapshot.data!.docs[index];
-                                  String docID = document.id;
-                                  Map<String, dynamic> data =
-                                      document.data()! as Map<String, dynamic>;
+                      child: Column(
+                        children: [
+                          !state.isLoadingDocument
+                              ? Container()
+                              : const LinearProgressIndicator(
+                                  value: null,
+                                  semanticsLabel: 'Linear progress indicator',
+                                ),
+                          spacerWidget(),
+                          Flexible(
+                            child: ListView.separated(
+                              // separatorBuilder: separatorBuilder,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: snapshot.data!.size,
+                              separatorBuilder: (context, index) {
+                                return Divider(
+                                  color: Theme.of(context).primaryColorLight,
+                                );
+                              },
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot document =
+                                    snapshot.data!.docs[index];
+                                String docID = document.id;
+                                Map<String, dynamic> data =
+                                    document.data()! as Map<String, dynamic>;
 
-                                  bool isEdited = data['isEdited'] ?? false;
+                                bool isEdited = data['isEdited'] ?? false;
 
-                                  return ListTile(
-                                    dense: true,
-                                    isThreeLine: true,
-                                    leading: Text((index + 1).toString()),
-                                    title: isEdited
-                                        ? Text(
-                                            '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
-                                        : Text(
-                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
-                                    subtitle: Text('${data['email']}'),
-                                    trailing: IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                                  title: const Text(
-                                                    'Confirm Delete !',
+                                return ListTile(
+                                  dense: true,
+                                  isThreeLine: true,
+                                  leading: Text((index + 1).toString()),
+                                  title: isEdited
+                                      ? Text(
+                                          '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
+                                      : Text(
+                                          '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                  subtitle: Text('${data['email']}'),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: const Text(
+                                                  'Confirm Delete !',
+                                                ),
+                                                content: ListTile(
+                                                  dense: true,
+                                                  isThreeLine: true,
+                                                  leading: const Icon(
+                                                    Icons.list_rounded,
                                                   ),
-                                                  content: ListTile(
-                                                    dense: true,
-                                                    isThreeLine: true,
-                                                    leading: const Icon(
-                                                      Icons.list_rounded,
-                                                    ),
-                                                    title: isEdited
-                                                        ? Text(
-                                                            '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
-                                                        : Text(
-                                                            '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
-                                                    subtitle: Text(
-                                                        '${data['email']}'),
+                                                  title: isEdited
+                                                      ? Text(
+                                                          '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]})')
+                                                      : Text(
+                                                          '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]})'),
+                                                  subtitle:
+                                                      Text('${data['email']}'),
+                                                ),
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                ),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Delete.execute(docID);
+                                                      Navigator.pop(context);
+                                                      showInfo(isEdited
+                                                          ? '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]}) deleted !'
+                                                          : '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
+                                                    },
+                                                    child: const Text("DELETE"),
                                                   ),
-                                                  icon: const Icon(
-                                                    Icons.delete,
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text("CANCEL"),
                                                   ),
-                                                  actions: [
-                                                    ElevatedButton(
-                                                      onPressed: () {
-                                                        Delete.execute(docID);
-                                                        Navigator.pop(context);
-                                                        showInfo(isEdited
-                                                            ? '${data["s1_edit"]["fullName"]}, (${data["s1_edit"]["gramPanchayat"]}) deleted !'
-                                                            : '${data["s1"]["fullName"]}, (${data["s1"]["gramPanchayat"]}) deleted !');
-                                                      },
-                                                      child:
-                                                          const Text("DELETE"),
-                                                    ),
-                                                    ElevatedButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child:
-                                                          const Text("CANCEL"),
-                                                    ),
-                                                  ],
-                                                ));
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                      ),
+                                                ],
+                                              ));
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
                                     ),
-                                    onTap: () async {
+                                  ),
+                                  onTap: () async {
+                                    context
+                                        .read<InformaticsCubit>()
+                                        .isLoadingDocumentChanged(true);
+
+                                    DocumentSnapshot<Object?> data =
+                                        await Read.execute(docID);
+
+                                    if (mounted) {
                                       context
                                           .read<InformaticsCubit>()
-                                          .isLoadingDocumentChanged(true);
+                                          .documentIDChanged(docID);
 
-                                      DocumentSnapshot<Object?> data =
-                                          await Read.execute(docID);
+                                      context
+                                          .read<InformaticsCubit>()
+                                          .isEnabledChanged(context, false);
+                                    }
 
-                                      if (mounted) {
-                                        context
-                                            .read<InformaticsCubit>()
-                                            .documentIDChanged(docID);
+                                    SectionOneState s1 = isEdited
+                                        ? SectionOneState.fromMap(
+                                            data["s1_edit"])
+                                        : SectionOneState.fromMap(data["s1"]);
 
-                                        context
-                                            .read<InformaticsCubit>()
-                                            .isEnabledChanged(context, false);
-                                      }
+                                    SectionTwoState s2 = isEdited
+                                        ? SectionTwoState.fromMap(
+                                            data["s2_edit"])
+                                        : SectionTwoState.fromMap(data["s2"]);
 
-                                      SectionOneState s1 = isEdited
-                                          ? SectionOneState.fromMap(
-                                              data["s1_edit"])
-                                          : SectionOneState.fromMap(data["s1"]);
+                                    SectionThreeState s3 = isEdited
+                                        ? SectionThreeState.fromMap(
+                                            data["s3_edit"])
+                                        : SectionThreeState.fromMap(data["s3"]);
 
-                                      SectionTwoState s2 = isEdited
-                                          ? SectionTwoState.fromMap(
-                                              data["s2_edit"])
-                                          : SectionTwoState.fromMap(data["s2"]);
+                                    SectionFourState s4 = isEdited
+                                        ? SectionFourState.fromMap(
+                                            data["s4_edit"])
+                                        : SectionFourState.fromMap(data["s4"]);
 
-                                      SectionThreeState s3 = isEdited
-                                          ? SectionThreeState.fromMap(
-                                              data["s3_edit"])
-                                          : SectionThreeState.fromMap(
-                                              data["s3"]);
+                                    SectionFiveState s5 = isEdited
+                                        ? SectionFiveState.fromMap(
+                                            data["s5_edit"])
+                                        : SectionFiveState.fromMap(data["s5"]);
 
-                                      SectionFourState s4 = isEdited
-                                          ? SectionFourState.fromMap(
-                                              data["s4_edit"])
-                                          : SectionFourState.fromMap(
-                                              data["s4"]);
+                                    SectionSixState s6 = isEdited
+                                        ? SectionSixState.fromMap(
+                                            data["s6_edit"])
+                                        : SectionSixState.fromMap(data["s6"]);
 
-                                      SectionFiveState s5 = isEdited
-                                          ? SectionFiveState.fromMap(
-                                              data["s5_edit"])
-                                          : SectionFiveState.fromMap(
-                                              data["s5"]);
+                                    if (mounted) {
+                                      context
+                                          .read<InformaticsCubit>()
+                                          .isLoadingDocumentChanged(false);
 
-                                      SectionSixState s6 = isEdited
-                                          ? SectionSixState.fromMap(
-                                              data["s6_edit"])
-                                          : SectionSixState.fromMap(data["s6"]);
+                                      context
+                                          .read<SectionOneCubit>()
+                                          .setState(s1);
+                                      context
+                                          .read<SectionTwoCubit>()
+                                          .setState(s2);
+                                      context
+                                          .read<SectionThreeCubit>()
+                                          .setState(s3);
+                                      context
+                                          .read<SectionFourCubit>()
+                                          .setState(s4);
+                                      context
+                                          .read<SectionFiveCubit>()
+                                          .setState(s5);
+                                      context
+                                          .read<SectionSixCubit>()
+                                          .setState(s6);
 
-                                      if (mounted) {
-                                        context
-                                            .read<InformaticsCubit>()
-                                            .isLoadingDocumentChanged(false);
+                                      Navigator.pop(context);
 
-                                        context
-                                            .read<SectionOneCubit>()
-                                            .setState(s1);
-                                        context
-                                            .read<SectionTwoCubit>()
-                                            .setState(s2);
-                                        context
-                                            .read<SectionThreeCubit>()
-                                            .setState(s3);
-                                        context
-                                            .read<SectionFourCubit>()
-                                            .setState(s4);
-                                        context
-                                            .read<SectionFiveCubit>()
-                                            .setState(s5);
-                                        context
-                                            .read<SectionSixCubit>()
-                                            .setState(s6);
+                                      _tabController.animateTo(0,
+                                          duration: const Duration(seconds: 1));
 
-                                        Navigator.pop(context);
-
-                                        _tabController.animateTo(0,
-                                            duration:
-                                                const Duration(seconds: 1));
-
-                                        TabOne.of(context)?.scrollUp();
-                                      }
-                                    },
-                                  );
-                                },
-                              ),
+                                      TabOne.of(context)?.scrollUp();
+                                    }
+                                  },
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   },

@@ -11,19 +11,31 @@ import 'package:path_provider/path_provider.dart';
 import 'app/bloc_observer.dart';
 import 'app/view/app.dart';
 import 'configuration/configuration.dart';
+import 'firebase_options.dart';
 
 final globalScaffoldMessenger = GlobalKey<ScaffoldMessengerState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  // in order to use BefaultFirebaseOptions use this
+  // dart pub global activate flutterfire_cli (execute this line)
+  // flutterfire configure (then this)
+  // set PATH for "C:\Users\OFFICE\AppData\Local\Pub\Cache\bin"
+  // restart VSCode
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   configurationUpdate();
 
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
 
-  await FirebaseAppCheck.instance.activate();
+  await FirebaseAppCheck.instance.activate(
+    webRecaptchaSiteKey: '6Lcg9m8iAAAAAGYp-pR1nu9WzWCC9WMjZItfGP9e',
+  );
 
   Bloc.observer = AppBlocObserver();
 
@@ -48,23 +60,4 @@ Future<void> main() async {
   );
 
   runApp(App(authenticationRepository: authenticationRepository));
-
-  // HydratedBloc.storage.runZoned(
-  //   () => runApp(App(authenticationRepository: authenticationRepository)),
-  //   createStorage: () async {
-  //     WidgetsFlutterBinding.ensureInitialized();
-  //     return HydratedStorage.build(
-  //       storageDirectory: kIsWeb
-  //           ? HydratedStorage.webStorageDirectory
-  //           : await getApplicationDocumentsDirectory(),
-  //     );
-  //   },
-  // );
-
-  // HydratedBlocOverrides.runZoned(
-  //   () => runApp(App(authenticationRepository: authenticationRepository)),
-  //   storage: storage,
-  // );
-
-  // runApp(App(authenticationRepository: authenticationRepository));
 }

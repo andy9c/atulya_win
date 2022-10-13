@@ -46,7 +46,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   flutter_launcher_icons: ^0.10.0
   flutter_native_splash: ^2.2.11
-  flutter_windowmanager: ^0.2.0
+  # flutter_windowmanager: ^0.2.0
   fluttertoast: ^8.0.9
   form_input: ^0.1.1
   form_inputs:
@@ -54,7 +54,7 @@ dependencies:
   formz: ^0.4.1
   google_fonts: ^3.0.1
   hydrated_bloc: ^9.0.0-dev.3
-  internet_connection_checker: ^1.0.0+1
+  # internet_connection_checker: ^1.0.0+1
   multi_select_flutter: ^4.1.2
   path_provider: ^2.0.11
   replay_bloc: ^0.2.2
