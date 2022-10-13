@@ -10,6 +10,7 @@ import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
 import 'package:atulya/home/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -502,151 +503,158 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     Widget? getFab() {
-      return Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton.extended(
-              enableFeedback: true,
-              onPressed: () {
-                String message =
-                    "Create New Record ? Unsaved changes will be lost !";
+      final User? user = FirebaseAuth.instance.currentUser;
+      final String emailID = user!.email.toString();
 
-                globalScaffoldMessenger.currentState
-                  ?..removeCurrentMaterialBanner()
-                  ..showMaterialBanner(
-                    MaterialBanner(
-                      //backgroundColor: Colors.blue,
-                      content: Text(message),
-                      //contentTextStyle: const TextStyle(color: Colors.white),
-                      onVisible: () => Future.delayed(
-                        const Duration(seconds: 7),
-                        () => globalScaffoldMessenger.currentState!
-                            .hideCurrentMaterialBanner(),
+      final specDomain = RegExp(r'^[A-Za-z0-9]*@watch\.edu$');
+
+      return specDomain.hasMatch(emailID)
+          ? Container()
+          : Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: FloatingActionButton.extended(
+                    enableFeedback: true,
+                    onPressed: () {
+                      String message =
+                          "Create New Record ? Unsaved changes will be lost !";
+
+                      globalScaffoldMessenger.currentState
+                        ?..removeCurrentMaterialBanner()
+                        ..showMaterialBanner(
+                          MaterialBanner(
+                            //backgroundColor: Colors.blue,
+                            content: Text(message),
+                            //contentTextStyle: const TextStyle(color: Colors.white),
+                            onVisible: () => Future.delayed(
+                              const Duration(seconds: 7),
+                              () => globalScaffoldMessenger.currentState!
+                                  .hideCurrentMaterialBanner(),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  context.read<SectionOneCubit>().reset();
+                                  context.read<SectionTwoCubit>().reset();
+                                  context.read<SectionThreeCubit>().reset();
+                                  context.read<SectionFourCubit>().reset();
+                                  context.read<SectionFiveCubit>().reset();
+                                  context.read<SectionSixCubit>().reset();
+
+                                  globalScaffoldMessenger.currentState!
+                                      .hideCurrentMaterialBanner();
+
+                                  context
+                                      .read<InformaticsCubit>()
+                                      .documentIDChanged(null);
+
+                                  context
+                                      .read<InformaticsCubit>()
+                                      .isEnabledChanged(context, true);
+
+                                  _tabController.animateTo(0,
+                                      duration: const Duration(seconds: 1));
+
+                                  TabOne.of(context)?.scrollUp();
+                                },
+                                child: const Text("CREATE"),
+                              ),
+                              TextButton(
+                                //style: TextButton.styleFrom(foregroundColor: Colors.white),
+                                onPressed: () {
+                                  globalScaffoldMessenger.currentState!
+                                      .hideCurrentMaterialBanner();
+                                },
+                                child: const Text("DISMISS"),
+                              )
+                            ],
+                          ),
+                        );
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text(
+                      'New',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            context.read<SectionOneCubit>().reset();
-                            context.read<SectionTwoCubit>().reset();
-                            context.read<SectionThreeCubit>().reset();
-                            context.read<SectionFourCubit>().reset();
-                            context.read<SectionFiveCubit>().reset();
-                            context.read<SectionSixCubit>().reset();
-
-                            globalScaffoldMessenger.currentState!
-                                .hideCurrentMaterialBanner();
-
-                            context
-                                .read<InformaticsCubit>()
-                                .documentIDChanged(null);
-
-                            context
-                                .read<InformaticsCubit>()
-                                .isEnabledChanged(context, true);
-
-                            _tabController.animateTo(0,
-                                duration: const Duration(seconds: 1));
-
-                            TabOne.of(context)?.scrollUp();
-                          },
-                          child: const Text("CREATE"),
-                        ),
-                        TextButton(
-                          //style: TextButton.styleFrom(foregroundColor: Colors.white),
-                          onPressed: () {
-                            globalScaffoldMessenger.currentState!
-                                .hideCurrentMaterialBanner();
-                          },
-                          child: const Text("DISMISS"),
-                        )
-                      ],
                     ),
-                  );
-              },
-              icon: const Icon(Icons.add),
-              label: const Text(
-                'New',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ),
-          ),
-          BlocBuilder<InformaticsCubit, InformaticsState>(
-            builder: (context, state) {
-              final dynamic cubit;
+                BlocBuilder<InformaticsCubit, InformaticsState>(
+                  builder: (context, state) {
+                    final dynamic cubit;
 
-              switch (state.tabIndex) {
-                case 0:
-                  cubit = context.read<SectionOneCubit>();
-                  break;
-                case 1:
-                  cubit = context.read<SectionTwoCubit>();
-                  break;
-                case 2:
-                  cubit = context.read<SectionThreeCubit>();
-                  break;
-                case 3:
-                  cubit = context.read<SectionFourCubit>();
-                  break;
-                case 4:
-                  cubit = context.read<SectionFiveCubit>();
-                  break;
-                case 5:
-                  cubit = context.read<SectionSixCubit>();
-                  break;
-                default:
-                  cubit = context.read<SectionOneCubit>();
-                  break;
-              }
+                    switch (state.tabIndex) {
+                      case 0:
+                        cubit = context.read<SectionOneCubit>();
+                        break;
+                      case 1:
+                        cubit = context.read<SectionTwoCubit>();
+                        break;
+                      case 2:
+                        cubit = context.read<SectionThreeCubit>();
+                        break;
+                      case 3:
+                        cubit = context.read<SectionFourCubit>();
+                        break;
+                      case 4:
+                        cubit = context.read<SectionFiveCubit>();
+                        break;
+                      case 5:
+                        cubit = context.read<SectionSixCubit>();
+                        break;
+                      default:
+                        cubit = context.read<SectionOneCubit>();
+                        break;
+                    }
 
-              return Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  children: [
-                    spacerWidget(),
-                    spacerWidget(),
-                    FloatingActionButton.extended(
-                      enableFeedback: true,
-                      onPressed: () {
-                        // print(cubit.canUndo);
-                        if (cubit.canUndo) {
-                          cubit.undo();
-                        }
-                      },
-                      icon: const Icon(Icons.undo),
-                      label: const Text(
-                        'Undo',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    return Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Row(
+                        children: [
+                          spacerWidget(),
+                          spacerWidget(),
+                          FloatingActionButton.extended(
+                            enableFeedback: true,
+                            onPressed: () {
+                              // print(cubit.canUndo);
+                              if (cubit.canUndo) {
+                                cubit.undo();
+                              }
+                            },
+                            icon: const Icon(Icons.undo),
+                            label: const Text(
+                              'Undo',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          spacerWidget(),
+                          FloatingActionButton.extended(
+                            enableFeedback: true,
+                            onPressed: () {
+                              // print(cubit.canRedo);
+                              if (cubit.canRedo) {
+                                cubit.redo();
+                              }
+                            },
+                            icon: const Icon(Icons.redo),
+                            label: const Text(
+                              'Redo',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    spacerWidget(),
-                    FloatingActionButton.extended(
-                      enableFeedback: true,
-                      onPressed: () {
-                        // print(cubit.canRedo);
-                        if (cubit.canRedo) {
-                          cubit.redo();
-                        }
-                      },
-                      icon: const Icon(Icons.redo),
-                      label: const Text(
-                        'Redo',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          )
-        ],
-      );
+                    );
+                  },
+                )
+              ],
+            );
     }
 
     return DefaultTabController(
