@@ -1,4 +1,7 @@
+import 'package:atulya/home/cubit/cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -31,7 +34,25 @@ class InformaticsCubit extends Cubit<InformaticsState> with HydratedMixin {
     //   emit(state.copyWith(isEnabled: true));
     // }
 
-    emit(state.copyWith(isEnabled: true));
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String emailID = user!.email.toString();
+
+    final specDomain = RegExp(r'^[A-Za-z0-9]*@watch\.edu$');
+
+    if (specDomain.hasMatch(emailID)) {
+      emit(state.copyWith(isEnabled: false));
+
+      context.read<SectionOneCubit>().reloadToggleChanged();
+      context.read<SectionTwoCubit>().reloadToggleChanged();
+      context.read<SectionThreeCubit>().reloadToggleChanged();
+      context.read<SectionFourCubit>().reloadToggleChanged();
+      context.read<SectionFiveCubit>().reloadToggleChanged();
+      context.read<SectionSixCubit>().reloadToggleChanged();
+    } else {
+      emit(state.copyWith(isEnabled: true));
+    }
+
+    //emit(state.copyWith(isEnabled: true));
   }
 
   void hasInternetChanged(bool value) {
