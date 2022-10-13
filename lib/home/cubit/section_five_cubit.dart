@@ -30,6 +30,10 @@ class SectionFiveCubit extends Cubit<SectionFiveState>
     emit(state.copyWith(looseLand: Compulsory.dirty(value)));
   }
 
+  void totalLandToLooseChanged(String value) {
+    emit(state.copyWith(totalLandToLoose: Compulsory.dirty(value)));
+  }
+
   void landHoldingLostChanged(Map<String, dynamic> value) {
     Map<String, dynamic> newData = Map.from(state.landHoldingLost);
     newData.addAll(value);

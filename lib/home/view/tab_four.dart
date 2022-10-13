@@ -85,217 +85,146 @@ class _TabFourState extends State<TabFour>
       builder: (context, state) {
         return Align(
           alignment: const Alignment(0, -1 / 3),
-          child: Scrollbar(
-            thumbVisibility: true,
-            controller: scr4,
-            child: FocusScope(
-              child: ListView(
-                controller: scr4,
-                padding: const EdgeInsets.all(0.0),
-                physics: const AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: <Widget>[
-                  spacerWidget(),
-                  sectionHeading(
-                      "Details of Land loss for any projects Before"),
-                  dividerWidget(),
-                  spacerWidget(),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        value: state.lostland.value,
-                        onChanged:
-                            !context.read<InformaticsCubit>().state.isEnabled
-                                ? null
-                                : (String? value) => context
-                                    .read<SectionFourCubit>()
-                                    .lostlandChanged(value!),
-                        isExpanded: true,
-                        //value: "YES",
-                        icon: const Icon(Icons.arrow_downward_rounded),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        decoration: InputDecoration(
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child:
-                                Icon(Icons.wc_rounded, color: Colors.lightBlue),
-                          ),
-                          border: const OutlineInputBorder(),
-                          labelText:
-                              "Have you lost land in any projects in the past ?",
-                          helperText: '',
-                          errorText:
-                              state.lostland.invalid ? 'required field' : null,
-                        ),
-                        items: yesNoList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        hint: const Text(
-                          "Please select yes/no",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                  sectionInfo("If Yes, Then for which Project"),
-                  spacerWidget(),
-                  Padding(
+          child: FocusScope(
+            child: ListView(
+              controller: scr4,
+              padding: const EdgeInsets.all(0.0),
+              physics: const AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: <Widget>[
+                spacerWidget(),
+                sectionHeading("Details of Land loss for any projects Before"),
+                dividerWidget(),
+                spacerWidget(),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 0,
                       horizontal: 5.w,
                     ),
-                    child: AbsorbPointer(
-                      absorbing:
-                          !context.read<InformaticsCubit>().state.isEnabled,
-                      child: MultiSelectDialogField(
-                        key: GlobalKey(),
-                        initialValue: List<String>.from(
-                            state.lostLandtoprojects.value ?? []),
-                        onConfirm: (value) {
-                          context
-                              .read<SectionFourCubit>()
-                              .lostLandtoprojectsChanged(value);
-                        },
-                        title: const Text("Select Projects"),
-                        buttonText: const Text(
-                          "Select Projects",
+                    child: DropdownButtonFormField<String>(
+                      value: state.lostland.value,
+                      onChanged:
+                          !context.read<InformaticsCubit>().state.isEnabled
+                              ? null
+                              : (String? value) => context
+                                  .read<SectionFourCubit>()
+                                  .lostlandChanged(value!),
+                      isExpanded: true,
+                      //value: "YES",
+                      icon: const Icon(Icons.arrow_downward_rounded),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      decoration: InputDecoration(
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child:
+                              Icon(Icons.wc_rounded, color: Colors.lightBlue),
                         ),
-                        searchable: true,
-                        barrierColor: Colors.blueGrey.withOpacity(0.3),
-                        items: projectLossList
-                            .map((e) => MultiSelectItem(e, e))
-                            .toList(),
-                        listType: MultiSelectListType.CHIP,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              // color: Colors.green,
-                              // width: 8,
-                              ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                        border: const OutlineInputBorder(),
+                        labelText:
+                            "Have you lost land in any projects in the past ?",
+                        helperText: '',
+                        errorText:
+                            state.lostland.invalid ? 'required field' : null,
+                      ),
+                      items: yesNoList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: const Text(
+                        "Please select yes/no",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
-                  spacerWidget(),
-                  sectionInfo("How much land lost ?"),
-                  spacerWidget(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: 5.w,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          enabled:
-                              context.read<InformaticsCubit>().state.isEnabled,
-                          inputFormatters: [
-                            multipledoubleFormat(),
-                          ],
-                          controller: c1 = TextEditingController()
-                            ..text = state.landAreaLost.value ?? ''
-                            ..selection = TextSelection.fromPosition(
-                              TextPosition(
-                                offset: state.landAreaLost.value == null
-                                    ? 0
-                                    : c1.selection.base.offset >
-                                            state.landAreaLost.value.length
-                                        ? state.landAreaLost.value.length
-                                        : c1.selection.base.offset,
-                              ),
+                ),
+                sectionInfo("If Yes, Then for which Project"),
+                spacerWidget(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 5.w,
+                  ),
+                  child: AbsorbPointer(
+                    absorbing:
+                        !context.read<InformaticsCubit>().state.isEnabled,
+                    child: MultiSelectDialogField(
+                      key: GlobalKey(),
+                      initialValue: List<String>.from(
+                          state.lostLandtoprojects.value ?? []),
+                      onConfirm: (value) {
+                        context
+                            .read<SectionFourCubit>()
+                            .lostLandtoprojectsChanged(value);
+                      },
+                      title: const Text("Select Projects"),
+                      buttonText: const Text(
+                        "Select Projects",
+                      ),
+                      searchable: true,
+                      barrierColor: Colors.blueGrey.withOpacity(0.3),
+                      items: projectLossList
+                          .map((e) => MultiSelectItem(e, e))
+                          .toList(),
+                      listType: MultiSelectListType.CHIP,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            // color: Colors.green,
+                            // width: 8,
                             ),
-                          maxLines: 1,
-                          textCapitalization: TextCapitalization.characters,
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.text,
-                          key: const Key('sectionFour_landAreaLost'),
-                          onChanged: (value) => context
-                              .read<SectionFourCubit>()
-                              .landAreaLostChanged(value),
-                          obscureText: false,
-                          decoration: const InputDecoration(
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0), // add padding to adjust icon
-                              child: Icon(Icons.person),
-                            ),
-                            border: OutlineInputBorder(),
-                            labelText: "How much land lost ?",
-                            helperText:
-                                'Use comma as separator; e.g. 2.3,4.5,6.2',
-                          ),
-                        ),
-                        spacerWidget(),
-                        spacerWidget(),
-                        TextFormField(
-                          enabled: false,
-                          controller: TextEditingController(
-                            text: getMultipleArea(state.landAreaLost.value),
-                          ),
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.blueGrey.shade50,
-                            border: const OutlineInputBorder(),
-                            labelText: 'acre/decimal',
-                            helperText: '',
-                          ),
-                        ),
-                      ],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                   ),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
+                ),
+                spacerWidget(),
+                sectionInfo("How much land lost ?"),
+                spacerWidget(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 5.w,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
                         enabled:
                             context.read<InformaticsCubit>().state.isEnabled,
                         inputFormatters: [
-                          alphaNumericFormat(),
-                          LowerCaseFormatter(),
+                          multipledoubleFormat(),
                         ],
-                        controller: c2 = TextEditingController()
-                          ..text = state.yearOflandLost.value ?? ''
+                        controller: c1 = TextEditingController()
+                          ..text = state.landAreaLost.value ?? ''
                           ..selection = TextSelection.fromPosition(
                             TextPosition(
-                              offset: state.yearOflandLost.value == null
+                              offset: state.landAreaLost.value == null
                                   ? 0
-                                  : c2.selection.base.offset >
-                                          state.yearOflandLost.value.length
-                                      ? state.yearOflandLost.value.length
-                                      : c2.selection.base.offset,
+                                  : c1.selection.base.offset >
+                                          state.landAreaLost.value.length
+                                      ? state.landAreaLost.value.length
+                                      : c1.selection.base.offset,
                             ),
                           ),
-                        maxLines: 3,
-                        textCapitalization: TextCapitalization.none,
+                        maxLines: 1,
+                        textCapitalization: TextCapitalization.characters,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.text,
-                        key: const Key('sectionFour_yearOfLandLost'),
+                        key: const Key('sectionFour_landAreaLost'),
                         onChanged: (value) => context
                             .read<SectionFourCubit>()
-                            .yearOflandLostChanged(value),
+                            .landAreaLostChanged(value),
                         obscureText: false,
                         decoration: const InputDecoration(
                           prefixIcon: Padding(
@@ -304,317 +233,377 @@ class _TabFourState extends State<TabFour>
                             child: Icon(Icons.person),
                           ),
                           border: OutlineInputBorder(),
-                          labelText: "Year of the land lost",
+                          labelText: "How much land lost ?",
                           helperText:
-                              'Use separators as needed; e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
+                              'Use comma as separator; e.g. 2.3,4.5,6.2',
                         ),
                       ),
-                    ),
-                  ),
-                  spacerWidget(),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        value: state.gotCompensation.value,
-                        onChanged:
-                            !context.read<InformaticsCubit>().state.isEnabled
-                                ? null
-                                : (String? value) => context
-                                    .read<SectionFourCubit>()
-                                    .gotCompensationChanged(value!),
-                        isExpanded: true,
-                        //value: "YES",
-                        icon: const Icon(Icons.arrow_downward_rounded),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.wc_rounded),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText: "Did you get any compensation ?",
-                          helperText: '',
-                          // errorText: state.gotCompensation.invalid
-                          //     ? 'required field'
-                          //     : null,
+                      spacerWidget(),
+                      spacerWidget(),
+                      TextFormField(
+                        enabled: false,
+                        controller: TextEditingController(
+                          text: getMultipleArea(state.landAreaLost.value),
                         ),
-                        items: yesNoList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        hint: const Text(
-                          "Please select yes/no",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                  spacerWidget(),
-                  sectionInfo(
-                      "If Yes, then What was the compensation (Cash, employment, land) ?"),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
-                        enabled:
-                            context.read<InformaticsCubit>().state.isEnabled,
-                        inputFormatters: [
-                          alphaNumericFormat(),
-                          UpperCaseFormatter(),
-                        ],
-                        controller: c3 = TextEditingController()
-                          ..text = state.compensation
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: c3.selection.base.offset >
-                                      state.compensation.length
-                                  ? state.compensation.length
-                                  : c3.selection.base.offset,
-                            ),
-                          ),
-                        maxLines: 5,
-                        textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.next,
-                        key: const Key('sectionFour_compensation'),
-                        onChanged: (value) => context
-                            .read<SectionFourCubit>()
-                            .compensationChanged(value),
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText:
-                              "If Yes, then What was the compensation(Cash, employment, land ),?",
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.blueGrey.shade50,
+                          border: const OutlineInputBorder(),
+                          labelText: 'acre/decimal',
                           helperText: '',
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  sectionInfo(
-                      "If Cash then how much, what were your expectation ?"),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
-                        enabled:
-                            context.read<InformaticsCubit>().state.isEnabled,
-                        inputFormatters: [
-                          alphaNumericFormat(),
-                          UpperCaseFormatter(),
-                        ],
-                        controller: c4 = TextEditingController()
-                          ..text = state.cashCompensation
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: c4.selection.base.offset >
-                                      state.cashCompensation.length
-                                  ? state.cashCompensation.length
-                                  : c4.selection.base.offset,
-                            ),
+                ),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        LowerCaseFormatter(),
+                      ],
+                      controller: c2 = TextEditingController()
+                        ..text = state.yearOflandLost.value ?? ''
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: state.yearOflandLost.value == null
+                                ? 0
+                                : c2.selection.base.offset >
+                                        state.yearOflandLost.value.length
+                                    ? state.yearOflandLost.value.length
+                                    : c2.selection.base.offset,
                           ),
-                        maxLines: 5,
-                        textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.next,
-                        key: const Key('sectionFour_cashCompensation'),
-                        onChanged: (value) => context
-                            .read<SectionFourCubit>()
-                            .cashCompensationChanged(value),
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText:
-                              "If Cash then how much, what were your expectation ?",
-                          helperText: '',
                         ),
-                      ),
-                    ),
-                  ),
-                  sectionInfo(
-                      "If Employment was it permanent or contractual, were you satisfied with the job ? "),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
-                        enabled:
-                            context.read<InformaticsCubit>().state.isEnabled,
-                        inputFormatters: [
-                          alphaNumericFormat(),
-                          UpperCaseFormatter(),
-                        ],
-                        controller: c5 = TextEditingController()
-                          ..text = state.employmentDetails
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: c5.selection.base.offset >
-                                      state.employmentDetails.length
-                                  ? state.employmentDetails.length
-                                  : c5.selection.base.offset,
-                            ),
-                          ),
-                        maxLines: 5,
-                        textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.next,
-                        key: const Key('sectionFour_employmentDetails'),
-                        onChanged: (value) => context
-                            .read<SectionFourCubit>()
-                            .employmentDetailsChanged(value),
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText:
-                              "If Employment was it permanent or contractual, were you satisfied with the job? ",
-                          helperText: '',
+                      maxLines: 3,
+                      textCapitalization: TextCapitalization.none,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      key: const Key('sectionFour_yearOfLandLost'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .yearOflandLostChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
                         ),
+                        border: OutlineInputBorder(),
+                        labelText: "Year of the land lost",
+                        helperText:
+                            'Use separators as needed; e.g. 2017 (2ac,5dm); 2020 (1ac,3dm)',
                       ),
                     ),
                   ),
-                  sectionInfo(
-                      "If land (mention the quantity and location), were you satisfied ?"),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
-                        enabled:
-                            context.read<InformaticsCubit>().state.isEnabled,
-                        inputFormatters: [
-                          alphaNumericFormat(),
-                          UpperCaseFormatter(),
-                        ],
-                        controller: c6 = TextEditingController()
-                          ..text = state.landDetails
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: c6.selection.base.offset >
-                                      state.landDetails.length
-                                  ? state.landDetails.length
-                                  : c6.selection.base.offset,
-                            ),
-                          ),
-                        maxLines: 5,
-                        textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.next,
-                        key: const Key('sectionFour_landDetails'),
-                        onChanged: (value) => context
-                            .read<SectionFourCubit>()
-                            .landDetailsChanged(value),
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText:
-                              "If land (mention the quantity and location), were you satisfied ?",
-                          helperText: '',
+                ),
+                spacerWidget(),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: state.gotCompensation.value,
+                      onChanged:
+                          !context.read<InformaticsCubit>().state.isEnabled
+                              ? null
+                              : (String? value) => context
+                                  .read<SectionFourCubit>()
+                                  .gotCompensationChanged(value!),
+                      isExpanded: true,
+                      //value: "YES",
+                      icon: const Icon(Icons.arrow_downward_rounded),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.wc_rounded),
                         ),
+                        border: OutlineInputBorder(),
+                        labelText: "Did you get any compensation ?",
+                        helperText: '',
+                        // errorText: state.gotCompensation.invalid
+                        //     ? 'required field'
+                        //     : null,
+                      ),
+                      items: yesNoList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: const Text(
+                        "Please select yes/no",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
-                  sectionInfo("Any other Comments ?"),
-                  spacerWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 5.w,
-                      ),
-                      child: TextFormField(
-                        enabled:
-                            context.read<InformaticsCubit>().state.isEnabled,
-                        inputFormatters: [
-                          alphaNumericFormat(),
-                          UpperCaseFormatter(),
-                        ],
-                        controller: c7 = TextEditingController()
-                          ..text = state.otherComments
-                          ..selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: c7.selection.base.offset >
-                                      state.otherComments.length
-                                  ? state.otherComments.length
-                                  : c7.selection.base.offset,
-                            ),
+                ),
+                spacerWidget(),
+                sectionInfo(
+                    "If Yes, then What was the compensation (Cash, employment, land) ?"),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        UpperCaseFormatter(),
+                      ],
+                      controller: c3 = TextEditingController()
+                        ..text = state.compensation
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: c3.selection.base.offset >
+                                    state.compensation.length
+                                ? state.compensation.length
+                                : c3.selection.base.offset,
                           ),
-                        maxLines: 5,
-                        textCapitalization: TextCapitalization.characters,
-                        textInputAction: TextInputAction.done,
-                        key: const Key('sectionFour_otherComments'),
-                        onChanged: (value) => context
-                            .read<SectionFourCubit>()
-                            .otherCommentsChanged(value),
-                        obscureText: false,
-                        decoration: const InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: 0), // add padding to adjust icon
-                            child: Icon(Icons.person),
-                          ),
-                          border: OutlineInputBorder(),
-                          labelText: "Any other comments",
-                          helperText: '',
                         ),
+                      maxLines: 5,
+                      textCapitalization: TextCapitalization.characters,
+                      textInputAction: TextInputAction.next,
+                      key: const Key('sectionFour_compensation'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .compensationChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText:
+                            "If Yes, then What was the compensation(Cash, employment, land ),?",
+                        helperText: '',
                       ),
                     ),
                   ),
-                  spacerWidget(),
-                  spacerWidget(),
-                  spacerWidget(),
-                  spacerWidget(),
-                  spacerWidget(),
-                ],
-              ),
+                ),
+                sectionInfo(
+                    "If Cash then how much, what were your expectation ?"),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        UpperCaseFormatter(),
+                      ],
+                      controller: c4 = TextEditingController()
+                        ..text = state.cashCompensation
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: c4.selection.base.offset >
+                                    state.cashCompensation.length
+                                ? state.cashCompensation.length
+                                : c4.selection.base.offset,
+                          ),
+                        ),
+                      maxLines: 5,
+                      textCapitalization: TextCapitalization.characters,
+                      textInputAction: TextInputAction.next,
+                      key: const Key('sectionFour_cashCompensation'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .cashCompensationChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText:
+                            "If Cash then how much, what were your expectation ?",
+                        helperText: '',
+                      ),
+                    ),
+                  ),
+                ),
+                sectionInfo(
+                    "If Employment was it permanent or contractual, were you satisfied with the job ? "),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        UpperCaseFormatter(),
+                      ],
+                      controller: c5 = TextEditingController()
+                        ..text = state.employmentDetails
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: c5.selection.base.offset >
+                                    state.employmentDetails.length
+                                ? state.employmentDetails.length
+                                : c5.selection.base.offset,
+                          ),
+                        ),
+                      maxLines: 5,
+                      textCapitalization: TextCapitalization.characters,
+                      textInputAction: TextInputAction.next,
+                      key: const Key('sectionFour_employmentDetails'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .employmentDetailsChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText:
+                            "If Employment was it permanent or contractual, were you satisfied with the job? ",
+                        helperText: '',
+                      ),
+                    ),
+                  ),
+                ),
+                sectionInfo(
+                    "If land (mention the quantity and location), were you satisfied ?"),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        UpperCaseFormatter(),
+                      ],
+                      controller: c6 = TextEditingController()
+                        ..text = state.landDetails
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: c6.selection.base.offset >
+                                    state.landDetails.length
+                                ? state.landDetails.length
+                                : c6.selection.base.offset,
+                          ),
+                        ),
+                      maxLines: 5,
+                      textCapitalization: TextCapitalization.characters,
+                      textInputAction: TextInputAction.next,
+                      key: const Key('sectionFour_landDetails'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .landDetailsChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText:
+                            "If land (mention the quantity and location), were you satisfied ?",
+                        helperText: '',
+                      ),
+                    ),
+                  ),
+                ),
+                sectionInfo("Any other Comments ?"),
+                spacerWidget(),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 5.w,
+                    ),
+                    child: TextFormField(
+                      enabled: context.read<InformaticsCubit>().state.isEnabled,
+                      inputFormatters: [
+                        alphaNumericFormat(),
+                        UpperCaseFormatter(),
+                      ],
+                      controller: c7 = TextEditingController()
+                        ..text = state.otherComments
+                        ..selection = TextSelection.fromPosition(
+                          TextPosition(
+                            offset: c7.selection.base.offset >
+                                    state.otherComments.length
+                                ? state.otherComments.length
+                                : c7.selection.base.offset,
+                          ),
+                        ),
+                      maxLines: 5,
+                      textCapitalization: TextCapitalization.characters,
+                      textInputAction: TextInputAction.done,
+                      key: const Key('sectionFour_otherComments'),
+                      onChanged: (value) => context
+                          .read<SectionFourCubit>()
+                          .otherCommentsChanged(value),
+                      obscureText: false,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              top: 0), // add padding to adjust icon
+                          child: Icon(Icons.person),
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText: "Any other comments",
+                        helperText: '',
+                      ),
+                    ),
+                  ),
+                ),
+                spacerWidget(),
+                spacerWidget(),
+                spacerWidget(),
+                spacerWidget(),
+                spacerWidget(),
+              ],
             ),
           ),
         );

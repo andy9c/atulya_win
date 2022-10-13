@@ -54,6 +54,10 @@ class SectionTwoCubit extends Cubit<SectionTwoState>
     emit(state.copyWith(totalPeople: Compulsory.dirty(value)));
   }
 
+  void totalUndividedLandChanged(String value) {
+    emit(state.copyWith(totalUndividedLand: Compulsory.dirty(value)));
+  }
+
   void landHoldingChanged(Map<String, dynamic> value) {
     Map<String, dynamic> newData = Map.from(state.landHolding);
     newData.addAll(value);

@@ -10,6 +10,7 @@ class SectionTwoState extends Equatable with FormzMixin {
     this.isAlive = const Compulsory.pure(),
     this.countChulha = const Compulsory.pure(),
     this.totalPeople = const Compulsory.pure(),
+    this.totalUndividedLand = const Compulsory.pure(),
     this.landHolding = const {},
     this.cultivateAnabadi = const Compulsory.pure(),
     this.yearsAnabadi = "",
@@ -27,6 +28,7 @@ class SectionTwoState extends Equatable with FormzMixin {
   final Compulsory isAlive;
   final Compulsory countChulha;
   final Compulsory totalPeople;
+  final Compulsory totalUndividedLand;
   final Map<String, dynamic> landHolding;
   final Compulsory cultivateAnabadi;
   final String yearsAnabadi;
@@ -46,6 +48,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       isAlive,
       countChulha,
       totalPeople,
+      totalUndividedLand,
       landHolding,
       cultivateAnabadi,
       yearsAnabadi,
@@ -65,6 +68,7 @@ class SectionTwoState extends Equatable with FormzMixin {
     Compulsory? isAlive,
     Compulsory? countChulha,
     Compulsory? totalPeople,
+    Compulsory? totalUndividedLand,
     Map<String, dynamic>? landHolding,
     Compulsory? cultivateAnabadi,
     String? yearsAnabadi,
@@ -82,6 +86,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       isAlive: isAlive ?? this.isAlive,
       countChulha: countChulha ?? this.countChulha,
       totalPeople: totalPeople ?? this.totalPeople,
+      totalUndividedLand: totalUndividedLand ?? this.totalUndividedLand,
       landHolding: landHolding ?? this.landHolding,
       cultivateAnabadi: cultivateAnabadi ?? this.cultivateAnabadi,
       yearsAnabadi: yearsAnabadi ?? this.yearsAnabadi,
@@ -102,6 +107,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       'isAlive': state.isAlive.value,
       'countChulha': state.countChulha.value,
       'totalPeople': state.totalPeople.value,
+      'totalUndividedLand': state.totalUndividedLand.value,
       'landHolding': state.landHolding,
       'cultivateAnabadi': state.cultivateAnabadi.value,
       'yearsAnabadi': state.yearsAnabadi,
@@ -121,6 +127,7 @@ class SectionTwoState extends Equatable with FormzMixin {
       isAlive: Compulsory.dirty(map['isAlive']),
       countChulha: Compulsory.dirty(map['countChulha']),
       totalPeople: Compulsory.dirty(map['totalPeople']),
+      totalUndividedLand: Compulsory.dirty(map['totalUndividedLand'] ?? ''),
       landHolding: map['landHolding'],
       cultivateAnabadi: Compulsory.dirty(map['cultivateAnabadi']),
       yearsAnabadi: map['yearsAnabadi'],
@@ -138,6 +145,7 @@ class SectionTwoState extends Equatable with FormzMixin {
         isAlive,
         countChulha,
         totalPeople,
+        totalUndividedLand,
         cultivateAnabadi,
       ];
 }

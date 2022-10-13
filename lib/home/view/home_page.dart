@@ -1,7 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
-// import 'dart:io';
+import 'dart:io';
 
 import 'package:atulya/app/app.dart';
 import 'package:atulya/configuration/configuration.dart';
@@ -10,12 +10,12 @@ import 'package:atulya/home/cubit/cubit.dart';
 import 'package:atulya/home/view/view.dart';
 import 'package:atulya/home/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:formz/formz.dart';
-// import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../database/database.dart';
@@ -32,17 +32,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tabController;
-  // late final StreamSubscription<InternetConnectionStatus>? listener;
+  late final StreamSubscription<InternetConnectionStatus>? listener;
 
-  // Future<void> secureScreen() async {
-  //   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  // }
+  Future<void> secureScreen() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
 
   @override
   void initState() {
-    // if (Platform.isAndroid) {
-    //   secureScreen();
-    // }
+    if (!kIsWeb && Platform.isAndroid) {
+      secureScreen();
+    }
 
     _tabController = TabController(
       length: 6,
@@ -54,31 +54,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       context.read<InformaticsCubit>().tabIndexChanged(_tabController.index);
     });
 
-    // if (kIsWeb) {
-    //   // actively listen for status updates
-    //   listener = InternetConnectionChecker().onStatusChange.listen(
-    //     (InternetConnectionStatus status) {
-    //       switch (status) {
-    //         case InternetConnectionStatus.connected:
-    //           // ignore: avoid_print
-    //           // print('Data connection is available.');
-    //           context.read<InformaticsCubit>().hasInternetChanged(true);
-    //           String message = 'Connected to internet !';
-    //           showMessageBanner(message, dismiss: true);
-    //           break;
-    //         case InternetConnectionStatus.disconnected:
-    //           // ignore: avoid_print
-    //           // print('You are disconnected from the internet.');
-    //           context.read<InformaticsCubit>().hasInternetChanged(false);
-    //           String message = 'No internet !';
-    //           showMessageBanner(message, dismiss: true);
-    //           break;
-    //       }
-    //     },
-    //   );
-    // } else {
-    //   listener = null;
-    // }
+    if (!kIsWeb) {
+      // actively listen for status updates
+      listener = InternetConnectionChecker().onStatusChange.listen(
+        (InternetConnectionStatus status) {
+          switch (status) {
+            case InternetConnectionStatus.connected:
+              // ignore: avoid_print
+              // print('Data connection is available.');
+              context.read<InformaticsCubit>().hasInternetChanged(true);
+              String message = 'Connected to internet !';
+              showMessageBanner(message, dismiss: true);
+              break;
+            case InternetConnectionStatus.disconnected:
+              // ignore: avoid_print
+              // print('You are disconnected from the internet.');
+              context.read<InformaticsCubit>().hasInternetChanged(false);
+              String message = 'No internet !';
+              showMessageBanner(message, dismiss: true);
+              break;
+          }
+        },
+      );
+    } else {
+      listener = null;
+    }
 
     if (context.read<InformaticsCubit>().state.documentID.value != null) {
       context.read<InformaticsCubit>().isEnabledChanged(context, false);

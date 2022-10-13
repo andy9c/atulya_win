@@ -4,6 +4,7 @@ class SectionFiveState extends Equatable with FormzMixin {
   const SectionFiveState({
     this.oclAcquiring = const Compulsory.pure(),
     this.looseLand = const Compulsory.pure(),
+    this.totalLandToLoose = const Compulsory.pure(),
     this.landHoldingLost = const {},
     this.gotNotification = const Compulsory.pure(),
     this.whatAction = const Compulsory.pure(),
@@ -23,6 +24,7 @@ class SectionFiveState extends Equatable with FormzMixin {
 
   final Compulsory oclAcquiring;
   final Compulsory looseLand;
+  final Compulsory totalLandToLoose;
   final Map<String, dynamic> landHoldingLost;
   final Compulsory gotNotification;
   final Compulsory whatAction;
@@ -44,6 +46,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     return [
       oclAcquiring,
       looseLand,
+      totalLandToLoose,
       landHoldingLost,
       gotNotification,
       whatAction,
@@ -81,6 +84,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     return {
       'oclAcquiring': state.oclAcquiring.value,
       'looseLand': state.looseLand.value,
+      'totalLandToLoose': state.totalLandToLoose.value,
       'landHoldingLost': state.landHoldingLost,
       'gotNotification': state.gotNotification.value,
       'whatAction': state.whatAction.value,
@@ -102,6 +106,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     return SectionFiveState(
       oclAcquiring: Compulsory.dirty(map['oclAcquiring']),
       looseLand: Compulsory.dirty(map['looseLand']),
+      totalLandToLoose: Compulsory.dirty(map['totalLandToLoose'] ?? ''),
       landHoldingLost: map['landHoldingLost'],
       gotNotification: Compulsory.dirty(map['gotNotification']),
       whatAction: Compulsory.dirty(map['whatAction']),
@@ -122,6 +127,7 @@ class SectionFiveState extends Equatable with FormzMixin {
   SectionFiveState copyWith({
     Compulsory? oclAcquiring,
     Compulsory? looseLand,
+    Compulsory? totalLandToLoose,
     Map<String, dynamic>? landHoldingLost,
     Compulsory? gotNotification,
     Compulsory? whatAction,
@@ -141,6 +147,7 @@ class SectionFiveState extends Equatable with FormzMixin {
     return SectionFiveState(
       oclAcquiring: oclAcquiring ?? this.oclAcquiring,
       looseLand: looseLand ?? this.looseLand,
+      totalLandToLoose: totalLandToLoose ?? this.totalLandToLoose,
       landHoldingLost: landHoldingLost ?? this.landHoldingLost,
       gotNotification: gotNotification ?? this.gotNotification,
       whatAction: whatAction ?? this.whatAction,
