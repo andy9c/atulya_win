@@ -206,7 +206,6 @@ class _TabFiveState extends State<TabFive>
                     ),
                   ),
                 ),
-                spacerWidget(),
                 sectionInfo("Total land you will lose in land acquisition ?"),
                 spacerWidget(),
                 Padding(

@@ -233,7 +233,6 @@ class _TabTwoState extends State<TabTwo>
                     ),
                   ),
                 ),
-                spacerWidget(),
                 sectionInfo("Total land owned by the undivided family ?"),
                 spacerWidget(),
                 Padding(
