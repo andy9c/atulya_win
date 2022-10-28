@@ -15,8 +15,9 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "exceljs": "^4.3.0",
     "firebase": "^9.12.1",
-    "firebase-admin": "^11.1.0",
+    "firebase-admin": "^11.2.0",
     "firebase-functions": "^3.24.1",
     "terser": "^5.15.1"
   },
