@@ -877,11 +877,11 @@ class _TabThreeState extends State<TabThree>
                         !context.read<InformaticsCubit>().state.isEnabled,
                     child: MultiSelectDialogField(
                       key: GlobalKey(),
-                      initialValue: List<String>.from(state.forestProduce),
+                      initialValue: List<String>.from(state.freshWaterItems),
                       onConfirm: (value) {
                         context
                             .read<SectionThreeCubit>()
-                            .forestProduceChanged(value);
+                            .freshWaterItemsChanged(value);
                       },
                       title: const Text("Select"),
                       buttonText: const Text("Select Fresh Water Produce"),
